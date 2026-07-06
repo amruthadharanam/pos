@@ -750,7 +750,7 @@
                 document.title = originalTitle; 
             },
 
-            sendWhatsApp() {
+           sendWhatsApp() {
                 if (!this.validateInputs()) return;
 
                 const customer = this.getCustomerDetails();
@@ -767,6 +767,26 @@
                 invoice.itemsList.forEach(item => {
                     text += `• ${item.name} x ${item.qty} → ₹${item.total.toFixed(2)}\n`;
                 });
+
+                text += `------------------------------------------\n`;
+                text += `*Subtotal:* ₹${invoice.subtotal.toFixed(2)}\n`;
+                text += `*Delivery Fee:* ₹${POSState.deliveryCharge.toFixed(2)}\n`;
+                text += `*Grand Total Invoice:* ₹${invoice.grandTotal.toFixed(2)}`;
+
+                let destinationPhone = customer.phone.replace(/[^0-9]/g, '');
+                if (destinationPhone.length === 10) {
+                    destinationPhone = '91' + destinationPhone;
+                }
+
+                // FIX: Use standard universal web link instead of api.whatsapp call for GitHub compatibility
+                const url = `https://wa.me/${destinationPhone}?text=${encodeURIComponent(text)}`;
+                
+                // FIX: Force security attributes required by GitHub Pages to allow cross-origin tab opening
+                const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+                if (newWindow) {
+                    newWindow.opener = null;
+                }
+            },
 
                 text += `------------------------------------------\n`;
                 text += `*Subtotal:* ₹${invoice.subtotal.toFixed(2)}\n`;
