@@ -425,7 +425,6 @@
     </div>
 
     <script>
-        // FIXED: Rebuilt entirely from scratch using clean menu structure without redundancy
         const MENU_DATA = [
             // --- SIGNATURE SANDWICHES ---
             { id: "s1", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Bombay Raw Veg Green Chutney Sandwich (Triple Layer)", price: 99 },
@@ -474,7 +473,6 @@
             { id: "d7", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Fresh Coconut Milk (1 Ltr)", price: 125 }
         ];
 
-        // Core Application State Module Object
         const POSState = {
             cart: {}, 
             activeCategory: "ALL",
@@ -494,7 +492,6 @@
             }
         };
 
-        // UI Presentation and Interaction Handling Engine Object
         const UIEngine = {
             init() {
                 this.renderCategories();
@@ -666,7 +663,6 @@
             }
         };
 
-        // Pure Logical Data and Native System Core Export Engine Object Module
         const ExportEngine = {
             validateInputs() {
                 const customerForm = document.getElementById("form-customer");
@@ -778,15 +774,13 @@
                     destinationPhone = '91' + destinationPhone;
                 }
 
-                // FIX: Use standard universal web link instead of api.whatsapp call for GitHub compatibility
                 const url = `https://wa.me/${destinationPhone}?text=${encodeURIComponent(text)}`;
-                
-                // FIX: Force security attributes required by GitHub Pages to allow cross-origin tab opening
                 const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
                 if (newWindow) {
                     newWindow.opener = null;
                 }
             },
+
             exportCSV() {
                 if (!this.validateInputs()) return;
 
@@ -807,7 +801,6 @@
             }
         };
 
-        // Application Execution Initializer Hooks Entrypoint
         document.addEventListener("DOMContentLoaded", () => {
             POSState.init();
             UIEngine.init();
