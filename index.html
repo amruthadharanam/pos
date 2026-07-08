@@ -1470,47 +1470,50 @@
 
                 const LINE = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
 
-                let text = `🛒 *NEW ORDER — AMRUTHADHARANAM*\n`;
+                // Greeting — customer talking to the shop
+                let text = `Hello *AMRUTHADHARANAM* 🙏\n\n`;
+                text += `I'd like to place an order. Here are my details:\n`;
                 text += LINE;
 
-                // Order meta
-                text += `📋 *Ref:*  ${POSState.orderId}\n`;
-                text += `👤 *Name:* ${customer.name}\n`;
-                text += `📞 *Phone:* ${customer.phone}\n`;
-                text += `🚚 *Type:* ${POSState.orderType}\n`;
+                // Customer details
+                text += `👤 *Name:*   ${customer.name}\n`;
+                text += `📞 *Phone:*  ${customer.phone}\n`;
+                text += `🚚 *Order Mode:* ${isPickup ? '🏠 Self Pickup' : '🛵 Home Delivery'}\n`;
                 if (isPickup) {
-                    text += `🏠 *Pickup:* I'll collect at your counter\n`;
+                    text += `   I will collect my order at your counter.\n`;
                 } else {
-                    text += `📍 *Deliver to:* ${customer.door}${customer.apart ? ', ' + customer.apart : ''}\n`;
+                    text += `📍 *Deliver to:*\n`;
+                    text += `   ${customer.door}${customer.apart ? ', ' + customer.apart : ''}\n`;
                 }
                 if (customer.notes) text += `📝 *Notes:* ${customer.notes}\n`;
                 text += LINE;
 
                 // Items
-                text += `🍽️ *ORDER ITEMS*\n`;
+                text += `🍽️ *My Order:*\n\n`;
                 invoice.itemsList.forEach((item, i) => {
                     text += `  ${i + 1}. ${item.name}\n`;
-                    text += `      ${item.qty} × ₹${item.price.toFixed(2)} = *₹${item.total.toFixed(2)}*\n`;
+                    text += `     ${item.qty} × ₹${item.price.toFixed(2)} = *₹${item.total.toFixed(2)}*\n\n`;
                 });
                 text += LINE;
 
-                // Bill summary
-                text += `💰 *BILL SUMMARY*\n`;
-                text += `  Subtotal          ₹${invoice.subtotal.toFixed(2)}\n`;
+                // Bill
+                text += `💰 *Bill Summary:*\n\n`;
+                text += `  Subtotal        :  ₹${invoice.subtotal.toFixed(2)}\n`;
                 if (invoice.discountAmount > 0) {
-                    text += `  Discount (${POSState.discount.code})  −₹${invoice.discountAmount.toFixed(2)}\n`;
+                    text += `  Discount (${POSState.discount.code})  : −₹${invoice.discountAmount.toFixed(2)}\n`;
                 }
                 if (!isPickup) {
-                    text += `  Delivery Fee      ₹${invoice.deliveryFee.toFixed(2)}\n`;
+                    text += `  Delivery Fee    :  ₹${invoice.deliveryFee.toFixed(2)}\n`;
                 }
-                text += `  ──────────────────────────────\n`;
-                text += `  *Grand Total  ₹${invoice.grandTotal.toFixed(2)}*\n`;
+                text += `  ─────────────────────────────\n`;
+                text += `  *Total Payable  :  ₹${invoice.grandTotal.toFixed(2)}*\n`;
                 text += LINE;
 
-                // Footer
-                text += `⏱️ *Est. Ready:* ~${invoice.readyMins} min\n\n`;
-                text += `Happy to serve you ! 🙏\n`;
-                text += `_— TEAM AMRUTHADHARANAM`;
+                // Closing
+                text += `⏱️ Estimated ready in *~${invoice.readyMins} min*\n`;
+                text += `📌 Ref: _${POSState.orderId}_\n\n`;
+                text += `Kindly confirm my order at your earliest.\n`;
+                text += `Thank you so much! 🙏`;
 
                 return text;
             },
