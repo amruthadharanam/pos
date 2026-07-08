@@ -349,14 +349,6 @@
         .totals-table tr.grand-total { font-size: 1.15rem; font-weight: 700; color: var(--primary); border-top: 2px solid var(--primary); }
         .totals-table tr.grand-total td { padding-top: 0.65rem; letter-spacing: 0.01em; }
 
-        .ready-chip {
-            display: flex; align-items: center; justify-content: space-between;
-            background: rgba(54, 92, 70, 0.07); border: 1px dashed var(--primary); border-radius: var(--radius-md);
-            padding: 0.55rem 0.75rem; font-size: 0.8rem; margin-top: 0.85rem;
-        }
-        [data-theme="dark"] .ready-chip { background: rgba(74, 122, 93, 0.15); }
-        .ready-chip strong { font-family: var(--font-mono); color: var(--accent); }
-
         .delivery-fee-input {
             width: 72px; text-align: right; border: 1px solid var(--border); border-radius: 4px;
             background: var(--background); color: var(--text-main); font-family: var(--font-mono);
@@ -681,10 +673,6 @@
                     </tr>
                 </table>
 
-                <div class="ready-chip">
-                    <span>⏱ Estimated Ready Time</span>
-                    <strong id="ready-time-value">~15 min</strong>
-                </div>
             </section>
 
             <section class="qr-pay-section">
@@ -747,7 +735,6 @@
         <div class="receipt-row"><span>Order No:</span><span id="print-order-no"></span></div>
         <div class="receipt-row"><span>Date/Time:</span><span id="print-datetime"></span></div>
         <div class="receipt-row"><span>Order Type:</span><span id="print-order-type"></span></div>
-        <div class="receipt-row"><span>Est. Ready In:</span><span id="print-ready-time"></span></div>
         <div class="receipt-divider"></div>
         <div class="receipt-row"><strong>Customer Details:</strong></div>
         <div id="print-cust-info" style="font-size: 11px; margin-bottom: 2mm;"></div>
@@ -1029,13 +1016,7 @@
                 }
             },
 
-            /* ---------- TOTALS, DISCOUNT, READY TIME ---------- */
-            estimateReadyMinutes(totalQty) {
-                if (totalQty === 0) return 0;
-                const raw = 15 + totalQty * 2;
-                return Math.min(60, Math.ceil(raw / 5) * 5);
-            },
-
+            /* ---------- TOTALS & DISCOUNT ---------- */
             syncTotals() {
                 let uniqueItems = 0, totalQty = 0, subtotal = 0;
                 const previewContainer = document.getElementById("cart-items-preview");
@@ -1073,7 +1054,6 @@
 
                 const effectiveDeliveryFee = POSState.orderType === "Pickup" ? 0 : POSState.deliveryCharge;
                 const grandTotal = subtotal > 0 ? Math.max(0, subtotal - discountAmount) + effectiveDeliveryFee : 0;
-                const readyMins = this.estimateReadyMinutes(totalQty);
 
                 document.getElementById("summary-unique-items").innerText = uniqueItems;
                 document.getElementById("summary-total-qty").innerText = totalQty;
@@ -1090,9 +1070,6 @@
                     discountRow.classList.remove("visible");
                 }
 
-                const readyText = readyMins > 0 ? `~${readyMins} min` : `—`;
-                document.getElementById("ready-time-value").innerText = readyText;
-
                 const qrTag = document.getElementById("qr-amount-tag");
                 document.getElementById("qr-amount-display").innerText = `₹${grandTotal.toFixed(2)}`;
                 qrTag.classList.toggle("zero", grandTotal === 0);
@@ -1105,7 +1082,7 @@
                 document.getElementById("mobile-cart-count").innerText = totalQty;
                 document.getElementById("mobile-cart-total").innerText = `₹${grandTotal.toFixed(2)}`;
 
-                return { uniqueItems, totalQty, subtotal, discountAmount, effectiveDeliveryFee, grandTotal, readyMins };
+                return { uniqueItems, totalQty, subtotal, discountAmount, effectiveDeliveryFee, grandTotal };
             },
 
             updateTimestamp() {
@@ -1413,9 +1390,8 @@
 
                 const deliveryFee = POSState.orderType === "Pickup" ? 0 : POSState.deliveryCharge;
                 const grandTotal = subtotal > 0 ? Math.max(0, subtotal - discountAmount) + deliveryFee : 0;
-                const readyMins = UIEngine.estimateReadyMinutes(totalQty);
 
-                return { itemsList, subtotal, totalQty, discountAmount, deliveryFee, grandTotal, readyMins };
+                return { itemsList, subtotal, totalQty, discountAmount, deliveryFee, grandTotal };
             },
 
             printInvoice() {
@@ -1428,7 +1404,6 @@
                 document.getElementById("print-order-no").innerText = POSState.orderId;
                 document.getElementById("print-datetime").innerText = new Date().toLocaleString('en-IN');
                 document.getElementById("print-order-type").innerText = POSState.orderType;
-                document.getElementById("print-ready-time").innerText = invoice.readyMins > 0 ? `~${invoice.readyMins} min` : '—';
                 document.getElementById("print-cust-info").innerHTML = isPickup
                     ? `<strong>${customer.name}</strong> (${customer.phone})<br>Self Pickup at Counter`
                     : `<strong>${customer.name}</strong> (${customer.phone})<br>
@@ -1468,11 +1443,11 @@
                 const invoice = this.compileInvoiceData();
                 const isPickup = POSState.orderType === "Pickup";
 
-                const LINE = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+                const LINE = `━━━━━━━━━━━━━━━━━━\n`;
 
                 // Greeting — customer talking to the shop
-                let text = `Hello *AMRUTHADHARANAM* 🙏\n\n`;
-                text += `I'd like to place an order. Here are my details:\n`;
+                let text = `Hello *AMRUTHADHARANAM*,\n\n`;
+                text += `I'd like to place my order. Here are the details:\n`;
                 text += LINE;
 
                 // Customer details
@@ -1505,15 +1480,14 @@
                 if (!isPickup) {
                     text += `  Delivery Fee    :  ₹${invoice.deliveryFee.toFixed(2)}\n`;
                 }
-                text += `  ─────────────────────────────\n`;
+                text += `  ──────────────────\n`;
                 text += `  *Total Payable  :  ₹${invoice.grandTotal.toFixed(2)}*\n`;
                 text += LINE;
 
                 // Closing
-                text += `⏱️ Estimated ready in *~${invoice.readyMins} min*\n`;
                 text += `📌 Ref: _${POSState.orderId}_\n\n`;
-                text += `Kindly confirm my order at your earliest.\n`;
-                text += `Thank you so much! 🙏`;
+                text += `Kindly confirm my order at the earliest.\n`;
+                text += `Thank you so much!`;
 
                 return text;
             },
