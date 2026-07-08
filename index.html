@@ -3,38 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMRUTHADHARANAM - Premium POS Engine</title>
-    
+    <title>AMRUTHADHARANAM — Order Terminal</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&family=Manrope:wght@600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+
     <style>
-        /* --- DESIGN SYSTEM VARIABLES --- */
+        /* ============================================================
+           DESIGN SYSTEM
+           Palette: banana-leaf green + temple-gold + terracotta clay —
+           the actual palette of a South Indian tiffin counter, not a
+           generic "food app" gradient.
+        ============================================================ */
         :root {
             --primary: #365C46;
+            --primary-deep: #24402E;
             --secondary: #E6C98F;
             --background: #FCFAF7;
             --surface: #FFFFFF;
             --accent: #B44F2A;
             --success: #2E7D32;
             --danger: #C62828;
+            --warning: #9C6B14;
             --text-main: #2C2A29;
             --text-muted: #666461;
             --border: #E8E5E0;
+            --radius-sm: 6px;
             --radius-md: 8px;
-            --radius-lg: 12px;
-            --shadow: 0 4px 12px rgba(54, 92, 70, 0.05);
-            --transition: all 0.2s ease-in-out;
-            
+            --radius-lg: 14px;
+            --shadow: 0 4px 12px rgba(54, 92, 70, 0.06);
+            --shadow-lift: 0 10px 30px rgba(54, 92, 70, 0.14);
+            --transition: all 0.18s ease-in-out;
+
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Inter', sans-serif;
             --font-btn: 'Manrope', sans-serif;
             --font-mono: 'IBM Plex Mono', monospace;
+            --heading-color: var(--primary);
         }
 
         [data-theme="dark"] {
             --primary: #4A7A5D;
+            --primary-deep: #365C46;
             --secondary: #E6C98F;
             --background: #121211;
             --surface: #1E1D1C;
@@ -43,19 +54,67 @@
             --text-muted: #A8A5A0;
             --border: #33312F;
             --shadow: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-lift: 0 10px 34px rgba(0,0,0,0.45);
+            --heading-color: #E8A87C;
+        }
+        [data-theme="dark"] body {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg opacity='0.18'%3E%3Cellipse cx='22' cy='32' rx='4' ry='13' transform='rotate(-20 22 32)' fill='%234A7A5D'/%3E%3Cellipse cx='22' cy='32' rx='4' ry='13' transform='rotate(20 22 32)' fill='%234A7A5D'/%3E%3Cellipse cx='32' cy='22' rx='3' ry='10' transform='rotate(-55 32 22)' fill='%234A7A5D'/%3E%3Cline x1='22' y1='40' x2='22' y2='58' stroke='%234A7A5D' stroke-width='1.5' stroke-linecap='round'/%3E%3Cellipse cx='185' cy='52' rx='20' ry='6' fill='%23E6C98F'/%3E%3Cellipse cx='185' cy='44' rx='22' ry='5' fill='%234A7A5D'/%3E%3Cpath d='M165,42 Q165,28 185,28 Q205,28 205,42 Z' fill='%23E6C98F'/%3E%3Ccircle cx='108' cy='52' r='22' fill='none' stroke='%234A7A5D' stroke-width='1.2'/%3E%3Ccircle cx='108' cy='52' r='14' fill='none' stroke='%234A7A5D' stroke-width='0.7'/%3E%3Ccircle cx='108' cy='52' r='4' fill='%23E6C98F'/%3E%3Cpath d='M15,148 Q12,172 40,178 Q68,172 65,148 Z' fill='none' stroke='%234A7A5D' stroke-width='1.5'/%3E%3Cellipse cx='40' cy='148' rx='25' ry='5' fill='none' stroke='%234A7A5D' stroke-width='1'/%3E%3Cpath d='M22,158 Q27,154 32,158 Q37,162 42,158 Q47,154 52,158 Q57,162 60,158' fill='none' stroke='%23D96B43' stroke-width='1.3' stroke-linecap='round'/%3E%3Cpath d='M24,165 Q30,161 36,165 Q42,169 48,165 Q54,161 58,165' fill='none' stroke='%23D96B43' stroke-width='1.1' stroke-linecap='round'/%3E%3Cpath d='M185,108 L180,142 L218,142 L213,108 Z' fill='none' stroke='%234A7A5D' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cellipse cx='199' cy='108' rx='14' ry='3.5' fill='none' stroke='%234A7A5D' stroke-width='1'/%3E%3Cline x1='212' y1='94' x2='212' y2='132' stroke='%23D96B43' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='190' cy='134' r='2.5' fill='%234A7A5D'/%3E%3Ccircle cx='199' cy='136' r='2.5' fill='%234A7A5D'/%3E%3Ccircle cx='208' cy='134' r='2' fill='%234A7A5D'/%3E%3Cpath d='M62,186 L40,220 L84,220 Z' fill='none' stroke='%23D96B43' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cline x1='44' y1='212' x2='80' y2='212' stroke='%23E6C98F' stroke-width='1.2'/%3E%3Cline x1='47' y1='205' x2='77' y2='205' stroke='%23E6C98F' stroke-width='0.8'/%3E%3Ccircle cx='62' cy='184' r='3' fill='%23D96B43'/%3E%3Crect x='193' y='190' width='26' height='22' rx='3' fill='none' stroke='%234A7A5D' stroke-width='1.5'/%3E%3Cpath d='M219,195 Q228,195 228,201 Q228,207 219,207' fill='none' stroke='%234A7A5D' stroke-width='1.3'/%3E%3Cellipse cx='206' cy='213' rx='18' ry='4' fill='none' stroke='%234A7A5D' stroke-width='1'/%3E%3Cpath d='M200,187 Q197,182 200,177' fill='none' stroke='%234A7A5D' stroke-width='1.2' stroke-linecap='round'/%3E%3Cpath d='M206,185 Q203,180 206,175' fill='none' stroke='%234A7A5D' stroke-width='1.2' stroke-linecap='round'/%3E%3Cpath d='M212,187 Q209,182 212,177' fill='none' stroke='%234A7A5D' stroke-width='1.2' stroke-linecap='round'/%3E%3Ccircle cx='118' cy='220' r='3' fill='%23D96B43'/%3E%3Ccircle cx='126' cy='215' r='2.5' fill='%23D96B43'/%3E%3Ccircle cx='134' cy='221' r='2' fill='%23D96B43'/%3E%3Ccircle cx='122' cy='228' r='2' fill='%23E6C98F'/%3E%3Ccircle cx='130' cy='226' r='1.5' fill='%23E6C98F'/%3E%3Ccircle cx='138' cy='215' r='1.5' fill='%23E6C98F'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 240px 240px;
         }
 
-        /* --- BASE STYLES --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: var(--font-body);
             background-color: var(--background);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg opacity='0.13'%3E%3Cellipse cx='22' cy='32' rx='4' ry='13' transform='rotate(-20 22 32)' fill='%23365C46'/%3E%3Cellipse cx='22' cy='32' rx='4' ry='13' transform='rotate(20 22 32)' fill='%23365C46'/%3E%3Cellipse cx='32' cy='22' rx='3' ry='10' transform='rotate(-55 32 22)' fill='%23365C46'/%3E%3Cline x1='22' y1='40' x2='22' y2='58' stroke='%23365C46' stroke-width='1.5' stroke-linecap='round'/%3E%3Cellipse cx='185' cy='52' rx='20' ry='6' fill='%23E6C98F'/%3E%3Cellipse cx='185' cy='44' rx='22' ry='5' fill='%23365C46'/%3E%3Cpath d='M165,42 Q165,28 185,28 Q205,28 205,42 Z' fill='%23E6C98F'/%3E%3Ccircle cx='108' cy='52' r='22' fill='none' stroke='%23365C46' stroke-width='1.2'/%3E%3Ccircle cx='108' cy='52' r='14' fill='none' stroke='%23365C46' stroke-width='0.7'/%3E%3Ccircle cx='108' cy='52' r='4' fill='%23E6C98F'/%3E%3Cpath d='M15,148 Q12,172 40,178 Q68,172 65,148 Z' fill='none' stroke='%23365C46' stroke-width='1.5'/%3E%3Cellipse cx='40' cy='148' rx='25' ry='5' fill='none' stroke='%23365C46' stroke-width='1'/%3E%3Cpath d='M22,158 Q27,154 32,158 Q37,162 42,158 Q47,154 52,158 Q57,162 60,158' fill='none' stroke='%23B44F2A' stroke-width='1.3' stroke-linecap='round'/%3E%3Cpath d='M24,165 Q30,161 36,165 Q42,169 48,165 Q54,161 58,165' fill='none' stroke='%23B44F2A' stroke-width='1.1' stroke-linecap='round'/%3E%3Cpath d='M185,108 L180,142 L218,142 L213,108 Z' fill='none' stroke='%23365C46' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cellipse cx='199' cy='108' rx='14' ry='3.5' fill='none' stroke='%23365C46' stroke-width='1'/%3E%3Cline x1='212' y1='94' x2='212' y2='132' stroke='%23B44F2A' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='190' cy='134' r='2.5' fill='%23365C46'/%3E%3Ccircle cx='199' cy='136' r='2.5' fill='%23365C46'/%3E%3Ccircle cx='208' cy='134' r='2' fill='%23365C46'/%3E%3Cpath d='M62,186 L40,220 L84,220 Z' fill='none' stroke='%23B44F2A' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cline x1='44' y1='212' x2='80' y2='212' stroke='%23E6C98F' stroke-width='1.2'/%3E%3Cline x1='47' y1='205' x2='77' y2='205' stroke='%23E6C98F' stroke-width='0.8'/%3E%3Ccircle cx='62' cy='184' r='3' fill='%23B44F2A'/%3E%3Crect x='193' y='190' width='26' height='22' rx='3' fill='none' stroke='%23365C46' stroke-width='1.5'/%3E%3Cpath d='M219,195 Q228,195 228,201 Q228,207 219,207' fill='none' stroke='%23365C46' stroke-width='1.3'/%3E%3Cellipse cx='206' cy='213' rx='18' ry='4' fill='none' stroke='%23365C46' stroke-width='1'/%3E%3Cpath d='M200,187 Q197,182 200,177' fill='none' stroke='%23365C46' stroke-width='1.2' stroke-linecap='round'/%3E%3Cpath d='M206,185 Q203,180 206,175' fill='none' stroke='%23365C46' stroke-width='1.2' stroke-linecap='round'/%3E%3Cpath d='M212,187 Q209,182 212,177' fill='none' stroke='%23365C46' stroke-width='1.2' stroke-linecap='round'/%3E%3Ccircle cx='118' cy='220' r='3' fill='%23B44F2A'/%3E%3Ccircle cx='126' cy='215' r='2.5' fill='%23B44F2A'/%3E%3Ccircle cx='134' cy='221' r='2' fill='%23B44F2A'/%3E%3Ccircle cx='122' cy='228' r='2' fill='%23E6C98F'/%3E%3Ccircle cx='130' cy='226' r='1.5' fill='%23E6C98F'/%3E%3Ccircle cx='138' cy='215' r='1.5' fill='%23E6C98F'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 240px 240px;
             color: var(--text-main);
             line-height: 1.5;
             transition: var(--transition);
         }
-        
-        /* --- INTERFACE LAYOUT --- */
+        a { color: inherit; }
+        :focus-visible { outline: 2.5px solid var(--accent); outline-offset: 2px; }
+
+        /* ============================================================
+           LIVE STATUS BOARD — the signature element.
+           Reads like a hospitality front-desk / departure board:
+           instantly tells staff whether the kitchen can take orders,
+           without ever hard-blocking them from queuing one anyway.
+        ============================================================ */
+        .status-board {
+            max-width: 1600px;
+            margin: 0 auto 1rem;
+            padding: 0.6rem 1.5rem;
+            background: linear-gradient(90deg, var(--primary-deep), var(--primary));
+            color: #F5F3EF;
+            border-radius: var(--radius-md);
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.25rem;
+            box-shadow: var(--shadow);
+        }
+        .status-board .seg { display: flex; align-items: center; gap: 0.5rem; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .status-dot.open { background: #6FCF97; box-shadow: 0 0 0 0 rgba(111,207,151,0.6); animation: pulse-dot 2.2s infinite; }
+        .status-dot.closed { background: #E57373; }
+        @keyframes pulse-dot {
+            0% { box-shadow: 0 0 0 0 rgba(111,207,151,0.55); }
+            70% { box-shadow: 0 0 0 7px rgba(111,207,151,0); }
+            100% { box-shadow: 0 0 0 0 rgba(111,207,151,0); }
+        }
+        .veg-mark { width: 12px; height: 12px; border: 1.5px solid #8FD19E; border-radius: 2px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .veg-mark::after { content: ''; width: 5px; height: 5px; background: #8FD19E; border-radius: 50%; }
+        .status-board .divider { opacity: 0.35; }
+
+        /* ============================================================
+           LAYOUT
+        ============================================================ */
         .app-container {
             display: grid;
             grid-template-columns: 1fr 420px;
@@ -63,17 +122,11 @@
             max-width: 1600px;
             margin: 0 auto;
         }
-
-        .main-content {
-            padding: 2rem;
-            max-height: 100vh;
-            overflow-y: auto;
-        }
-
+        .main-content { padding: 0 2rem 2rem; max-height: 100vh; overflow-y: auto; }
         .sidebar {
             background-color: var(--surface);
             border-left: 1px solid var(--border);
-            padding: 2rem;
+            padding: 1.75rem;
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
@@ -84,166 +137,237 @@
             overflow-y: auto;
         }
 
-        /* --- RESTAURANT HEADER --- */
         .pos-header {
             display: grid;
-            grid-template-columns: 120px 1fr auto;
+            grid-template-columns: 100px 1fr auto;
             align-items: center;
             background: var(--surface);
             padding: 1rem 1.5rem;
             border-radius: var(--radius-lg);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
             gap: 1.5rem;
         }
-        .header-left {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .brand-logo {
-            width: auto;
-            height: auto;
-            max-width: 100px;
-            max-height: 85px;
-            object-fit: contain;
-            border-radius: var(--radius-md);
+        .header-left { display: flex; align-items: center; justify-content: center; }
+        .brand-logo { width: auto; height: auto; max-width: 90px; max-height: 78px; object-fit: contain; border-radius: var(--radius-md); }
+        .brand-logo-fallback {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: var(--primary); color: var(--secondary);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-heading); font-weight: 700; font-size: 1.4rem;
         }
         .header-center { text-align: center; }
-        .header-center h1 { font-family: var(--font-heading); color: var(--primary); font-size: 1.8rem; letter-spacing: 0.5px; }
-        .header-center p { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; }
-        .header-right { text-align: right; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6; }
+        .header-center h1 { font-family: var(--font-heading); color: var(--heading-color); font-size: 1.75rem; letter-spacing: 0.5px; transition: color 0.3s ease; }
+        .header-center p { font-size: 0.83rem; color: var(--text-muted); margin-top: 0.25rem; }
+        .header-right { text-align: right; font-family: var(--font-mono); font-size: 0.83rem; line-height: 1.6; }
+        .header-right .ready-inline { color: var(--accent); font-weight: 600; }
 
         /* --- FILTERS & CONTROLS --- */
         .controls-row {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            align-items: center;
-            flex-wrap: wrap;
+            display: flex; gap: 1rem; margin: 1.5rem 0 1.5rem;
+            align-items: center; flex-wrap: wrap;
+            position: sticky; top: 0; z-index: 5;
+            background: var(--background);
+            padding: 0.4rem 0;
         }
         .search-wrapper { flex: 1; position: relative; min-width: 250px; }
         .search-input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--text-main);
-            font-size: 0.95rem;
+            width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border-radius: var(--radius-md); border: 1px solid var(--border);
+            background: var(--surface); color: var(--text-main); font-size: 0.95rem;
         }
-        .search-wrapper::before {
-            content: "🔍"; position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%);
+        .search-wrapper::before { content: "🔍"; position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); }
+        .search-shortcut-hint {
+            position: absolute; right: 0.6rem; top: 50%; transform: translateY(-50%);
+            font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-muted);
+            border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px;
+            pointer-events: none;
         }
         .category-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .pill {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--text-main);
-            cursor: pointer;
-            border-radius: 20px;
-            font-family: var(--font-btn);
-            font-size: 0.85rem;
-            transition: var(--transition);
+            padding: 0.5rem 1rem; border: 1px solid var(--border); background: var(--surface);
+            color: var(--text-main); cursor: pointer; border-radius: 20px;
+            font-family: var(--font-btn); font-size: 0.85rem; transition: var(--transition);
         }
-        .pill.active, .pill:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
+        .pill.active, .pill:hover { background: var(--primary); color: white; border-color: var(--primary); }
         .theme-toggle {
-            background: none; border: 1px solid var(--border); font-size: 1.2rem;
-            cursor: pointer; padding: 0.5rem; border-radius: var(--radius-md);
+            background: var(--surface); border: 1.5px solid var(--primary); cursor: pointer;
+            padding: 0.45rem 0.85rem; border-radius: var(--radius-md); font-family: var(--font-btn);
+            font-size: 0.8rem; font-weight: 600; color: var(--primary); display: flex;
+            align-items: center; gap: 0.4rem; white-space: nowrap; transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(54, 92, 70, 0.22), 0 1px 3px rgba(0,0,0,0.08);
         }
+        .theme-toggle:hover { background: var(--primary); color: white; box-shadow: 0 4px 16px rgba(54, 92, 70, 0.42); transform: translateY(-1px); }
+        [data-theme="dark"] .theme-toggle { box-shadow: 0 2px 12px rgba(74, 122, 93, 0.5), 0 1px 4px rgba(0,0,0,0.35); }
+        [data-theme="dark"] .theme-toggle:hover { box-shadow: 0 4px 20px rgba(74, 122, 93, 0.68); }
+        #theme-icon { font-size: 1rem; line-height: 1; }
 
         /* --- MENU GRID --- */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
         .category-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 1.25rem;
-            box-shadow: var(--shadow);
+            background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--secondary);
+            border-radius: var(--radius-lg); padding: 1.25rem; box-shadow: var(--shadow); transition: var(--transition);
         }
+        .category-card:hover { box-shadow: 0 6px 20px rgba(54, 92, 70, 0.1); }
         .category-title {
-            font-family: var(--font-heading);
-            color: var(--primary);
-            border-bottom: 2px solid var(--secondary);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+            font-family: var(--font-heading); color: var(--heading-color); border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.15rem;
         }
-        .menu-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px dashed var(--border);
-        }
+        .menu-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px dashed var(--border); }
         .menu-item:last-child { border-bottom: none; }
         .item-info h4 { font-size: 0.95rem; font-weight: 500; }
-        .item-info p { color: var(--accent); font-weight: 600; font-size: 0.9rem; margin-top: 0.2rem;}
-        
-        /* QUANTITY CONTROLS */
+        .item-info p { color: var(--accent); font-weight: 600; font-size: 0.9rem; margin-top: 0.2rem; }
+        .badge-popular {
+            background: var(--accent); color: #fff; font-size: 0.6rem; font-weight: 700;
+            padding: 1px 6px; border-radius: 8px; margin-left: 6px; letter-spacing: 0.02em;
+            vertical-align: middle; white-space: nowrap;
+        }
+
         .qty-controls { display: flex; align-items: center; gap: 0.5rem; }
         .qty-btn {
-            background: var(--border); border: none; width: 28px; height: 28px;
-            border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 1rem;
+            background: var(--border); border: none; width: 30px; height: 30px;
+            border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem;
             display: flex; align-items: center; justify-content: center; transition: var(--transition);
         }
         .qty-btn:hover { background: var(--secondary); }
+        .qty-btn:active { transform: scale(0.85); }
         .qty-input {
-            width: 35px; text-align: center; border: 1px solid var(--border);
-            background: transparent; color: var(--text-main); font-family: var(--font-mono);
+            width: 38px; text-align: center; border: 1px solid var(--border);
+            border-radius: 4px; background: transparent; color: var(--text-main); font-family: var(--font-mono);
+            padding: 0.3rem 0;
         }
 
-        /* --- SIDEBAR CUSTOMER FORM --- */
-        .section-title {
-            font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;
-            color: var(--primary); font-family: var(--font-btn); border-bottom: 1px solid var(--border);
-            padding-bottom: 0.25rem; margin-bottom: 0.75rem;
+        .menu-item.in-cart {
+            background: rgba(54, 92, 70, 0.07); border-radius: var(--radius-md);
+            margin: 0 -0.5rem; padding-left: 0.5rem; padding-right: 0.5rem;
+            border-bottom-color: rgba(54, 92, 70, 0.18);
         }
-        .form-vertical { display: flex; flex-direction: column; gap: 0.85rem; }
+        .menu-item.in-cart .item-info h4 { color: var(--primary); font-weight: 600; }
+        .menu-item.in-cart .qty-btn { background: var(--primary); color: white; }
+
+        .pill-badge {
+            display: inline-block; background: var(--secondary); color: #2C2A29; font-size: 0.68rem;
+            font-weight: 700; border-radius: 10px; padding: 1px 6px; margin-left: 4px;
+            vertical-align: middle; line-height: 1.5;
+        }
+        .pill.active .pill-badge { background: rgba(255,255,255,0.3); color: white; }
+
+        .empty-results { text-align: center; padding: 3rem 1rem; color: var(--text-muted); grid-column: 1 / -1; }
+        .empty-results .empty-icon { font-size: 2.2rem; display: block; margin-bottom: 0.6rem; }
+
+        .cart-empty-state { text-align: center; padding: 1.25rem 0 0.5rem; color: var(--text-muted); font-size: 0.82rem; }
+        .cart-empty-state .empty-icon { font-size: 1.8rem; display: block; margin-bottom: 0.3rem; }
+
+        /* --- SIDEBAR: NUMBERED WORKFLOW STEPS --- */
+        .step-title {
+            display: flex; align-items: center; gap: 0.6rem; font-size: 0.92rem; text-transform: uppercase;
+            letter-spacing: 0.05em; color: var(--primary); font-family: var(--font-btn);
+            border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; margin-bottom: 0.85rem;
+        }
+        .step-num {
+            width: 21px; height: 21px; border-radius: 50%; background: var(--primary); color: #fff;
+            font-family: var(--font-mono); font-size: 0.72rem; display: flex; align-items: center;
+            justify-content: center; flex-shrink: 0;
+        }
+        [data-theme="dark"] .step-num { background: var(--heading-color); color: #1E1D1C; }
+
+        .segmented { display: flex; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+        .segmented button {
+            flex: 1; padding: 0.6rem; border: none; background: var(--surface); color: var(--text-main);
+            font-family: var(--font-btn); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: var(--transition);
+        }
+        .segmented button:not(:last-child) { border-right: 1px solid var(--border); }
+        .segmented button.active { background: var(--primary); color: #fff; }
+
+        .pickup-note {
+            font-size: 0.78rem; color: var(--text-muted); background: rgba(180, 79, 42, 0.08);
+            border: 1px dashed var(--accent); border-radius: var(--radius-md); padding: 0.6rem 0.75rem;
+            margin-top: 0.75rem; display: none;
+        }
+        .pickup-note.visible { display: block; }
+        .address-fields.collapsed { display: none; }
+
+        .form-vertical { display: flex; flex-direction: column; gap: 0.85rem; margin-top: 0.9rem; }
         .form-group { display: flex; flex-direction: column; gap: 0.35rem; width: 100%; }
         .form-group label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+        .form-group .field-hint { font-size: 0.68rem; color: var(--text-muted); font-weight: 400; text-transform: none; letter-spacing: 0; }
         .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 0.65rem 0.75rem; 
-            border: 1px solid var(--border); 
-            border-radius: var(--radius-md);
-            background: var(--background); 
-            color: var(--text-main); 
-            font-size: 0.9rem;
-            font-family: var(--font-body);
+            width: 100%; padding: 0.65rem 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-md);
+            background: var(--background); color: var(--text-main); font-size: 0.9rem; font-family: var(--font-body);
             transition: var(--transition);
         }
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: var(--surface);
-        }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); background: var(--surface); }
+        .form-group input:invalid:not(:placeholder-shown) { border-color: var(--danger); }
 
-        /* --- FLOATING ORDER SUMMARY --- */
-        .summary-box { display: flex; flex-direction: column; margin-top: 0.5rem; }
-        .cart-items-list { list-style: none; margin-bottom: 1rem; max-height: 180px; overflow-y: auto; }
-        .cart-item-row {
-            display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.4rem 0;
-            border-bottom: 1px solid var(--border);
+        .summary-box { display: flex; flex-direction: column; }
+        .cart-items-list { list-style: none; margin-bottom: 1rem; max-height: 160px; overflow-y: auto; }
+        .cart-item-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
+
+        .coupon-row { display: flex; gap: 0.5rem; margin: 0.75rem 0 0.25rem; }
+        .coupon-row input { flex: 1; text-transform: uppercase; }
+        .btn-apply {
+            padding: 0 0.9rem; border-radius: var(--radius-md); border: 1.5px solid var(--primary);
+            background: transparent; color: var(--primary); font-family: var(--font-btn); font-weight: 700;
+            font-size: 0.78rem; cursor: pointer; transition: var(--transition); white-space: nowrap;
         }
-        .totals-table { width: 100%; border-collapse: collapse; margin-top: auto; font-size: 0.9rem; }
+        .btn-apply:hover { background: var(--primary); color: #fff; }
+        .coupon-feedback { font-size: 0.72rem; min-height: 1rem; }
+        .coupon-feedback.error { color: var(--danger); }
+        .coupon-feedback.success { color: var(--success); }
+
+        .totals-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 0.9rem; }
         .totals-table td { padding: 0.4rem 0; }
-        .totals-table tr.grand-total {
-            font-size: 1.15rem; font-weight: 700; color: var(--primary); border-top: 2px solid var(--primary);
+        .totals-table tr.row-discount { color: var(--success); display: none; }
+        .totals-table tr.row-discount.visible { display: table-row; }
+        .totals-table tr.grand-total { font-size: 1.15rem; font-weight: 700; color: var(--primary); border-top: 2px solid var(--primary); }
+        .totals-table tr.grand-total td { padding-top: 0.65rem; letter-spacing: 0.01em; }
+
+        .ready-chip {
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(54, 92, 70, 0.07); border: 1px dashed var(--primary); border-radius: var(--radius-md);
+            padding: 0.55rem 0.75rem; font-size: 0.8rem; margin-top: 0.85rem;
         }
+        [data-theme="dark"] .ready-chip { background: rgba(74, 122, 93, 0.15); }
+        .ready-chip strong { font-family: var(--font-mono); color: var(--accent); }
+
+        .delivery-fee-input {
+            width: 72px; text-align: right; border: 1px solid var(--border); border-radius: 4px;
+            background: var(--background); color: var(--text-main); font-family: var(--font-mono);
+            font-size: 0.85rem; padding: 2px 6px; transition: var(--transition);
+        }
+        .delivery-fee-input:disabled { opacity: 0.4; }
+
+        /* --- QR / PAYMENT --- */
+        .qr-pay-section { }
+        .qr-wrapper {
+            position: relative; border: 1px solid var(--border); border-radius: var(--radius-lg);
+            padding: 1rem; text-align: center; background: var(--background);
+        }
+        .qr-image { max-width: 100%; max-height: 180px; border-radius: var(--radius-md); }
+        .qr-placeholder-box {
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 140px; color: var(--text-muted); font-size: 0.8rem; line-height: 1.6;
+        }
+        .qr-amount-tag {
+            margin-top: 0.75rem; display: inline-flex; flex-direction: column; align-items: center;
+            background: var(--primary); color: #fff; padding: 0.4rem 1rem; border-radius: var(--radius-md);
+        }
+        .qr-amount-tag.zero { background: var(--border); color: var(--text-muted); }
+        .qr-amount-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.85; }
+        .qr-amount-value { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; }
+        .qr-hint { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.5rem; line-height: 1.6; text-align: center; }
+
+        /* --- SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
         /* --- BUTTON SYSTEM --- */
-        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1rem; }
+        .btn-group { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem; }
+        .btn-row { display: flex; gap: 0.6rem; }
+        .btn-row .btn { flex: 1; }
         .btn {
             padding: 0.75rem; border: none; border-radius: var(--radius-md); cursor: pointer;
             font-family: var(--font-btn); font-weight: 600; font-size: 0.85rem; text-align: center;
@@ -251,14 +375,60 @@
         }
         .btn-primary { background: var(--primary); color: white; }
         .btn-primary:hover { background: #284433; }
-        .btn-accent { background: var(--accent); color: white; }
         .btn-secondary { background: var(--border); color: var(--text-main); }
-        .btn-danger { background: var(--danger); color: white; }
-        .btn.full-width { grid-column: span 2; }
+        .btn-secondary:hover { background: var(--secondary); }
+        .btn-danger { background: transparent; color: var(--danger); border: 1.5px solid var(--danger); }
+        .btn-danger:hover { background: var(--danger); color: #fff; }
+        .btn-whatsapp {
+            background: #25D366; color: white; display: flex; align-items: center; justify-content: center;
+            gap: 0.55rem; font-size: 0.95rem; padding: 0.9rem 1rem; letter-spacing: 0.01em;
+        }
+        .btn-whatsapp:hover { background: #128C7E; }
 
-        /* --- PRINT RECEIPT STYLING (HIDDEN BY DEFAULT) --- */
+        /* --- TOASTS --- */
+        .toast-container { position: fixed; bottom: 1.25rem; right: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; z-index: 9999; }
+        .toast {
+            background: var(--primary); color: #fff; padding: 0.7rem 1rem; border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lift); font-family: var(--font-btn); font-size: 0.83rem;
+            display: flex; align-items: center; gap: 0.5rem; animation: toast-in 0.25s ease-out; max-width: 300px;
+        }
+        .toast.error { background: var(--danger); }
+        .toast.success { background: var(--success); }
+        .toast.info { background: var(--text-main); }
+        @keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- MODAL (replaces jarring native alert/confirm) --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(20, 20, 18, 0.5); display: flex;
+            align-items: center; justify-content: center; z-index: 10000; padding: 1rem;
+        }
+        .modal-overlay.hidden { display: none; }
+        .modal-box {
+            background: var(--surface); border-radius: var(--radius-lg); padding: 1.6rem;
+            max-width: 380px; width: 100%; box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+            animation: toast-in 0.2s ease-out;
+        }
+        .modal-box h3 { font-family: var(--font-heading); color: var(--heading-color); margin-bottom: 0.6rem; font-size: 1.2rem; }
+        .modal-box p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.3rem; white-space: pre-line; }
+        .modal-actions { display: flex; gap: 0.6rem; justify-content: flex-end; }
+        .modal-actions .btn { padding: 0.6rem 1.1rem; }
+
+        /* --- MOBILE STICKY CART BAR --- */
+        .mobile-cart-bar {
+            display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--primary);
+            color: #fff; padding: 0.85rem 1.1rem; align-items: center; justify-content: space-between;
+            z-index: 9998; box-shadow: 0 -6px 18px rgba(0,0,0,0.18); font-family: var(--font-btn); cursor: pointer;
+        }
+        .mobile-cart-bar.visible { display: flex; }
+        .mobile-cart-bar .mcb-left { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; }
+        .mobile-cart-bar .mcb-count {
+            background: rgba(255,255,255,0.25); border-radius: 50%; width: 24px; height: 24px;
+            display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.75rem;
+        }
+        .mobile-cart-bar strong { font-family: var(--font-mono); }
+
+        /* --- PRINT RECEIPT --- */
         #print-receipt-window { display: none; }
-
         @media print {
             body * { display: none !important; }
             #print-receipt-window, #print-receipt-window * { display: block !important; }
@@ -277,83 +447,116 @@
             .qr-placeholder { text-align: center; margin-top: 4mm; font-size: 9px; }
         }
 
-        /* Responsive Breakpoint */
         @media (max-width: 1024px) {
             .app-container { grid-template-columns: 1fr; }
             .sidebar { height: auto; position: relative; border-left: none; border-top: 1px solid var(--border); }
-            .main-content { max-height: none; overflow-y: visible; }
+            .main-content { max-height: none; overflow-y: visible; padding-bottom: 5rem; }
+            .controls-row { position: static; }
+            .search-shortcut-hint { display: none; }
+            body { padding-bottom: 0; }
+        }
+        @media (max-width: 560px) {
+            .status-board { font-size: 0.7rem; padding: 0.5rem 1rem; }
+            .btn-row { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
+    <div class="status-board" id="status-board" role="status" aria-live="polite">
+        <div class="seg"><span class="status-dot" id="kitchen-dot"></span><span id="kitchen-status-text">Checking kitchen status…</span></div>
+        <span class="divider">•</span>
+        <div class="seg"><span class="veg-mark"></span><span>100% Pure Vegetarian Kitchen</span></div>
+        <span class="divider">•</span>
+        <div class="seg"><span>⏱ Serving Hours: 06:00 – 22:00</span></div>
+    </div>
+
     <div class="app-container">
-        
+
         <main class="main-content">
-            
+
             <header class="pos-header">
                 <div class="header-left">
-                    <img src="Amruthadharanam logo.jpg" alt="Amruthadharanam Logo" class="brand-logo">
+                    <img src="Amruthadharanam logo.jpg" alt="Amruthadharanam Logo" class="brand-logo"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="brand-logo-fallback" style="display:none;">AD</div>
                 </div>
                 <div class="header-center">
                     <h1>AMRUTHADHARANAM</h1>
-                    <p>Freshly Crafted Snacks & Refreshing Beverages | 6:00 AM – 10:00 PM</p>
+                    <p>Freshly Crafted Snacks &amp; Refreshing Beverages | 6:00 AM – 10:00 PM</p>
                 </div>
                 <div class="header-right">
-                    <div>Order No: <span id="lbl-order-no">#AD-20260706-0000</span></div>
-                    <div id="lbl-date-time">06-Jul-2026 14:12</div>
+                    <div>Order No: <span id="lbl-order-no">#AD-20260707-0000</span></div>
+                    <div id="lbl-date-time">07-Jul-2026 09:36</div>
+                    <div>Ready in <span class="ready-inline" id="header-ready-time">~20 min</span></div>
                 </div>
             </header>
 
             <div class="controls-row">
                 <div class="search-wrapper">
-                    <input type="text" id="txt-search" class="search-input" placeholder="Search menu items (e.g., Nutella, Maggi, Pasta)..." aria-label="Search menu">
+                    <input type="text" id="txt-search" class="search-input" placeholder="Search menu items (e.g., Cake, Pastry, Idli, Maggi, Pasta)..." aria-label="Search menu">
+                    <span class="search-shortcut-hint">/</span>
                 </div>
-                <div class="category-pills" id="category-pills-container">
-                    </div>
-                <button id="btn-theme" class="theme-toggle" title="Toggle Dark/Light Mode" aria-label="Toggle dark mode">🌙</button>
+                <div class="category-pills" id="category-pills-container"></div>
+                <button id="btn-theme" class="theme-toggle" title="Toggle Dark/Light Mode" aria-label="Toggle dark mode"><span id="theme-icon">🌙</span><span id="theme-label">Dark Mode</span></button>
             </div>
 
-            <div class="menu-grid" id="menu-container">
-                </div>
+            <div class="menu-grid" id="menu-container"></div>
         </main>
 
         <aside class="sidebar">
-            
+
             <section>
-                <h3 class="section-title">Customer & Delivery Details</h3>
-                <form id="form-customer" class="form-vertical">
+                <h3 class="step-title"><span class="step-num">1</span> Order Type</h3>
+                <div class="segmented" id="order-type-toggle" role="group" aria-label="Order type">
+                    <button type="button" class="active" data-type="Delivery">🛵 Delivery</button>
+                    <button type="button" data-type="Pickup">🏠 Self Pickup</button>
+                </div>
+                <p class="pickup-note" id="pickup-note">Customer will collect at the counter — address fields are hidden and delivery fee is waived.</p>
+            </section>
+
+            <section>
+                <h3 class="step-title"><span class="step-num">2</span> Your Details</h3>
+                <form id="form-customer" class="form-vertical" style="margin-top:0;">
                     <div class="form-group">
                         <label for="cust-name">Customer Name *</label>
                         <input type="text" id="cust-name" required placeholder="Enter customer name">
                     </div>
                     <div class="form-group">
-                        <label for="cust-phone">Phone Number *</label>
-                        <input type="tel" id="cust-phone" required placeholder="Enter 10-digit number">
+                        <label for="cust-phone">Phone Number * <span class="field-hint">— 10 digits, used for WhatsApp</span></label>
+                        <input type="tel" id="cust-phone" required pattern="[0-9]{10}" maxlength="10" placeholder="Enter 10-digit number">
+                    </div>
+                    <div class="address-fields" id="address-fields">
+                        <div class="form-group">
+                            <label for="cust-door">Door / Flat No *</label>
+                            <input type="text" id="cust-door" required placeholder="e.g., Door G-4 / Flat B404">
+                        </div>
+                        <div class="form-group">
+                            <label for="cust-apart">Apartment / Villa</label>
+                            <input type="text" id="cust-apart" placeholder="e.g., Sidharth Dhakshin Apts">
+                        </div>
+                        <div class="form-group">
+                            <label for="cust-street">Street &amp; Landmark</label>
+                            <input type="text" id="cust-street" placeholder="e.g., Urappakkam, near Central Park">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="cust-door">Door / Flat No *</label>
-                        <input type="text" id="cust-door" required placeholder="e.g., Door G-4 / Flat B404">
-                    </div>
-                    <div class="form-group">
-                        <label for="cust-apart">Apartment / Villa</label>
-                        <input type="text" id="cust-apart" placeholder="e.g., Sidharth Dhakshin Apts">
-                    </div>
-                    <div class="form-group">
-                        <label for="cust-street">Street & Landmark</label>
-                        <input type="text" id="cust-street" placeholder="e.g., Urappakkam, near Central Park">
-                    </div>
-                    <div class="form-group">
-                        <label for="cust-notes">Delivery Notes</label>
-                        <textarea id="cust-notes" rows="2" style="resize:none;" placeholder="Special packaging or route instructions..."></textarea>
+                        <label for="cust-notes">Notes for Kitchen / Delivery</label>
+                        <textarea id="cust-notes" rows="2" style="resize:none;" placeholder="Special packaging, spice level, or route instructions..."></textarea>
                     </div>
                 </form>
             </section>
 
             <section class="summary-box">
-                <h3 class="section-title">Order Summary</h3>
-                <ul class="cart-items-list" id="cart-items-preview">
-                    </ul>
+                <h3 class="step-title"><span class="step-num">3</span> Order Summary</h3>
+                <ul class="cart-items-list" id="cart-items-preview" aria-live="polite"></ul>
+
+                <div class="coupon-row">
+                    <input type="text" id="input-coupon" placeholder="Promo code" aria-label="Promo code">
+                    <button type="button" class="btn-apply" id="btn-apply-coupon">Apply</button>
+                </div>
+                <div class="coupon-feedback" id="coupon-feedback"></div>
+
                 <table class="totals-table">
                     <tr>
                         <td>Total Unique Items</td>
@@ -367,34 +570,95 @@
                         <td>Subtotal</td>
                         <td class="text-right" id="summary-subtotal">₹0.00</td>
                     </tr>
-                    <tr>
-                        <td>Delivery Fee</td>
-                        <td class="text-right" id="summary-delivery">₹0.00</td>
+                    <tr class="row-discount" id="row-discount">
+                        <td>Discount <span id="discount-code-label"></span></td>
+                        <td class="text-right" id="summary-discount">−₹0.00</td>
+                    </tr>
+                    <tr id="row-delivery-fee">
+                        <td>Delivery Fee (₹)</td>
+                        <td class="text-right">
+                            <input type="number" id="input-delivery-fee" min="0" value="0" step="5" class="delivery-fee-input" aria-label="Set delivery fee in rupees">
+                        </td>
                     </tr>
                     <tr class="grand-total">
                         <td>Grand Total</td>
                         <td class="text-right" id="summary-grand-total">₹0.00</td>
                     </tr>
                 </table>
+
+                <div class="ready-chip">
+                    <span>⏱ Estimated Ready Time</span>
+                    <strong id="ready-time-value">~15 min</strong>
+                </div>
+            </section>
+
+            <section class="qr-pay-section">
+                <h3 class="step-title"><span class="step-num">4</span> Payment &amp; Confirm</h3>
+
+                <div class="segmented" id="payment-status-toggle" role="group" aria-label="Payment status" style="margin-bottom:0.9rem;">
+                    <button type="button" class="active" data-status="Pending">🕒 I'll Pay via UPI</button>
+                    <button type="button" data-status="Paid">✅ I've Already Paid</button>
+                </div>
+
+                <div class="qr-wrapper">
+                    <img src="qr.jpeg" alt="UPI Payment QR Code" class="qr-image"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="qr-placeholder-box">
+                        📲 Add your QR image<br>named <strong>qr.jpeg</strong><br>to this folder
+                    </div>
+                    <div class="qr-amount-tag zero" id="qr-amount-tag">
+                        <span class="qr-amount-label">Amount Due</span>
+                        <span class="qr-amount-value" id="qr-amount-display">₹0.00</span>
+                    </div>
+                </div>
+                <p class="qr-hint">PhonePe &nbsp;•&nbsp; GPay &nbsp;•&nbsp; Paytm &nbsp;•&nbsp; Any UPI App</p>
             </section>
 
             <div class="btn-group">
-                <button id="trigger-print" class="btn btn-primary">🖨️ Print Receipt</button>
-                <button id="trigger-whatsapp" class="btn btn-accent">💬 WhatsApp Order</button>
-                <button id="trigger-csv" class="btn btn-secondary">📥 Export CSV</button>
-                <button id="trigger-reset" class="btn btn-danger">🔄 Reset Terminal</button>
+                <button id="trigger-whatsapp" class="btn btn-whatsapp">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="white" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    <span id="whatsapp-btn-label">Send My Order via WhatsApp</span>
+                </button>
+                <div class="btn-row">
+                    <button id="trigger-print" class="btn btn-secondary">🖨️ Print</button>
+                    <button id="trigger-copy" class="btn btn-secondary">📋 Copy Order Text</button>
+                </div>
+                <button id="trigger-reset" class="btn btn-danger">🔄 Reset Order</button>
             </div>
         </aside>
+    </div>
+
+    <div class="mobile-cart-bar" id="mobile-cart-bar">
+        <div class="mcb-left">
+            <span class="mcb-count" id="mobile-cart-count">0</span>
+            <span>View order</span>
+        </div>
+        <strong id="mobile-cart-total">₹0.00</strong>
+    </div>
+
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+    <div class="modal-overlay hidden" id="modal-overlay">
+        <div class="modal-box" role="dialog" aria-modal="true">
+            <h3 id="modal-title">Title</h3>
+            <p id="modal-message">Message</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
+                <button class="btn btn-primary" id="modal-confirm-btn">OK</button>
+            </div>
+        </div>
     </div>
 
     <div id="print-receipt-window">
         <div class="receipt-header">
             <h2>AMRUTHADHARANAM</h2>
-            <p>Freshly Crafted Snacks & Beverages</p>
+            <p>Freshly Crafted Snacks &amp; Beverages</p>
         </div>
         <div class="receipt-divider"></div>
         <div class="receipt-row"><span>Order No:</span><span id="print-order-no"></span></div>
         <div class="receipt-row"><span>Date/Time:</span><span id="print-datetime"></span></div>
+        <div class="receipt-row"><span>Order Type:</span><span id="print-order-type"></span></div>
+        <div class="receipt-row"><span>Est. Ready In:</span><span id="print-ready-time"></span></div>
         <div class="receipt-divider"></div>
         <div class="receipt-row"><strong>Customer Details:</strong></div>
         <div id="print-cust-info" style="font-size: 11px; margin-bottom: 2mm;"></div>
@@ -407,11 +671,11 @@
                     <th class="text-right" style="width:15mm;">Amt</th>
                 </tr>
             </thead>
-            <tbody id="print-items-body">
-                </tbody>
+            <tbody id="print-items-body"></tbody>
         </table>
         <div class="receipt-divider"></div>
         <div class="receipt-row"><span>Total Items Qty:</span><span id="print-total-qty"></span></div>
+        <div class="receipt-row" id="print-discount-row" style="display:none;"><span>Discount:</span><span id="print-discount"></span></div>
         <div class="receipt-row"><span>Delivery Fee:</span><span id="print-delivery"></span></div>
         <div class="receipt-row" style="font-size: 14px; font-weight: bold;"><span>Grand Total:</span><span id="print-grand-total"></span></div>
         <div class="receipt-divider"></div>
@@ -419,14 +683,48 @@
             <p>Thank You! Visit Again</p>
             <div class="qr-placeholder">
                 <div style="border: 1px solid #000; width: 25mm; height: 25mm; margin: 2mm auto; display: flex; align-items: center; justify-content: center; font-size: 8px;">Scan to Pay</div>
-                <p>Digital Dynamic POS Invoicing Engine</p>
+                <p>Order generated via Amruthadharanam Online Ordering</p>
             </div>
         </div>
     </div>
 
     <script>
         const MENU_DATA = [
-            // --- SIGNATURE SANDWICHES ---
+            // --- BREAKFAST SECTION (7 am to 10 am)---
+         //   { id: "b1", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Ghee Podi Mini Idli (14 Pcs)", price: 80 },
+         //   { id: "b2", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Traditional Steamed Idli (2 Pcs) with Chutney", price: 40 },
+         //   { id: "b3", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Crispy Medu Vada (2 Pcs)", price: 45 },
+         //   { id: "b4", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Special Ghee Roast Dosa", price: 90, popular: true },
+
+            // --- LUNCH SECTION (12.30 pm to 2 pm)---
+         //   { id: "l1", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Sambar Rice with Potato Fry & Papad", price: 85 },
+         //   { id: "l2", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Tangy Lemon Rice with Roasted Peanuts", price: 75 },
+         //   { id: "l3", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Creamy Curd Rice with Pickle & Chutney", price: 70 },
+         //   { id: "l4", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Executive Mini South Indian Meals", price: 130, popular: true },
+
+            // --- EVENING SNACKS SECTION (4 pm to 5.30 pm)---
+            { id: "es1", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Onion Thool Bajji 100gm ", price: 50 },
+            { id: "es2", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Bhel Poori chat", price: 50 },
+         //   { id: "es3", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Roasted Masala Peanut Fry", price: 40 },
+         //   { id: "es4", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Classic Samosa (2 Pcs) with Mint Chutney", price: 35 },
+
+            // --- MY DINNER SPECIAL SECTION (Pre order delivery from 7 pm)--- 
+            { id: "ds1", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Paneer Butter Massala Gravy 250ml", price: 80 },
+            { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti (2pcs) + Gravy 100ml", price: 80 },
+            { id: "ds3", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti (1 pc)", price: 25 },
+            { id: "ds4", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Plain Roti (1 pc)", price: 20 },
+            { id: "ds5", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Naan (1 pc)", price: 40 },
+
+            // --- BAKERY & PASTRY SECTION (All day Menu)---
+            { id: "bp1", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "French Vannila Tea Cake (1 Pc)", price: 40 },
+         //   { id: "bp2", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Classic Butterscotch Pastry (1 Pc)", price: 80 },
+         //   { id: "bp3", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Red Velvet Cream Cheese Pastry", price: 95 },
+         //   { id: "bp4", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Fresh Cream Pineapple Cake Slice", price: 75 },
+         //   { id: "bp5", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Rich Chocolate Truffle Cake (Half KG)", price: 450, popular: true },
+         //   { id: "bp6", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Freshly Baked Veg Puff (1 Pc)", price: 30 },
+         //   { id: "bp7", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Paneer Tikka Puff", price: 45 },
+
+            // --- SIGNATURE SANDWICHES (All day Menu)---
             { id: "s1", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Bombay Raw Veg Green Chutney Sandwich", price: 99 },
             { id: "s2", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Deadly Chocolate with Cheese Sandwich", price: 99 },
             { id: "s3", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Minced Veg Spicy Paneer with Butter Grilled Sandwich", price: 99 },
@@ -436,11 +734,11 @@
             { id: "s7", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Corn Cheese Sandwich", price: 75 },
             { id: "s8", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Cucumber Cheese Sandwich", price: 75 },
             { id: "s9", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Onion, Tomato & Cucumber with Green Chutney", price: 75 },
-            { id: "s10", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Sandwich", price: 99 },
+            { id: "s10", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Sandwich", price: 99, popular: true },
             { id: "s11", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Banana Sandwich", price: 120 },
             { id: "s12", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Extra Cheese (Add-On)", price: 20 },
 
-            // --- MAGGI CORNER ---
+            // --- MAGGI CORNER (All day Menu)---
             { id: "m1", category: "Maggi", title: "🍜 Maggi Corner", name: "Plain Maggi", price: 50 },
             { id: "m2", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Maggi", price: 60 },
             { id: "m3", category: "Maggi", title: "🍜 Maggi Corner", name: "Butter Maggi", price: 60 },
@@ -448,36 +746,63 @@
             { id: "m5", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Maggi", price: 70 },
             { id: "m6", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Paneer Cheese Maggi", price: 75 },
             { id: "m7", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Maggi", price: 80 },
-            { id: "m8", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Paneer Maggi", price: 99 },
+            { id: "m8", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Paneer Maggi", price: 99, popular: true },
 
-            // --- PASTA CORNER ---
-            { id: "p1", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Cheesy Corn Penne Pasta", price: 99 },
+            // --- PASTA CORNER (All day Menu)---
+            { id: "p1", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Cheesy Corn Penne Pasta", price: 99, popular: true },
             { id: "p2", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Veg Fusilli Pasta", price: 99 },
             { id: "p3", category: "Pasta", title: "🍝 Pasta Corner", name: "Veggy Sweet Spice Red Sauce Shell Pasta", price: 99 },
             { id: "p4", category: "Pasta", title: "🍝 Pasta Corner", name: "Masala Macaroni Pasta", price: 99 },
 
-            // --- COOLERS & FRESH JUICES ---
+            // --- COOLERS & FRESH JUICES (All day Menu) ---
             { id: "j1", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Mint Cooler", price: 99 },
             { id: "j2", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Juice", price: 75 },
             { id: "j3", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Lemon Mint Cooler", price: 75 },
             { id: "j4", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Sabja Mint Lime Juice", price: 75 },
-            { id: "j5", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Original & Natural Mint Mojito", price: 99 },
+            { id: "j5", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Original & Natural Mint Mojito", price: 99, popular: true },
 
-            // --- MILKSHAKES & SPECIAL DRINKS ---
+            // --- MILKSHAKES & SPECIAL DRINKS (All day Menu)---
             { id: "d1", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Lassi", price: 75 },
             { id: "d2", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Regular Rosemilk", price: 99 },
             { id: "d3", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Sabja Rosemilk", price: 99 },
             { id: "d4", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Royal Vanilla Rosemilk", price: 99 },
             { id: "d5", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Banana Milkshake", price: 99 },
-            { id: "d6", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Choco Banana Milkshake", price: 99 },
-            { id: "d7", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Fresh Coconut Milk (1 Ltr)", price: 125 }
+            { id: "d6", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Choco Banana Milkshake", price: 99, popular: true },
+            { id: "d7", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Fresh Coconut Milk (1 Ltr)", price: 125 },
+
+            // --- COMBOS & OFFERS ---
+           { id: "co1", category: "Combos", title: "🎁 Combos & Offers", name: "BUY 2 CHOCO BANANA MILKSHAKES 250ml WORTH 150:", price: 99 },
+        //    { id: "co2", category: "Combos", title: "🎁 Combos & Offers", name: "Snack Combo: Any Sandwich + Fresh Juice", price: 149, popular: true },
+         //   { id: "co3", category: "Combos", title: "🎁 Combos & Offers", name: "Maggi + Milkshake Combo", price: 130 },
+         //   { id: "co4", category: "Combos", title: "🎁 Combos & Offers", name: "Pasta + Cooler Combo", price: 160 },
+        //    { id: "co5", category: "Combos", title: "🎁 Combos & Offers", name: "Evening Snack Platter (Pakoda + Bajji + Samosa)", price: 99 },
+        //    { id: "co6", category: "Combos", title: "🎁 Combos & Offers", name: "Dinner Combo: Parotta (2) + Kurma + Rosemilk", price: 175 }
         ];
 
+        // Example promo codes — edit freely for real campaigns.
+        const COUPON_CODES = {
+            "AMRUTHA10": { type: "percent", value: 10, label: "10% off" },
+            "FLAT50":    { type: "flat",    value: 50, label: "₹50 off" },
+            "WELCOME5":  { type: "percent", value: 5,  label: "5% welcome discount" }
+        };
+
+        const OPEN_HOUR = 6;   // 6:00 AM
+        const CLOSE_HOUR = 22; // 10:00 PM
+
+        // ⚠️ REQUIRED: Replace with Amruthadharanam's actual WhatsApp Business
+        // number (country code + number, digits only, e.g. "919876543210").
+        // This is where every customer's order gets sent. Leaving the
+        // placeholder in place means orders will fail to reach you.
+        const BUSINESS_WHATSAPP_NUMBER = "91XXXXXXXXXX";
+
         const POSState = {
-            cart: {}, 
+            cart: {},
             activeCategory: "ALL",
             searchQuery: "",
             deliveryCharge: 0.00,
+            orderType: "Delivery",
+            paymentStatus: "Pending",
+            discount: { code: "", type: null, value: 0, label: "" },
             orderId: "",
 
             init() {
@@ -497,21 +822,41 @@
                 this.renderCategories();
                 this.renderMenu();
                 this.updateTimestamp();
+                this.updateKitchenStatus();
                 this.bindEventHandlers();
-                setInterval(() => this.updateTimestamp(), 10000);
+                this.syncTotals();
+                setInterval(() => { this.updateTimestamp(); this.updateKitchenStatus(); }, 15000);
+                document.getElementById("txt-search").focus();
             },
 
+            /* ---------- KITCHEN STATUS BOARD ---------- */
+            updateKitchenStatus() {
+                const hour = new Date().getHours();
+                const isOpen = hour >= OPEN_HOUR && hour < CLOSE_HOUR;
+                const dot = document.getElementById("kitchen-dot");
+                const text = document.getElementById("kitchen-status-text");
+                dot.className = `status-dot ${isOpen ? 'open' : 'closed'}`;
+                text.textContent = isOpen
+                    ? "Kitchen Open — accepting orders now"
+                    : "Kitchen Closed — this order will queue for the next opening";
+            },
+
+            /* ---------- CATEGORY PILLS ---------- */
             renderCategories() {
                 const container = document.getElementById("category-pills-container");
                 const categories = ["ALL", ...new Set(MENU_DATA.map(item => item.category))];
-                
-                container.innerHTML = categories.map(cat => `
-                    <button class="pill ${POSState.activeCategory === cat ? 'active' : ''}" data-category="${cat}">
-                        ${cat.toUpperCase()}
-                    </button>
-                `).join('');
+
+                container.innerHTML = categories.map(cat => {
+                    const cartQty = cat === "ALL"
+                        ? Object.values(POSState.cart).reduce((a, b) => a + b, 0)
+                        : MENU_DATA.filter(i => i.category === cat)
+                                   .reduce((sum, i) => sum + (POSState.cart[i.id] || 0), 0);
+                    const badge = cartQty > 0 ? `<span class="pill-badge">${cartQty}</span>` : '';
+                    return `<button class="pill ${POSState.activeCategory === cat ? 'active' : ''}" data-category="${cat}">${cat.toUpperCase()}${badge}</button>`;
+                }).join('');
             },
 
+            /* ---------- MENU GRID ---------- */
             renderMenu() {
                 const container = document.getElementById("menu-container");
                 container.innerHTML = "";
@@ -521,6 +866,11 @@
                     const matchSearch = item.name.toLowerCase().includes(POSState.searchQuery.toLowerCase());
                     return matchCat && matchSearch;
                 });
+
+                if (filteredItems.length === 0) {
+                    container.innerHTML = `<div class="empty-results"><span class="empty-icon">🍽️</span>No dishes match "${POSState.searchQuery}". Try a different search or category.</div>`;
+                    return;
+                }
 
                 const groups = {};
                 filteredItems.forEach(item => {
@@ -532,14 +882,14 @@
                     const card = document.createElement("div");
                     card.className = "category-card";
                     card.innerHTML = `<h3 class="category-title">${title}</h3>`;
-                    
+
                     items.forEach(item => {
                         const currentQty = POSState.cart[item.id] || 0;
                         const row = document.createElement("div");
-                        row.className = "menu-item";
+                        row.className = `menu-item${currentQty > 0 ? ' in-cart' : ''}`;
                         row.innerHTML = `
                             <div class="item-info">
-                                <h4>${item.name}</h4>
+                                <h4>${item.name}${item.popular ? '<span class="badge-popular">★ Popular</span>' : ''}</h4>
                                 <p>₹${item.price.toFixed(2)}</p>
                             </div>
                             <div class="qty-controls">
@@ -554,10 +904,15 @@
                 }
             },
 
+            /* ---------- TOTALS, DISCOUNT, READY TIME ---------- */
+            estimateReadyMinutes(totalQty) {
+                if (totalQty === 0) return 0;
+                const raw = 15 + totalQty * 2;
+                return Math.min(60, Math.ceil(raw / 5) * 5);
+            },
+
             syncTotals() {
-                let uniqueItems = 0;
-                let totalQty = 0;
-                let subtotal = 0;
+                let uniqueItems = 0, totalQty = 0, subtotal = 0;
                 const previewContainer = document.getElementById("cart-items-preview");
                 previewContainer.innerHTML = "";
 
@@ -571,22 +926,60 @@
 
                         const li = document.createElement("li");
                         li.className = "cart-item-row";
-                        li.innerHTML = `
-                            <span>${item.name} (x${qty})</span>
-                            <strong>₹${(item.price * qty).toFixed(2)}</strong>
-                        `;
+                        li.innerHTML = `<span>${item.name} (x${qty})</span><strong>₹${(item.price * qty).toFixed(2)}</strong>`;
                         previewContainer.appendChild(li);
                     }
                 });
 
-                const grandTotal = subtotal > 0 ? (subtotal + POSState.deliveryCharge) : 0;
+                if (uniqueItems === 0) {
+                    previewContainer.innerHTML = `<li class="cart-empty-state"><span class="empty-icon">🛒</span>No items added yet</li>`;
+                }
+
+                // discount
+                let discountAmount = 0;
+                if (subtotal > 0 && POSState.discount.type) {
+                    discountAmount = POSState.discount.type === "percent"
+                        ? Math.round(subtotal * POSState.discount.value) / 100
+                        : POSState.discount.value;
+                    discountAmount = Math.min(discountAmount, subtotal);
+                } else if (subtotal === 0) {
+                    discountAmount = 0;
+                }
+
+                const effectiveDeliveryFee = POSState.orderType === "Pickup" ? 0 : POSState.deliveryCharge;
+                const grandTotal = subtotal > 0 ? Math.max(0, subtotal - discountAmount) + effectiveDeliveryFee : 0;
+                const readyMins = this.estimateReadyMinutes(totalQty);
 
                 document.getElementById("summary-unique-items").innerText = uniqueItems;
                 document.getElementById("summary-total-qty").innerText = totalQty;
                 document.getElementById("summary-subtotal").innerText = `₹${subtotal.toFixed(2)}`;
-                document.getElementById("summary-delivery").innerText = `₹${POSState.deliveryCharge.toFixed(2)}`;
                 document.getElementById("summary-grand-total").innerText = `₹${grandTotal.toFixed(2)}`;
                 document.getElementById("lbl-order-no").innerText = POSState.orderId;
+
+                const discountRow = document.getElementById("row-discount");
+                if (discountAmount > 0) {
+                    discountRow.classList.add("visible");
+                    document.getElementById("summary-discount").innerText = `−₹${discountAmount.toFixed(2)}`;
+                    document.getElementById("discount-code-label").innerText = `(${POSState.discount.code})`;
+                } else {
+                    discountRow.classList.remove("visible");
+                }
+
+                const readyText = readyMins > 0 ? `~${readyMins} min` : `—`;
+                document.getElementById("ready-time-value").innerText = readyText;
+                document.getElementById("header-ready-time").innerText = readyText;
+
+                const qrTag = document.getElementById("qr-amount-tag");
+                document.getElementById("qr-amount-display").innerText = `₹${grandTotal.toFixed(2)}`;
+                qrTag.classList.toggle("zero", grandTotal === 0);
+
+                // mobile sticky bar
+                const bar = document.getElementById("mobile-cart-bar");
+                bar.classList.toggle("visible", totalQty > 0);
+                document.getElementById("mobile-cart-count").innerText = totalQty;
+                document.getElementById("mobile-cart-total").innerText = `₹${grandTotal.toFixed(2)}`;
+
+                return { uniqueItems, totalQty, subtotal, discountAmount, effectiveDeliveryFee, grandTotal, readyMins };
             },
 
             updateTimestamp() {
@@ -594,6 +987,53 @@
                 document.getElementById("lbl-date-time").innerText = now.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
             },
 
+            /* ---------- TOASTS ---------- */
+            showToast(message, type = "info") {
+                const container = document.getElementById("toast-container");
+                const toast = document.createElement("div");
+                toast.className = `toast ${type}`;
+                toast.textContent = message;
+                container.appendChild(toast);
+                setTimeout(() => toast.remove(), 3200);
+            },
+
+            /* ---------- MODAL (replaces window.alert / window.confirm) ---------- */
+            alertModal(title, message) {
+                return this.showModal(title, message, { confirmText: "OK", showCancel: false });
+            },
+            confirmModal(title, message, confirmText = "Confirm") {
+                return this.showModal(title, message, { confirmText, showCancel: true, cancelText: "Cancel" });
+            },
+            showModal(title, message, opts) {
+                const overlay = document.getElementById("modal-overlay");
+                document.getElementById("modal-title").textContent = title;
+                document.getElementById("modal-message").textContent = message;
+                const confirmBtn = document.getElementById("modal-confirm-btn");
+                const cancelBtn = document.getElementById("modal-cancel-btn");
+                confirmBtn.textContent = opts.confirmText || "OK";
+                cancelBtn.style.display = opts.showCancel ? "inline-block" : "none";
+                if (opts.showCancel) cancelBtn.textContent = opts.cancelText || "Cancel";
+                overlay.classList.remove("hidden");
+
+                return new Promise((resolve) => {
+                    const cleanup = (result) => {
+                        overlay.classList.add("hidden");
+                        confirmBtn.removeEventListener("click", onConfirm);
+                        cancelBtn.removeEventListener("click", onCancel);
+                        document.removeEventListener("keydown", onKey);
+                        resolve(result);
+                    };
+                    const onConfirm = () => cleanup(true);
+                    const onCancel = () => cleanup(false);
+                    const onKey = (e) => { if (e.key === "Escape") cleanup(false); };
+                    confirmBtn.addEventListener("click", onConfirm);
+                    cancelBtn.addEventListener("click", onCancel);
+                    document.addEventListener("keydown", onKey);
+                    confirmBtn.focus();
+                });
+            },
+
+            /* ---------- EVENT BINDING ---------- */
             bindEventHandlers() {
                 document.getElementById("category-pills-container").addEventListener("click", (e) => {
                     if (e.target.classList.contains("pill")) {
@@ -608,16 +1048,30 @@
                     this.renderMenu();
                 });
 
+                document.addEventListener("keydown", (e) => {
+                    const activeTag = document.activeElement ? document.activeElement.tagName : "";
+                    if (e.key === "/" && activeTag !== "INPUT" && activeTag !== "TEXTAREA") {
+                        e.preventDefault();
+                        document.getElementById("txt-search").focus();
+                    }
+                });
+
                 document.getElementById("menu-container").addEventListener("click", (e) => {
                     if (e.target.classList.contains("qty-btn")) {
                         const id = e.target.dataset.id;
+                        const item = MENU_DATA.find(m => m.id === id);
                         const current = POSState.cart[id] || 0;
                         if (e.target.classList.contains("btn-up")) {
                             POSState.cart[id] = current + 1;
+                            if (current === 0) this.showToast(`${item.name} added`, "success");
                         } else if (e.target.classList.contains("btn-down") && current > 0) {
                             POSState.cart[id] = current - 1;
-                            if (POSState.cart[id] === 0) delete POSState.cart[id];
+                            if (POSState.cart[id] === 0) {
+                                delete POSState.cart[id];
+                                this.showToast(`${item.name} removed`, "info");
+                            }
                         }
+                        this.renderCategories();
                         this.renderMenu();
                         this.syncTotals();
                     }
@@ -632,34 +1086,131 @@
                         } else {
                             delete POSState.cart[id];
                         }
+                        this.renderCategories();
                         this.renderMenu();
                         this.syncTotals();
                     }
+                });
+
+                document.getElementById("input-delivery-fee").addEventListener("input", (e) => {
+                    const val = parseFloat(e.target.value);
+                    POSState.deliveryCharge = (!isNaN(val) && val >= 0) ? val : 0;
+                    this.syncTotals();
+                });
+
+                /* order type segmented control */
+                document.getElementById("order-type-toggle").addEventListener("click", (e) => {
+                    const btn = e.target.closest("button[data-type]");
+                    if (!btn) return;
+                    POSState.orderType = btn.dataset.type;
+                    document.querySelectorAll("#order-type-toggle button").forEach(b => b.classList.toggle("active", b === btn));
+
+                    const isPickup = POSState.orderType === "Pickup";
+                    document.getElementById("address-fields").classList.toggle("collapsed", isPickup);
+                    document.getElementById("pickup-note").classList.toggle("visible", isPickup);
+                    document.getElementById("row-delivery-fee").style.display = isPickup ? "none" : "table-row";
+                    document.getElementById("cust-door").required = !isPickup;
+                    document.getElementById("input-delivery-fee").disabled = isPickup;
+
+                    this.syncTotals();
+                });
+
+                /* payment status segmented control */
+                document.getElementById("payment-status-toggle").addEventListener("click", (e) => {
+                    const btn = e.target.closest("button[data-status]");
+                    if (!btn) return;
+                    POSState.paymentStatus = btn.dataset.status;
+                    document.querySelectorAll("#payment-status-toggle button").forEach(b => b.classList.toggle("active", b === btn));
+                });
+
+                /* coupon */
+                document.getElementById("btn-apply-coupon").addEventListener("click", () => this.applyCoupon());
+                document.getElementById("input-coupon").addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") { e.preventDefault(); this.applyCoupon(); }
                 });
 
                 document.getElementById("btn-theme").addEventListener("click", () => {
                     const html = document.documentElement;
                     const mode = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
                     html.setAttribute("data-theme", mode);
-                    document.getElementById("btn-theme").innerText = mode === "dark" ? "☀️" : "🌙";
+                    document.getElementById("theme-icon").innerText = mode === "dark" ? "☀️" : "🌙";
+                    document.getElementById("theme-label").innerText = mode === "dark" ? "Light Mode" : "Dark Mode";
                 });
 
-                document.getElementById("trigger-print").addEventListener("click", () => ExportEngine.printInvoice());
-                document.getElementById("trigger-whatsapp").addEventListener("click", () => ExportEngine.sendWhatsApp());
-                document.getElementById("trigger-csv").addEventListener("click", () => ExportEngine.exportCSV());
-                
-                document.getElementById("trigger-reset").addEventListener("click", () => {
-                    if(confirm("Are you sure you want to completely clear out the current order session and reset the terminal fields?")) {
-                        document.getElementById("form-customer").reset();
-                        document.getElementById("txt-search").value = "";
-                        POSState.searchQuery = "";
-                        POSState.activeCategory = "ALL";
-                        POSState.init();
-                        UIEngine.renderCategories();
-                        UIEngine.renderMenu();
-                        UIEngine.syncTotals();
-                    }
+                document.getElementById("mobile-cart-bar").addEventListener("click", () => {
+                    document.querySelector(".sidebar").scrollIntoView({ behavior: "smooth", block: "start" });
                 });
+
+                document.getElementById("trigger-whatsapp").addEventListener("click", () => ExportEngine.sendWhatsApp());
+                document.getElementById("trigger-print").addEventListener("click", () => ExportEngine.printInvoice());
+                document.getElementById("trigger-copy").addEventListener("click", () => ExportEngine.copyOrderSummary());
+
+                document.getElementById("trigger-reset").addEventListener("click", async () => {
+                    const ok = await this.confirmModal(
+                        "Reset this order?",
+                        "This clears your cart, your details, and any promo code for a fresh order. This can't be undone.",
+                        "Reset Order"
+                    );
+                    if (!ok) return;
+
+                    document.getElementById("form-customer").reset();
+                    document.getElementById("txt-search").value = "";
+                    document.getElementById("input-delivery-fee").value = "0";
+                    document.getElementById("input-coupon").value = "";
+                    document.getElementById("coupon-feedback").textContent = "";
+                    document.getElementById("coupon-feedback").className = "coupon-feedback";
+
+                    document.querySelectorAll("#order-type-toggle button").forEach(b => b.classList.toggle("active", b.dataset.type === "Delivery"));
+                    document.getElementById("address-fields").classList.remove("collapsed");
+                    document.getElementById("pickup-note").classList.remove("visible");
+                    document.getElementById("row-delivery-fee").style.display = "table-row";
+                    document.getElementById("cust-door").required = true;
+                    document.getElementById("input-delivery-fee").disabled = false;
+
+                    document.querySelectorAll("#payment-status-toggle button").forEach(b => b.classList.toggle("active", b.dataset.status === "Pending"));
+
+                    POSState.searchQuery = "";
+                    POSState.activeCategory = "ALL";
+                    POSState.deliveryCharge = 0;
+                    POSState.orderType = "Delivery";
+                    POSState.paymentStatus = "Pending";
+                    POSState.discount = { code: "", type: null, value: 0, label: "" };
+                    POSState.init();
+
+                    UIEngine.renderCategories();
+                    UIEngine.renderMenu();
+                    UIEngine.syncTotals();
+                    UIEngine.showToast("New order started", "success");
+                    document.getElementById("txt-search").focus();
+                });
+            },
+
+            applyCoupon() {
+                const input = document.getElementById("input-coupon");
+                const feedback = document.getElementById("coupon-feedback");
+                const raw = input.value.trim().toUpperCase();
+
+                if (!raw) {
+                    POSState.discount = { code: "", type: null, value: 0, label: "" };
+                    feedback.textContent = "";
+                    feedback.className = "coupon-feedback";
+                    this.syncTotals();
+                    return;
+                }
+
+                const match = COUPON_CODES[raw];
+                if (!match) {
+                    feedback.textContent = "That code isn't valid. Please check with the customer and try again.";
+                    feedback.className = "coupon-feedback error";
+                    this.showToast("Invalid promo code", "error");
+                    return;
+                }
+
+                POSState.discount = { code: raw, type: match.type, value: match.value, label: match.label };
+                feedback.textContent = `Applied — ${match.label}`;
+                feedback.className = "coupon-feedback success";
+                this.showToast(`Promo applied: ${match.label}`, "success");
+                this.syncTotals();
             }
         };
 
@@ -669,15 +1220,14 @@
                 const invoice = this.compileInvoiceData();
 
                 if (invoice.itemsList.length === 0) {
-                    alert("Please select at least one item from the menu before exporting.");
+                    UIEngine.alertModal("Your cart is empty", "Please add at least one item from the menu before sending, printing, or copying your order.");
                     return false;
                 }
-
                 if (!customerForm.checkValidity()) {
-                    alert("Please fill out all required customer information fields completely before exporting.");
+                    customerForm.reportValidity();
+                    UIEngine.alertModal("A few details are missing", "Please fill in your name and a valid 10-digit phone number, plus your door/flat number for delivery orders.");
                     return false;
                 }
-
                 return true;
             },
 
@@ -708,7 +1258,19 @@
                     }
                 });
 
-                return { itemsList, subtotal, totalQty, grandTotal: subtotal > 0 ? (subtotal + POSState.deliveryCharge) : 0 };
+                let discountAmount = 0;
+                if (subtotal > 0 && POSState.discount.type) {
+                    discountAmount = POSState.discount.type === "percent"
+                        ? Math.round(subtotal * POSState.discount.value) / 100
+                        : POSState.discount.value;
+                    discountAmount = Math.min(discountAmount, subtotal);
+                }
+
+                const deliveryFee = POSState.orderType === "Pickup" ? 0 : POSState.deliveryCharge;
+                const grandTotal = subtotal > 0 ? Math.max(0, subtotal - discountAmount) + deliveryFee : 0;
+                const readyMins = UIEngine.estimateReadyMinutes(totalQty);
+
+                return { itemsList, subtotal, totalQty, discountAmount, deliveryFee, grandTotal, readyMins };
             },
 
             printInvoice() {
@@ -716,14 +1278,17 @@
 
                 const customer = this.getCustomerDetails();
                 const invoice = this.compileInvoiceData();
+                const isPickup = POSState.orderType === "Pickup";
 
                 document.getElementById("print-order-no").innerText = POSState.orderId;
                 document.getElementById("print-datetime").innerText = new Date().toLocaleString('en-IN');
-                document.getElementById("print-cust-info").innerHTML = `
-                    <strong>${customer.name}</strong> (${customer.phone})<br>
-                    Flat/Door: ${customer.door} ${customer.apart ? ', ' + customer.apart : ''}<br>
-                    ${customer.street}
-                `;
+                document.getElementById("print-order-type").innerText = POSState.orderType;
+                document.getElementById("print-ready-time").innerText = invoice.readyMins > 0 ? `~${invoice.readyMins} min` : '—';
+                document.getElementById("print-cust-info").innerHTML = isPickup
+                    ? `<strong>${customer.name}</strong> (${customer.phone})<br>Self Pickup at Counter`
+                    : `<strong>${customer.name}</strong> (${customer.phone})<br>
+                       Flat/Door: ${customer.door} ${customer.apart ? ', ' + customer.apart : ''}<br>
+                       ${customer.street}`;
 
                 const body = document.getElementById("print-items-body");
                 body.innerHTML = invoice.itemsList.map(item => `
@@ -735,69 +1300,100 @@
                 `).join('');
 
                 document.getElementById("print-total-qty").innerText = invoice.totalQty;
-                document.getElementById("print-delivery").innerText = `₹${POSState.deliveryCharge.toFixed(2)}`;
+                const discRow = document.getElementById("print-discount-row");
+                if (invoice.discountAmount > 0) {
+                    discRow.style.display = "flex";
+                    document.getElementById("print-discount").innerText = `−₹${invoice.discountAmount.toFixed(2)} (${POSState.discount.code})`;
+                } else {
+                    discRow.style.display = "none";
+                }
+                document.getElementById("print-delivery").innerText = `₹${invoice.deliveryFee.toFixed(2)}`;
                 document.getElementById("print-grand-total").innerText = `₹${invoice.grandTotal.toFixed(2)}`;
 
                 const safeName = customer.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
                 const originalTitle = document.title;
                 document.title = `${safeName}_${POSState.orderId}`;
-                
+
                 window.print();
-                document.title = originalTitle; 
+                document.title = originalTitle;
             },
 
-            sendWhatsApp() {
-                if (!this.validateInputs()) return;
-
+            buildOrderMessage() {
                 const customer = this.getCustomerDetails();
                 const invoice = this.compileInvoiceData();
+                const claimsPaid = POSState.paymentStatus === "Paid";
+                const isPickup = POSState.orderType === "Pickup";
 
-                let text = `*MY AMRUTHADHARANAM ORDER*\n`;
+                let text = `🙏 *NEW ORDER — AMRUTHADHARANAM*\n`;
                 text += `------------------------------------------\n`;
                 text += `*Order Reference:* ${POSState.orderId}\n`;
-                text += `*Customer:* ${customer.name} (${customer.phone})\n`;
-                text += `*Delivery Address:* ${customer.door}${customer.apart ? ', ' + customer.apart : ''}${customer.street ? ', ' + customer.street : ''}\n`;
-                if(customer.notes) text += `*Notes:* ${customer.notes}\n`;
+                text += `*Name:* ${customer.name}\n`;
+                text += `*Phone:* ${customer.phone}\n`;
+                text += `*Order Type:* ${POSState.orderType}\n`;
+                if (isPickup) {
+                    text += `*Pickup:* I'll collect this at your counter\n`;
+                } else {
+                    text += `*Delivery Address:* ${customer.door}${customer.apart ? ', ' + customer.apart : ''}${customer.street ? ', ' + customer.street : ''}\n`;
+                }
+                if (customer.notes) text += `*Notes:* ${customer.notes}\n`;
                 text += `------------------------------------------\n`;
-                
+
                 invoice.itemsList.forEach(item => {
                     text += `• ${item.name} x ${item.qty} → ₹${item.total.toFixed(2)}\n`;
                 });
 
                 text += `------------------------------------------\n`;
                 text += `*Subtotal:* ₹${invoice.subtotal.toFixed(2)}\n`;
-                text += `*Delivery Fee:* ₹${POSState.deliveryCharge.toFixed(2)}\n`;
-                text += `*Grand Total Invoice:* ₹${invoice.grandTotal.toFixed(2)}`;
-
-                let destinationPhone = customer.phone.replace(/[^0-9]/g, '');
-                if (destinationPhone.length === 10) {
-                    destinationPhone = '91' + destinationPhone;
+                if (invoice.discountAmount > 0) {
+                    text += `*Discount (${POSState.discount.code}):* −₹${invoice.discountAmount.toFixed(2)}\n`;
                 }
+                if (!isPickup) text += `*Delivery Fee:* ₹${invoice.deliveryFee.toFixed(2)}\n`;
+                text += `*Grand Total:* ₹${invoice.grandTotal.toFixed(2)}\n`;
+                text += `------------------------------------------\n`;
 
-                const url = `https://wa.me/${destinationPhone}?text=${encodeURIComponent(text)}`;
-                const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-                if (newWindow) {
-                    newWindow.opener = null;
-                }
+                text += claimsPaid
+                    ? `*Payment:* ✅ I've already paid via UPI/QR — please confirm receipt on your end.\n`
+                    : `*Payment:* 🕒 I'll pay via UPI/QR once the order is confirmed.\n`;
+
+                text += `\nPlease let me know if this order (and the ~${invoice.readyMins} min estimate) works for you. Thank you! 🙏`;
+                return text;
             },
 
-            exportCSV() {
+            sendWhatsApp() {
                 if (!this.validateInputs()) return;
 
-                const invoice = this.compileInvoiceData();
-                let csvRows = [["Item Name", "Quantity", "Unit Price", "Total Amount"]];
-                invoice.itemsList.forEach(item => {
-                    csvRows.push([`"${item.name}"`, item.qty, item.price, item.total]);
-                });
+                if (!BUSINESS_WHATSAPP_NUMBER || BUSINESS_WHATSAPP_NUMBER.includes("X")) {
+                    UIEngine.alertModal(
+                        "WhatsApp number not set up yet",
+                        "This site isn't connected to a WhatsApp number yet. Please contact Amruthadharanam directly to place this order for now."
+                    );
+                    return;
+                }
 
-                let csvContent = "data:text/csv;charset=utf-8," + csvRows.map(e => e.join(",")).join("\n");
-                const encodedUri = encodeURI(csvContent);
-                const link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", `${POSState.orderId}_manifest.csv`);
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                const text = this.buildOrderMessage();
+                const url = `https://wa.me/${BUSINESS_WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+                const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+                if (newWindow) newWindow.opener = null;
+                UIEngine.showToast("Opening WhatsApp with your order pre-filled…", "success");
+            },
+
+            async copyOrderSummary() {
+                if (!this.validateInputs()) return;
+                const text = this.buildOrderMessage();
+                try {
+                    await navigator.clipboard.writeText(text);
+                    UIEngine.showToast("Order text copied — paste it anywhere", "success");
+                } catch (err) {
+                    const temp = document.createElement("textarea");
+                    temp.value = text;
+                    temp.style.position = "fixed";
+                    temp.style.opacity = "0";
+                    document.body.appendChild(temp);
+                    temp.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(temp);
+                    UIEngine.showToast("Order text copied — paste it anywhere", "success");
+                }
             }
         };
 
