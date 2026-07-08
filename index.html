@@ -62,6 +62,7 @@
             background-size: 240px 240px;
         }
 
+        html { overflow-x: hidden; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: var(--font-body);
@@ -292,12 +293,17 @@
         .form-group { display: flex; flex-direction: column; gap: 0.35rem; width: 100%; }
         .form-group label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
         .form-group .field-hint { font-size: 0.68rem; color: var(--text-muted); font-weight: 400; text-transform: none; letter-spacing: 0; }
-        .form-group input, .form-group textarea {
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%; padding: 0.65rem 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-md);
             background: var(--background); color: var(--text-main); font-size: 0.9rem; font-family: var(--font-body);
             transition: var(--transition);
         }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); background: var(--surface); }
+        .form-group select {
+            appearance: none; -webkit-appearance: none; cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666461' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 0.75rem center; padding-right: 2rem;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); background: var(--surface); }
         .form-group input:invalid:not(:placeholder-shown) { border-color: var(--danger); }
 
         .summary-box { display: flex; flex-direction: column; }
@@ -339,7 +345,6 @@
         .delivery-fee-input:disabled { opacity: 0.4; }
 
         /* --- QR / PAYMENT --- */
-        .qr-pay-section { }
         .qr-wrapper {
             position: relative; border: 1px solid var(--border); border-radius: var(--radius-lg);
             padding: 1rem; text-align: center; background: var(--background);
@@ -445,19 +450,84 @@
             .receipt-items-table td { padding: 1mm 0; font-size: 12px; }
             .text-right { text-align: right; }
             .qr-placeholder { text-align: center; margin-top: 4mm; font-size: 9px; }
-        }  
+        }
+
+        /* --- UPI BUTTON --- */
+        .btn-upi {
+            background: linear-gradient(135deg, #6B21E8, #9333EA); color: white;
+            display: flex; align-items: center; justify-content: center;
+            gap: 0.5rem; font-size: 0.95rem; padding: 0.9rem 1rem;
+        }
+        .btn-upi:hover { background: linear-gradient(135deg, #5B11D8, #7E22CE); }
+
+        /* --- COLLAPSIBLE TOGGLE ICON (hidden on desktop) --- */
+        .category-toggle-icon { display: none; font-size: 0.75rem; color: var(--text-muted); transition: transform 0.25s ease; flex-shrink: 0; padding: 4px; }
+
+        /* --- MOBILE OVERLAY --- */
+        .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 900; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+        .mobile-overlay.active { display: block; }
+
+        /* --- SIDEBAR BACK BUTTON (mobile only) --- */
+        .sidebar-close-btn { display: none; }
 
         @media (max-width: 1024px) {
             .app-container { grid-template-columns: 1fr; }
             .sidebar { height: auto; position: relative; border-left: none; border-top: 1px solid var(--border); }
-            .main-content { max-height: none; overflow-y: visible; padding-bottom: 5rem; }
+            .main-content { max-height: none; overflow-y: visible; padding-bottom: 5rem; min-width: 0; }
             .controls-row { position: static; }
             .search-shortcut-hint { display: none; }
             body { padding-bottom: 0; }
         }
-        @media (max-width: 560px) {
-            .status-board { font-size: 0.7rem; padding: 0.5rem 1rem; }
-            .btn-row { flex-direction: column; }
+
+        @media (max-width: 768px) {
+            .status-board { flex-direction: column; gap: 0.3rem; font-size: 0.72rem; padding: 0.5rem 1rem; }
+            .status-board .divider { display: none; }
+            .pos-header { grid-template-columns: 60px 1fr; grid-template-rows: auto auto; gap: 0.6rem; padding: 0.75rem 1rem; }
+            .header-right { grid-column: 1 / -1; text-align: center; font-size: 0.72rem; border-top: 1px solid var(--border); padding-top: 0.5rem; }
+            .brand-logo { max-width: 52px; max-height: 52px; }
+            .header-center h1 { font-size: 1.3rem; }
+            .header-center p { font-size: 0.72rem; }
+            .main-content { padding: 0 1rem 6rem; min-width: 0; }
+            .controls-row { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+            .search-wrapper { min-width: unset; }
+            .category-pills { flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none; width: 100%; min-width: 0; }
+            .category-pills::-webkit-scrollbar { display: none; }
+            .pill { white-space: nowrap; flex-shrink: 0; }
+            .theme-toggle { align-self: flex-start; }
+            .menu-grid { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+            .category-card { max-width: 100%; overflow: hidden; }
+            .category-title { cursor: pointer; user-select: none; -webkit-user-select: none; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+            .category-toggle-icon { display: inline-block; }
+            .category-card.collapsed .menu-items-body { display: none; }
+            .category-card.collapsed .category-title { border-bottom-color: transparent; margin-bottom: 0; padding-bottom: 0; }
+            .category-card.collapsed { padding-bottom: 0.75rem; }
+            .category-card.collapsed .category-toggle-icon { transform: rotate(-90deg); }
+            .qty-btn { width: 36px; height: 36px; font-size: 1.1rem; }
+            .qty-input { width: 42px; height: 36px; }
+            .sidebar {
+                position: fixed; bottom: 0; left: 0; right: 0; top: auto; height: 88vh;
+                z-index: 950; border-radius: 20px 20px 0 0; border-top: 2px solid var(--primary);
+                border-left: none; transform: translateY(100%);
+                transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                overflow-y: auto; padding: 0 1.25rem 2rem;
+            }
+            .sidebar::before { content: ''; display: block; width: 44px; height: 4px; background: var(--border); border-radius: 2px; margin: 0.85rem auto 1rem; }
+            .sidebar.mobile-open { transform: translateY(0); }
+            .sidebar-close-btn {
+                display: flex; align-items: center; gap: 0.5rem; width: 100%;
+                background: var(--surface); border: 1.5px solid var(--primary); border-radius: var(--radius-md);
+                padding: 0.7rem 1rem; font-family: var(--font-btn); font-weight: 700; font-size: 0.88rem;
+                color: var(--primary); cursor: pointer; margin-bottom: 0.5rem; transition: var(--transition);
+            }
+            .sidebar-close-btn:hover { background: var(--primary); color: white; }
+            .mobile-cart-bar { z-index: 940; }
+        }
+
+        @media (max-width: 480px) {
+            .pos-header { grid-template-columns: 44px 1fr; padding: 0.6rem 0.75rem; }
+            .brand-logo { max-width: 38px; max-height: 38px; }
+            .header-center h1 { font-size: 1.05rem; }
+            .main-content { padding: 0 0.75rem 6rem; }
         }
     </style>
 </head>
@@ -506,6 +576,8 @@
 
         <aside class="sidebar">
 
+            <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Back to menu">&#8592; Back to Menu</button>
+
             <section>
                 <h3 class="step-title"><span class="step-num">1</span> Order Type</h3>
                 <div class="segmented" id="order-type-toggle" role="group" aria-label="Order type">
@@ -533,11 +605,9 @@
                         </div>
                         <div class="form-group">
                             <label for="cust-apart">Apartment / Villa</label>
-                            <input type="text" id="cust-apart" placeholder="e.g., Sidharth Dhakshin Apts">
-                        </div>
-                        <div class="form-group">
-                            <label for="cust-street">Street &amp; Landmark</label>
-                            <input type="text" id="cust-street" placeholder="e.g., Urappakkam, near Central Park">
+                            <select id="cust-apart">
+                                <option value="Sidharth Dakshin Apts" selected>Sidharth Dakshin Apts</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -595,11 +665,6 @@
             <section class="qr-pay-section">
                 <h3 class="step-title"><span class="step-num">4</span> Payment &amp; Confirm</h3>
 
-                <div class="segmented" id="payment-status-toggle" role="group" aria-label="Payment status" style="margin-bottom:0.9rem;">
-                    <button type="button" class="active" data-status="Pending">🕒 I'll Pay via UPI</button>
-                    <button type="button" data-status="Paid">✅ I've Already Paid</button>
-                </div>
-
                 <div class="qr-wrapper">
                     <img src="qr.jpeg" alt="UPI Payment QR Code" class="qr-image"
                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
@@ -615,18 +680,17 @@
             </section>
 
             <div class="btn-group">
+                <button id="trigger-upi" class="btn btn-upi">📱 Pay via UPI App</button>
                 <button id="trigger-whatsapp" class="btn btn-whatsapp">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="white" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                    <span id="whatsapp-btn-label">Send My Order via WhatsApp</span>
+                    <span id="whatsapp-btn-label">Place Order</span>
                 </button>
-                <div class="btn-row">
-                    <button id="trigger-print" class="btn btn-secondary">🖨️ Print</button>
-                    <button id="trigger-copy" class="btn btn-secondary">📋 Copy Order Text</button>
-                </div>
                 <button id="trigger-reset" class="btn btn-danger">🔄 Reset Order</button>
             </div>
         </aside>
     </div>
+
+    <div class="mobile-overlay" id="mobile-overlay"></div>
 
     <div class="mobile-cart-bar" id="mobile-cart-bar">
         <div class="mcb-left">
@@ -739,14 +803,14 @@
             { id: "s12", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Extra Cheese (Add-On)", price: 20 },
 
             // --- MAGGI CORNER (All day Menu)---
-            { id: "m1", category: "Maggi", title: "🍜 Maggi Corner", name: "Plain Maggi 1 Serve", price: 50 },
-            { id: "m2", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Maggi 1 Serve", price: 60 },
-            { id: "m3", category: "Maggi", title: "🍜 Maggi Corner", name: "Butter Maggi 1 Serve", price: 60 },
-            { id: "m4", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Butter Maggi 1 Serve", price: 60 },
-            { id: "m5", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Maggi 1 Serve", price: 70 },
-            { id: "m6", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Paneer Cheese Maggi 1 Serve", price: 75 },
-            { id: "m7", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Maggi 1 Serve", price: 80 },
-            { id: "m8", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Paneer Maggi 1 Serve", price: 99, popular: true },
+            { id: "m1", category: "Maggi", title: "🍜 Maggi Corner", name: "Plain Maggi", price: 50 },
+            { id: "m2", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Maggi", price: 60 },
+            { id: "m3", category: "Maggi", title: "🍜 Maggi Corner", name: "Butter Maggi", price: 60 },
+            { id: "m4", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Butter Maggi", price: 60 },
+            { id: "m5", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Maggi", price: 70 },
+            { id: "m6", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Paneer Cheese Maggi", price: 75 },
+            { id: "m7", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Maggi", price: 80 },
+            { id: "m8", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Paneer Maggi", price: 99, popular: true },
 
             // --- PASTA CORNER (All day Menu)---
             { id: "p1", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Cheesy Corn Penne Pasta", price: 99, popular: true },
@@ -755,12 +819,12 @@
             { id: "p4", category: "Pasta", title: "🍝 Pasta Corner", name: "Masala Macaroni Pasta", price: 99 },
 
             // --- COOLERS & FRESH JUICES (All day Menu) ---
-            { id: "j1", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Mint Cooler 500ml", price: 99 },
-            { id: "j2", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Juice 500ml", price: 75 },
-            { id: "j3", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Lemon Mint Cooler 500ml", price: 75 },
-            { id: "j4", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Sabja Mint Lime Juice 500ml", price: 75 },
-            { id: "j5", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Original & Natural Mint Mojito 500ml", price: 99, popular: true },
-            { id: "j6", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Indian Paneer Grapes with mint and lime juice mocktail 250ml", price: 60, popular: true },
+            { id: "j1", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Mint Cooler", price: 99 },
+            { id: "j2", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Juice", price: 75 },
+            { id: "j3", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Lemon Mint Cooler", price: 75 },
+            { id: "j4", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Sabja Mint Lime Juice", price: 75 },
+            { id: "j5", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Original & Natural Mint Mojito", price: 99, popular: true },
+
             // --- MILKSHAKES & SPECIAL DRINKS (All day Menu)---
             { id: "d1", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Lassi", price: 75 },
             { id: "d2", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Regular Rosemilk", price: 99 },
@@ -793,7 +857,8 @@
         // number (country code + number, digits only, e.g. "919876543210").
         // This is where every customer's order gets sent. Leaving the
         // placeholder in place means orders will fail to reach you.
-        const BUSINESS_WHATSAPP_NUMBER = "91XXXXXXXXXX";
+        const BUSINESS_WHATSAPP_NUMBER = "917245387741";
+        const UPI_VPA = "prabhunandhu-2@oksbi"; // Replace with your actual UPI VPA
 
         const POSState = {
             cart: {},
@@ -801,7 +866,6 @@
             searchQuery: "",
             deliveryCharge: 0.00,
             orderType: "Delivery",
-            paymentStatus: "Pending",
             discount: { code: "", type: null, value: 0, label: "" },
             orderId: "",
 
@@ -859,6 +923,16 @@
             /* ---------- MENU GRID ---------- */
             renderMenu() {
                 const container = document.getElementById("menu-container");
+
+                // On mobile, remember which panels are currently open so re-renders don't collapse them
+                const expandedTitles = new Set();
+                if (window.matchMedia('(max-width: 768px)').matches) {
+                    container.querySelectorAll('.category-card:not(.collapsed)').forEach(c => {
+                        const sp = c.querySelector('.category-title span:first-child');
+                        if (sp) expandedTitles.add(sp.textContent.trim());
+                    });
+                }
+
                 container.innerHTML = "";
 
                 const filteredItems = MENU_DATA.filter(item => {
@@ -880,9 +954,17 @@
 
                 for (const [title, items] of Object.entries(groups)) {
                     const card = document.createElement("div");
-                    card.className = "category-card";
-                    card.innerHTML = `<h3 class="category-title">${title}</h3>`;
-
+                    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+                    const shouldCollapse = isMobile && !expandedTitles.has(title);
+                    card.className = `category-card${shouldCollapse ? ' collapsed' : ''}`;
+                    card.innerHTML = `
+                        <h3 class="category-title">
+                            <span>${title}</span>
+                            <span class="category-toggle-icon" aria-hidden="true">▼</span>
+                        </h3>
+                        <div class="menu-items-body"></div>
+                    `;
+                    const body = card.querySelector('.menu-items-body');
                     items.forEach(item => {
                         const currentQty = POSState.cart[item.id] || 0;
                         const row = document.createElement("div");
@@ -898,7 +980,7 @@
                                 <button class="qty-btn btn-up" data-id="${item.id}" aria-label="Increase quantity">+</button>
                             </div>
                         `;
-                        card.appendChild(row);
+                        body.appendChild(row);
                     });
                     container.appendChild(card);
                 }
@@ -1057,6 +1139,11 @@
                 });
 
                 document.getElementById("menu-container").addEventListener("click", (e) => {
+                    const titleEl = e.target.closest(".category-title");
+                    if (titleEl && window.matchMedia('(max-width: 768px)').matches) {
+                        titleEl.closest(".category-card").classList.toggle("collapsed");
+                        return;
+                    }
                     if (e.target.classList.contains("qty-btn")) {
                         const id = e.target.dataset.id;
                         const item = MENU_DATA.find(m => m.id === id);
@@ -1115,14 +1202,6 @@
                     this.syncTotals();
                 });
 
-                /* payment status segmented control */
-                document.getElementById("payment-status-toggle").addEventListener("click", (e) => {
-                    const btn = e.target.closest("button[data-status]");
-                    if (!btn) return;
-                    POSState.paymentStatus = btn.dataset.status;
-                    document.querySelectorAll("#payment-status-toggle button").forEach(b => b.classList.toggle("active", b === btn));
-                });
-
                 /* coupon */
                 document.getElementById("btn-apply-coupon").addEventListener("click", () => this.applyCoupon());
                 document.getElementById("input-coupon").addEventListener("keydown", (e) => {
@@ -1137,13 +1216,39 @@
                     document.getElementById("theme-label").innerText = mode === "dark" ? "Light Mode" : "Dark Mode";
                 });
 
+                const sidebar = document.querySelector(".sidebar");
+                const mobileOverlay = document.getElementById("mobile-overlay");
+
+                function openMobileSidebar() {
+                    sidebar.classList.add("mobile-open");
+                    mobileOverlay.classList.add("active");
+                    document.body.style.overflow = "hidden";
+                }
+                function closeMobileSidebar() {
+                    sidebar.classList.remove("mobile-open");
+                    mobileOverlay.classList.remove("active");
+                    document.body.style.overflow = "";
+                }
+
                 document.getElementById("mobile-cart-bar").addEventListener("click", () => {
-                    document.querySelector(".sidebar").scrollIntoView({ behavior: "smooth", block: "start" });
+                    if (window.matchMedia('(max-width: 768px)').matches) {
+                        openMobileSidebar();
+                    } else {
+                        sidebar.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                });
+
+                mobileOverlay.addEventListener("click", closeMobileSidebar);
+                document.getElementById("sidebar-close-btn").addEventListener("click", closeMobileSidebar);
+
+                sidebar.addEventListener("click", (e) => {
+                    if (["trigger-whatsapp", "trigger-reset", "trigger-upi"].includes(e.target.id)) {
+                        closeMobileSidebar();
+                    }
                 });
 
                 document.getElementById("trigger-whatsapp").addEventListener("click", () => ExportEngine.sendWhatsApp());
-                document.getElementById("trigger-print").addEventListener("click", () => ExportEngine.printInvoice());
-                document.getElementById("trigger-copy").addEventListener("click", () => ExportEngine.copyOrderSummary());
+                document.getElementById("trigger-upi").addEventListener("click", () => ExportEngine.payViaUPI());
 
                 document.getElementById("trigger-reset").addEventListener("click", async () => {
                     const ok = await this.confirmModal(
@@ -1167,13 +1272,10 @@
                     document.getElementById("cust-door").required = true;
                     document.getElementById("input-delivery-fee").disabled = false;
 
-                    document.querySelectorAll("#payment-status-toggle button").forEach(b => b.classList.toggle("active", b.dataset.status === "Pending"));
-
                     POSState.searchQuery = "";
                     POSState.activeCategory = "ALL";
                     POSState.deliveryCharge = 0;
                     POSState.orderType = "Delivery";
-                    POSState.paymentStatus = "Pending";
                     POSState.discount = { code: "", type: null, value: 0, label: "" };
                     POSState.init();
 
@@ -1236,8 +1338,7 @@
                     name: document.getElementById("cust-name").value.trim(),
                     phone: document.getElementById("cust-phone").value.trim(),
                     door: document.getElementById("cust-door").value.trim(),
-                    apart: document.getElementById("cust-apart").value.trim(),
-                    street: document.getElementById("cust-street").value.trim(),
+                    apart: document.getElementById("cust-apart").value,
                     notes: document.getElementById("cust-notes").value.trim()
                 };
             },
@@ -1321,7 +1422,6 @@
             buildOrderMessage() {
                 const customer = this.getCustomerDetails();
                 const invoice = this.compileInvoiceData();
-                const claimsPaid = POSState.paymentStatus === "Paid";
                 const isPickup = POSState.orderType === "Pickup";
 
                 let text = `🙏 *NEW ORDER — AMRUTHADHARANAM*\n`;
@@ -1333,7 +1433,7 @@
                 if (isPickup) {
                     text += `*Pickup:* I'll collect this at your counter\n`;
                 } else {
-                    text += `*Delivery Address:* ${customer.door}${customer.apart ? ', ' + customer.apart : ''}${customer.street ? ', ' + customer.street : ''}\n`;
+                    text += `*Delivery Address:* ${customer.door}${customer.apart ? ', ' + customer.apart : ''}\n`;
                 }
                 if (customer.notes) text += `*Notes:* ${customer.notes}\n`;
                 text += `------------------------------------------\n`;
@@ -1350,11 +1450,7 @@
                 if (!isPickup) text += `*Delivery Fee:* ₹${invoice.deliveryFee.toFixed(2)}\n`;
                 text += `*Grand Total:* ₹${invoice.grandTotal.toFixed(2)}\n`;
                 text += `------------------------------------------\n`;
-
-                text += claimsPaid
-                    ? `*Payment:* ✅ I've already paid via UPI/QR — please confirm receipt on your end.\n`
-                    : `*Payment:* 🕒 I'll pay via UPI/QR once the order is confirmed.\n`;
-
+                text += `*Payment:* 🕒 I will pay via UPI once the order is confirmed.\n`;
                 text += `\nPlease let me know if this order (and the ~${invoice.readyMins} min estimate) works for you. Thank you! 🙏`;
                 return text;
             },
@@ -1375,6 +1471,20 @@
                 const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
                 if (newWindow) newWindow.opener = null;
                 UIEngine.showToast("Opening WhatsApp with your order pre-filled…", "success");
+            },
+
+            payViaUPI() {
+                const invoice = this.compileInvoiceData();
+                if (invoice.grandTotal === 0) {
+                    UIEngine.alertModal("Cart is empty", "Please add at least one item before proceeding to UPI payment.");
+                    return;
+                }
+                const upiLink = `upi://pay?pa=${encodeURIComponent(UPI_VPA)}&pn=${encodeURIComponent("AMRUTHADHARANAM")}&am=${invoice.grandTotal.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Order ' + POSState.orderId)}`;
+                const tempLink = document.createElement('a');
+                tempLink.href = upiLink;
+                document.body.appendChild(tempLink);
+                tempLink.click();
+                document.body.removeChild(tempLink);
             },
 
             async copyOrderSummary() {
