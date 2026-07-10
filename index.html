@@ -122,6 +122,58 @@
         .status-board .divider { opacity: 0.35; }
 
         /* ============================================================
+           ANNOUNCEMENT BANNER
+           Sits directly under the status board so it reads as a
+           second, editorial line from the restaurant — separate from
+           the automated open/closed indicator above it. Dismissible,
+           but re-appears automatically whenever the message text/type
+           changes (tracked via a content hash), so a stale dismissal
+           can never hide a genuinely new notice.
+        ============================================================ */
+        .announcement-bar {
+            max-width: 1600px;
+            margin: 0 auto 1rem;
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.7rem 1.1rem;
+            border-radius: var(--radius-md);
+            background: linear-gradient(90deg, var(--primary-deep), var(--primary));
+            border: 1px solid var(--primary-deep);
+            border-left: 4px solid var(--secondary);
+            box-shadow: var(--shadow);
+            font-size: 0.85rem;
+            color: #FFFFFF;
+        }
+        .announcement-bar.visible { display: flex; }
+        .announcement-bar .ab-icon { font-size: 1.15rem; flex-shrink: 0; line-height: 1; }
+        .announcement-bar .ab-text { flex: 1; line-height: 1.5; color: #FFFFFF; }
+        .announcement-bar .ab-text strong { color: #FFFFFF; font-family: var(--font-btn); background: rgba(255,255,255,0.18); padding: 1px 6px; border-radius: 4px; }
+        .announcement-bar .ab-close {
+            background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.75);
+            font-size: 1.1rem; line-height: 1; padding: 0.2rem 0.4rem; border-radius: 4px;
+            flex-shrink: 0; transition: var(--transition);
+        }
+        .announcement-bar .ab-close:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+
+        /* type variants — pick via ANNOUNCEMENT.type in the script below */
+        .announcement-bar.type-info    { border-left-color: var(--secondary); }
+        .announcement-bar.type-offer   { border-left-color: var(--secondary); }
+        .announcement-bar.type-urgent  { background: linear-gradient(90deg, #5C1E1E, #8B2E2E); border-left-color: #F2C94C; }
+        .announcement-bar.type-urgent .ab-text strong { color: #FFFFFF; }
+
+        /* optional blink, toggled via ANNOUNCEMENT.blink in the script below */
+        .announcement-bar .ab-icon.blinking { animation: ab-blink 12s ease-in-out infinite; }
+        @keyframes ab-blink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.85); } }
+        @media (prefers-reduced-motion: reduce) {
+            .announcement-bar .ab-icon.blinking { animation: none; }
+        }
+
+        @media (max-width: 768px) {
+            .announcement-bar { font-size: 0.78rem; padding: 0.6rem 0.85rem; }
+        }
+
+        /* ============================================================
            LAYOUT
         ============================================================ */
         .app-container {
@@ -559,6 +611,12 @@
         <div class="seg"><span>⏱ Serving Hours: 06:00 – 22:00</span></div>
     </div>
 
+    <div class="announcement-bar" id="announcement-bar" role="status" aria-live="polite">
+        <span class="ab-icon" id="announcement-icon">📣</span>
+        <span class="ab-text" id="announcement-text"></span>
+        <button class="ab-close" id="announcement-close" aria-label="Dismiss announcement">✕</button>
+    </div>
+
     <div class="app-container">
 
         <main class="main-content">
@@ -764,6 +822,31 @@
     </div>
 
     <script>
+        /* ================================================================
+           ANNOUNCEMENT CONFIG
+           Edit this block whenever you have something timely to tell
+           customers — a delayed opening, a new item, a festival special,
+           a temporary closure, etc.
+
+           - enabled: set to false to hide the banner entirely
+           - type:    "info" (green, general), "offer" (gold, promos/new
+                      items), or "urgent" (red, delays/closures/issues)
+           - icon:    any emoji
+           - text:    plain text or simple HTML (e.g. <strong>bold</strong>)
+
+           Dismissals are remembered per browser, but only for THIS exact
+           message — the moment you change enabled/type/text and the
+           customer reloads the page, it reappears even if they'd
+           dismissed an earlier one.
+        ================================================================ */
+        const ANNOUNCEMENT = {
+            enabled: true,
+            type: "offer",   // "info" | "offer" | "urgent"
+            icon: "🎉",
+            text: "ANNOUNCMENT: <strong>Fresh Bactch of French Vannila Tea cake  and  Choco Brownie Fudge </strong> —available now. Book Yours. HURRY !!!",
+            blink: true      // true = text gently pulses to grab attention; false = static
+        };
+
         const MENU_DATA = [
             // --- BREAKFAST SECTION (7 am to 10 am)---
          //   { id: "b1", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Ghee Podi Mini Idli (14 Pcs)", price: 80 },
@@ -784,15 +867,15 @@
          //   { id: "es4", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Classic Samosa (2 Pcs) with Mint Chutney", price: 35 },
 
             // --- MY DINNER SPECIAL SECTION (Pre order delivery from 7 pm)--- 
-            { id: "ds1", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Kadai Paneer Gravy 250ml", price: 80 },
+            { id: "ds1", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Shimla Mirch Paneer Gravy 250ml", price: 80 },
             { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti (2pcs) + Gravy 100ml", price: 80 },
             { id: "ds3", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti (1 pc)", price: 25 },
             { id: "ds4", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Plain Roti (1 pc)", price: 20 },
             { id: "ds5", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Naan (1 pc)", price: 40 },
 
             // --- BAKERY & PASTRY SECTION (All day Menu)---
-         //   { id: "bp1", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "French Vannila Tea Cake (1 Pc)", price: 40 },
-         //   { id: "bp2", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Classic Butterscotch Pastry (1 Pc)", price: 80 },
+            { id: "bp1", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "French Vannila Tea Cake (1 Pc)", price: 40 },
+            { id: "bp2", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Signature Choco Brownie Fudge (1 Pc)", price: 59 },
          //   { id: "bp3", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Red Velvet Cream Cheese Pastry", price: 95 },
          //   { id: "bp4", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Fresh Cream Pineapple Cake Slice", price: 75 },
          //   { id: "bp5", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Rich Chocolate Truffle Cake (Half KG)", price: 450, popular: true },
@@ -847,8 +930,8 @@
             { id: "d7", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Fresh Coconut Milk (1 Ltr)", price: 125 },
 
             // --- COMBOS & OFFERS ---
-           { id: "co1", category: "Combos", title: "🎁 Combos & Offers", name: "BUY 2 WATERMELON MINT COOLER 250ml WORTH 120:", price: 99 },
-           { id: "co2", category: "Combos", title: "🎁 Combos & Offers", name: "VEG MOMOS 5 pcs WORTH 125. OFFER PRICE 99 ONLY: ",price: 99 },
+     //    { id: "co1", category: "Combos", title: "🎁 Combos & Offers", name: "BUY 2 WATERMELON MINT COOLER 250ml WORTH 120:", price: 99 },
+      //     { id: "co2", category: "Combos", title: "🎁 Combos & Offers", name: "VEG MOMOS 5 pcs WORTH 125. OFFER PRICE 99 ONLY: ",price: 99 },
          //   { id: "co3", category: "Combos", title: "🎁 Combos & Offers", name: "Maggi + Milkshake Combo", price: 130 },
          //   { id: "co4", category: "Combos", title: "🎁 Combos & Offers", name: "Pasta + Cooler Combo", price: 160 },
         //    { id: "co5", category: "Combos", title: "🎁 Combos & Offers", name: "Evening Snack Platter (Pakoda + Bajji + Samosa)", price: 99 },
@@ -899,10 +982,48 @@
                 this.renderMenu();
                 this.updateTimestamp();
                 this.updateKitchenStatus();
+                this.renderAnnouncement();
                 this.bindEventHandlers();
                 this.syncTotals();
                 setInterval(() => { this.updateTimestamp(); this.updateKitchenStatus(); }, 15000);
                 document.getElementById("txt-search").focus();
+            },
+
+            /* ---------- ANNOUNCEMENT BANNER ---------- */
+            renderAnnouncement() {
+                const bar = document.getElementById("announcement-bar");
+                const iconEl = document.getElementById("announcement-icon");
+                const textEl = document.getElementById("announcement-text");
+
+                if (!ANNOUNCEMENT || !ANNOUNCEMENT.enabled || !ANNOUNCEMENT.text) {
+                    bar.classList.remove("visible");
+                    return;
+                }
+
+                // Fingerprint the current message so a dismissal only
+                // suppresses THIS exact announcement, not future ones.
+                const fingerprint = `${ANNOUNCEMENT.type}|${ANNOUNCEMENT.text}`;
+                let hash = 0;
+                for (let i = 0; i < fingerprint.length; i++) {
+                    hash = (hash * 31 + fingerprint.charCodeAt(i)) | 0;
+                }
+                const storageKey = "ad_announcement_dismissed";
+                const dismissedHash = localStorage.getItem(storageKey);
+
+                if (dismissedHash === String(hash)) {
+                    bar.classList.remove("visible");
+                    return;
+                }
+
+                bar.className = `announcement-bar visible type-${ANNOUNCEMENT.type || 'info'}`;
+                iconEl.textContent = ANNOUNCEMENT.icon || "📣";
+                iconEl.classList.toggle("blinking", !!ANNOUNCEMENT.blink);
+                textEl.innerHTML = ANNOUNCEMENT.text;
+
+                document.getElementById("announcement-close").onclick = () => {
+                    localStorage.setItem(storageKey, String(hash));
+                    bar.classList.remove("visible");
+                };
             },
 
             /* ---------- KITCHEN STATUS BOARD ---------- */
