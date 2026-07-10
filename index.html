@@ -434,7 +434,38 @@
         .qr-amount-value { font-family: var(--font-mono); font-size: 1.6rem; font-weight: 700; letter-spacing: 0.01em; }
         .qr-hint { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.7; text-align: center; }
 
-        /* --- SCROLLBAR --- */
+        /* --- UPDATE NOW (cache-busting reload button) --- */
+        .btn-update-now {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 9970;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--danger);
+            color: #FFFFFF;
+            font-family: var(--font-btn);
+            font-weight: 700;
+            font-size: 0.82rem;
+            letter-spacing: 0.02em;
+            border: none;
+            border-radius: 999px;
+            padding: 0.7rem 1.15rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lift);
+            transition: var(--transition);
+        }
+        .btn-update-now:hover { background: #A32121; transform: translateY(-2px); }
+        .btn-update-now:active { transform: translateY(0) scale(0.97); }
+        .btn-update-now .bun-icon { font-size: 0.95rem; line-height: 1; animation: bun-spin 3.5s linear infinite; }
+        @keyframes bun-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @media (prefers-reduced-motion: reduce) {
+            .btn-update-now .bun-icon { animation: none; }
+        }
+        @media (max-width: 768px) {
+            .btn-update-now { left: 14px; bottom: 84px; padding: 0.6rem 1rem; font-size: 0.76rem; }
+        }
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
@@ -760,6 +791,10 @@
         </aside>
     </div>
 
+    <button id="btn-update-now" class="btn-update-now" title="Clear cache and load the newest version of this page">
+        <span class="bun-icon">⟳</span> Update Now
+    </button>
+
     <div class="mobile-overlay" id="mobile-overlay"></div>
 
     <div class="mobile-cart-bar" id="mobile-cart-bar">
@@ -843,11 +878,11 @@
             enabled: true,
             type: "offer",   // "info" | "offer" | "urgent"
             icon: "🎉",
-            text: "ANNOUNCMENT: <strong>Fresh Batch of French Vannila Tea cake</strong> —available now. Book Yours. HURRY !!!",
+            text: "Announcement: <strong>French Vannila tea Cake, only 40</strong> !",
             blink: true      // true = text gently pulses to grab attention; false = static
         };
 
-        const MENU_DATA = [
+         const MENU_DATA = [
             // --- BREAKFAST SECTION (7 am to 10 am)---
          //   { id: "b1", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Ghee Podi Mini Idli (14 Pcs)", price: 80 },
          //   { id: "b2", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Traditional Steamed Idli (2 Pcs) with Chutney", price: 40 },
@@ -1391,6 +1426,8 @@
 
                 document.getElementById("trigger-whatsapp").addEventListener("click", () => ExportEngine.sendWhatsApp());
 
+                document.getElementById("btn-update-now").addEventListener("click", () => this.hardReload());
+
                 document.getElementById("trigger-reset").addEventListener("click", async () => {
                     const ok = await this.confirmModal(
                         "Reset this order?",
@@ -1426,6 +1463,26 @@
                     UIEngine.showToast("New order started", "success");
                     document.getElementById("txt-search").focus();
                 });
+            },
+
+            /* ---------- UPDATE NOW: clear caches/SW and force a fresh load ---------- */
+            async hardReload() {
+                this.showToast("Fetching the latest version…", "info");
+                try {
+                    if (window.caches && caches.keys) {
+                        const names = await caches.keys();
+                        await Promise.all(names.map(n => caches.delete(n)));
+                    }
+                    if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) {
+                        const regs = await navigator.serviceWorker.getRegistrations();
+                        await Promise.all(regs.map(r => r.unregister()));
+                    }
+                } catch (err) {
+                    console.warn("Cache clear failed:", err);
+                }
+                const url = new URL(window.location.href);
+                url.searchParams.set("_v", Date.now());
+                window.location.replace(url.toString());
             },
 
             applyCoupon() {
