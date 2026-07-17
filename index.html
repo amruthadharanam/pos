@@ -227,7 +227,7 @@
            moment, echoed later in the tabs and buttons. */
         .pos-header {
             display: grid;
-            grid-template-columns: 90px 1fr;
+            grid-template-columns: 190px 1fr;
             align-items: center;
             background: linear-gradient(120deg, rgba(110,32,39,0.05) 0%, var(--surface) 55%, rgba(201,162,39,0.08) 100%);
             padding: 1.1rem 1.75rem;
@@ -242,18 +242,18 @@
             background: linear-gradient(120deg, rgba(177,75,82,0.12) 0%, var(--surface) 55%, rgba(232,199,102,0.06) 100%);
         }
         .header-left { display: flex; align-items: center; justify-content: center; }
+        /* The logo is a wide arch-shaped banner (~1.84:1), not a square
+           mark — object-fit: contain guarantees the full arch, its side
+           flourishes, and the lettering are always shown intact, never
+           cropped, at whatever width the layout gives it. */
         .brand-logo {
-            width: 84px; height: 84px; object-fit: cover; object-position: center;
-            border-radius: 50%;
-            padding: 5px;
-            background: radial-gradient(circle at 35% 30%, var(--secondary-bright), var(--secondary) 55%, var(--secondary-deep) 100%);
-            box-shadow:
-                0 1px 0 rgba(255,255,255,0.6) inset,
-                0 -3px 5px rgba(0,0,0,0.25) inset,
-                0 3px 10px rgba(59,15,19,0.35);
+            width: 100%; height: auto; max-height: 92px;
+            object-fit: contain; object-position: center;
+            display: block;
+            filter: drop-shadow(0 3px 8px rgba(59,15,19,0.25));
         }
         .brand-logo-fallback {
-            width: 64px; height: 64px; border-radius: 50%;
+            width: 100%; height: 64px; border-radius: var(--radius-md);
             background: radial-gradient(circle at 35% 30%, var(--secondary-bright), var(--secondary) 55%, var(--secondary-deep) 100%);
             color: var(--primary-deep);
             display: flex; align-items: center; justify-content: center;
@@ -716,8 +716,8 @@
         @media (max-width: 768px) {
             .status-board { flex-direction: column; gap: 0.3rem; font-size: 0.72rem; padding: 0.5rem 1rem; }
             .status-board .divider { display: none; }
-            .pos-header { grid-template-columns: 60px 1fr; gap: 0.6rem; padding: 0.75rem 1rem; }
-            .brand-logo { width: 52px; height: 52px; }
+            .pos-header { grid-template-columns: 120px 1fr; gap: 0.6rem; padding: 0.75rem 1rem; }
+            .brand-logo { max-height: 62px; }
             .header-center h1 { font-size: 1.3rem; }
             .header-center p { font-size: 0.72rem; }
             .main-content { padding: 0 1rem 6rem; min-width: 0; }
@@ -758,8 +758,8 @@
         }
 
         @media (max-width: 480px) {
-            .pos-header { grid-template-columns: 44px 1fr; padding: 0.6rem 0.75rem; }
-            .brand-logo { width: 38px; height: 38px; }
+            .pos-header { grid-template-columns: 92px 1fr; padding: 0.6rem 0.75rem; }
+            .brand-logo { max-height: 46px; }
             .header-center h1 { font-size: 1.05rem; }
             .main-content { padding: 0 0.75rem 6rem; }
         }
@@ -811,7 +811,7 @@
 
             <header class="pos-header">
                 <div class="header-left">
-                    <img src="Amruthadharanam logo2.png" alt="Amruthadhaaranam Logo" class="brand-logo"
+                    <img src="Amruthadharanam_logo2.png" alt="Amruthadhaaranam Logo" class="brand-logo"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="brand-logo-fallback" style="display:none;">AD</div>
                 </div>
