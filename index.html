@@ -243,7 +243,7 @@
         }
         .header-left { display: flex; align-items: center; justify-content: center; }
         .brand-logo {
-            width: auto; height: auto; max-width: 90px; max-height: 78px; object-fit: contain;
+            width: 84px; height: 84px; object-fit: cover; object-position: center;
             border-radius: 50%;
             padding: 5px;
             background: radial-gradient(circle at 35% 30%, var(--secondary-bright), var(--secondary) 55%, var(--secondary-deep) 100%);
@@ -717,7 +717,7 @@
             .status-board { flex-direction: column; gap: 0.3rem; font-size: 0.72rem; padding: 0.5rem 1rem; }
             .status-board .divider { display: none; }
             .pos-header { grid-template-columns: 60px 1fr; gap: 0.6rem; padding: 0.75rem 1rem; }
-            .brand-logo { max-width: 52px; max-height: 52px; }
+            .brand-logo { width: 52px; height: 52px; }
             .header-center h1 { font-size: 1.3rem; }
             .header-center p { font-size: 0.72rem; }
             .main-content { padding: 0 1rem 6rem; min-width: 0; }
@@ -759,7 +759,7 @@
 
         @media (max-width: 480px) {
             .pos-header { grid-template-columns: 44px 1fr; padding: 0.6rem 0.75rem; }
-            .brand-logo { max-width: 38px; max-height: 38px; }
+            .brand-logo { width: 38px; height: 38px; }
             .header-center h1 { font-size: 1.05rem; }
             .main-content { padding: 0 0.75rem 6rem; }
         }
