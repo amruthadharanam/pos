@@ -56,6 +56,22 @@
             --emboss-pressed:
                 0 2px 4px rgba(59,15,19,0.28) inset,
                 0 -1px 0 rgba(255,255,255,0.25) inset;
+
+            /* Crystal layer — glass fill + a glowing gradient brass
+               wire traced around each panel's edge, like a faceted
+               gem set in a metal claw. Layered on TOP of the carved
+               surfaces above, not a replacement for them. */
+            --glass-fill: linear-gradient(155deg, rgba(255,255,255,0.60), rgba(255,255,255,0.30));
+            --glass-blur: blur(16px) saturate(150%);
+            --wire-gradient: linear-gradient(135deg, var(--secondary-bright), var(--secondary) 45%, var(--secondary-deep) 70%, var(--secondary-bright));
+            --wire-glow: 0 0 0 1px rgba(201,162,39,0.25), 0 0 22px rgba(201,162,39,0.20), 0 0 2px rgba(255,255,255,0.6);
+            --spring: cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        [data-theme="dark"] {
+            --glass-fill: linear-gradient(155deg, rgba(255,255,255,0.07), rgba(255,255,255,0.015));
+            --wire-gradient: linear-gradient(135deg, var(--secondary-bright), var(--secondary) 45%, var(--secondary-deep) 70%, var(--secondary-bright));
+            --wire-glow: 0 0 0 1px rgba(232,199,102,0.28), 0 0 26px rgba(232,199,102,0.22), 0 0 2px rgba(255,255,255,0.15);
         }
 
         [data-theme="dark"] {
@@ -108,6 +124,46 @@
         :focus-visible { outline: 2.5px solid var(--accent); outline-offset: 2px; }
 
         /* ============================================================
+           CRYSTAL LAYER
+           A shared "glass panel" treatment: frosted translucency over
+           the diamond-facet backdrop, a glowing brass wire traced
+           around the rounded edge (drawn with a masked gradient so it
+           follows border-radius exactly, not a straight-sided box),
+           and a soft diagonal light sweep for a faceted-glass glint.
+           Applied to structural panels only — buttons and inputs stay
+           solid so text and tap targets remain crisp and legible.
+        ============================================================ */
+        .crystal {
+            position: relative;
+            background-image: var(--glass-fill);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+        }
+        .crystal::before {
+            content: '';
+            position: absolute; inset: 0; border-radius: inherit;
+            padding: 1.5px;
+            background: var(--wire-gradient);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .crystal::after {
+            content: '';
+            position: absolute; inset: 0; border-radius: inherit;
+            background: linear-gradient(115deg, rgba(255,255,255,0.35) 0%, transparent 22%, transparent 78%, rgba(255,255,255,0.12) 100%);
+            pointer-events: none; z-index: 1; mix-blend-mode: soft-light;
+        }
+        [data-theme="dark"] .crystal::after { mix-blend-mode: overlay; opacity: 0.7; }
+        .crystal > * { position: relative; z-index: 2; }
+        @media (max-width: 640px) {
+            .crystal { -webkit-backdrop-filter: blur(9px); backdrop-filter: blur(9px); }
+        }
+
+        /* ============================================================
            LIVE STATUS BOARD — the signature element.
            Reads like a hospitality front-desk / departure board:
            instantly tells staff whether the kitchen can take orders,
@@ -129,7 +185,7 @@
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 0.5rem 1.25rem;
-            box-shadow: var(--shadow), 0 1px 0 rgba(255,255,255,0.08) inset;
+            box-shadow: var(--shadow), var(--wire-glow), 0 1px 0 rgba(255,255,255,0.08) inset;
         }
         .status-board .seg { display: flex; align-items: center; gap: 0.5rem; }
         .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 0 2px rgba(0,0,0,0.15) inset; }
@@ -233,7 +289,7 @@
             padding: 1.1rem 1.75rem;
             border-radius: var(--radius-lg);
             margin-bottom: 1.5rem;
-            box-shadow: 0 2px 10px rgba(110,32,39,0.09), 0 1px 3px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 10px rgba(110,32,39,0.09), 0 1px 3px rgba(0,0,0,0.04), var(--wire-glow);
             border: 1px solid var(--border);
             border-bottom: 3px solid var(--secondary);
             gap: 1.25rem;
@@ -340,11 +396,11 @@
 
         /* Future Order's date/time card. */
         .schedule-card {
-            display: none; background: var(--surface); border: 1px solid var(--border);
+            display: none; border: 1px solid var(--border);
             border-left: 4px solid var(--secondary); border-radius: var(--radius-lg);
-            padding: 1.1rem 1.25rem; margin-bottom: 1.5rem; box-shadow: var(--shadow);
+            padding: 1.1rem 1.25rem; margin-bottom: 1.5rem; box-shadow: var(--shadow), var(--wire-glow);
         }
-        .schedule-card.visible { display: block; animation: toast-in 0.2s ease-out; }
+        .schedule-card.visible { display: block; animation: toast-in 0.2s var(--spring); }
         .schedule-card-title {
             font-family: var(--font-heading); color: var(--heading-color); font-size: 1.1rem;
             margin-bottom: 0.9rem;
@@ -372,21 +428,23 @@
         [data-theme="dark"] .cart-schedule-note { background: rgba(232,199,102,0.08); color: var(--secondary-bright); }
 
         /* --- MENU GRID ---
-           Each category card is treated like a small carved wood panel:
-           a brass inlay rule down the left, a routed-groove inset shadow,
-           and a gentle 3D tilt toward the viewer on hover. */
-        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; perspective: 900px; }
+           Each category card is a small glass panel in a glowing brass
+           wire frame, floating over the diamond-facet backdrop, and it
+           tilts in real 3D toward the cursor (see the tiltEffect script
+           near the end of the page) rather than a fixed hover angle. */
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; perspective: 1400px; }
         .category-card {
-            background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--secondary);
+            border: 1px solid var(--border); border-left: 4px solid var(--secondary);
             border-radius: var(--radius-lg); padding: 1.25rem;
-            box-shadow: var(--shadow), 0 1px 0 rgba(255,255,255,0.5) inset;
-            transition: transform 0.22s ease, box-shadow 0.22s ease;
+            box-shadow: var(--shadow), var(--wire-glow), 0 1px 0 rgba(255,255,255,0.5) inset;
+            transition: transform 0.35s var(--spring), box-shadow 0.35s ease;
             transform-style: preserve-3d;
+            will-change: transform;
         }
         .category-card:hover {
-            box-shadow: var(--shadow-lift), 0 1px 0 rgba(255,255,255,0.5) inset;
-            transform: perspective(900px) rotateX(1.5deg) translateY(-3px);
+            box-shadow: var(--shadow-lift), var(--wire-glow), 0 1px 0 rgba(255,255,255,0.5) inset;
         }
+        @media (prefers-reduced-motion: reduce) { .category-card { transition: box-shadow 0.2s ease; } }
         .category-title {
             font-family: var(--font-heading); color: var(--heading-color); border-bottom: 2px solid var(--secondary);
             padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.15rem;
@@ -535,8 +593,9 @@
         .qr-wrapper {
             border: 2px solid var(--border); border-radius: var(--radius-lg);
             padding: 0.85rem; background: var(--surface); transition: border-color 0.25s, box-shadow 0.25s;
+            box-shadow: var(--wire-glow);
         }
-        .qr-wrapper.active { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(201,162,39,0.16); }
+        .qr-wrapper.active { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(201,162,39,0.16), var(--wire-glow); }
         [data-theme="dark"] .qr-wrapper.active { box-shadow: 0 0 0 3px rgba(232,199,102,0.2); }
         .qr-image { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; display: block; border-radius: var(--radius-md); }
         .qr-placeholder-box {
@@ -627,12 +686,12 @@
         .toast {
             background: linear-gradient(180deg, var(--primary), var(--primary-deep)); color: #fff; padding: 0.7rem 1rem; border-radius: var(--radius-md);
             box-shadow: var(--shadow-lift); font-family: var(--font-btn); font-size: 0.83rem;
-            display: flex; align-items: center; gap: 0.5rem; animation: toast-in 0.25s ease-out; max-width: 300px;
+            display: flex; align-items: center; gap: 0.5rem; animation: toast-in 0.3s var(--spring); max-width: 300px;
         }
         .toast.error { background: linear-gradient(180deg, #D6413A, var(--danger)); }
         .toast.success { background: linear-gradient(180deg, #3E9142, var(--success)); }
         .toast.info { background: linear-gradient(180deg, #4A3A30, var(--text-main)); }
-        @keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes toast-in { from { opacity: 0; transform: translateY(8px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
         /* --- MODAL (replaces jarring native alert/confirm) --- */
         .modal-overlay {
@@ -642,9 +701,9 @@
         .modal-overlay.hidden { display: none; }
         .modal-box {
             background: var(--surface); border-radius: var(--radius-lg); padding: 1.6rem;
-            max-width: 380px; width: 100%; box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+            max-width: 380px; width: 100%; box-shadow: 0 24px 60px rgba(0,0,0,0.4), var(--wire-glow);
             border-top: 3px solid var(--secondary);
-            animation: toast-in 0.2s ease-out;
+            animation: toast-in 0.22s var(--spring);
         }
         .modal-box h3 { font-family: var(--font-heading); color: var(--heading-color); margin-bottom: 0.6rem; font-size: 1.2rem; }
         .modal-box p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.3rem; white-space: pre-line; }
@@ -766,6 +825,67 @@
     </style>
     <style>
         /* ============================================================
+           MOTION SYSTEM
+           One spring curve reused everywhere: a staggered load-in
+           (plaque, nameplate, tabs, menu settle into place like lamps
+           lit down a counter), plus small tactile cart feedback —
+           a button pulse on tap, a pop on the totals when they change.
+           Fully disabled under prefers-reduced-motion.
+        ============================================================ */
+        @keyframes settle-in {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .status-board, .announcement-bar.visible, .pos-header, .mode-tabs,
+        .schedule-card.visible, .controls-row, .menu-grid, .sidebar {
+            animation: settle-in 0.55s var(--spring) both;
+        }
+        .status-board            { animation-delay: 0.02s; }
+        .announcement-bar.visible{ animation-delay: 0.06s; }
+        .pos-header               { animation-delay: 0.10s; }
+        .mode-tabs                 { animation-delay: 0.17s; }
+        .controls-row                { animation-delay: 0.23s; }
+        .menu-grid                     { animation-delay: 0.28s; }
+        .sidebar                         { animation-delay: 0.34s; }
+
+        @keyframes qty-pulse {
+            0%   { transform: scale(1); }
+            40%  { transform: scale(1.22); }
+            100% { transform: scale(1); }
+        }
+        .qty-btn.pulse { animation: qty-pulse 0.32s var(--spring); }
+
+        @keyframes row-in {
+            from { opacity: 0; transform: translateX(6px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        .cart-item-row { animation: row-in 0.3s var(--spring) both; }
+
+        @keyframes total-pop {
+            0%   { transform: scale(1); }
+            45%  { transform: scale(1.09); color: var(--secondary-deep); }
+            100% { transform: scale(1); }
+        }
+        #summary-grand-total.pop, #qr-amount-display.pop { animation: total-pop 0.4s var(--spring); display: inline-block; }
+
+        @keyframes badge-pop {
+            0% { transform: scale(0.4); opacity: 0; }
+            60% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        .pill-badge { animation: badge-pop 0.3s var(--spring); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .status-board, .announcement-bar.visible, .pos-header, .mode-tabs,
+            .schedule-card.visible, .controls-row, .menu-grid, .sidebar,
+            .qty-btn.pulse, .cart-item-row, #summary-grand-total.pop,
+            #qr-amount-display.pop, .pill-badge {
+                animation: none !important;
+            }
+        }
+    </style>
+    <style>
+        /* ============================================================
            COPY PROTECTION (deterrent only — see note in JS below)
         ============================================================ */
         html, body {
@@ -791,7 +911,7 @@
 </head>
 <body>
 
-    <div class="status-board" id="status-board" role="status" aria-live="polite">
+    <div class="status-board crystal" id="status-board" role="status" aria-live="polite">
         <div class="seg"><span class="status-dot" id="kitchen-dot"></span><span id="kitchen-status-text">Checking kitchen status…</span></div>
         <span class="divider">•</span>
         <div class="seg"><span class="veg-mark"></span><span>100% Pure Vegetarian</span></div>
@@ -809,7 +929,7 @@
 
         <main class="main-content">
 
-            <header class="pos-header">
+            <header class="pos-header crystal">
                 <div class="header-left">
                     <img src="Amruthadharanam_logo2.png" alt="Amruthadhaaranam Logo" class="brand-logo"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -826,7 +946,7 @@
                 <button type="button" class="mode-tab" data-mode="Future" aria-pressed="false">📅 Future Order</button>
             </div>
 
-            <div class="schedule-card" id="future-schedule-card">
+            <div class="schedule-card crystal" id="future-schedule-card">
                 <h3 class="schedule-card-title">📅 Future Delivery</h3>
                 <div class="schedule-card-fields">
                     <div class="form-group">
@@ -948,7 +1068,7 @@
             <section class="qr-pay-section">
                 <h3 class="step-title"><span class="step-num">4</span> Payment &amp; Confirm</h3>
 
-                <div class="qr-wrapper" id="qr-wrapper">
+                <div class="qr-wrapper crystal" id="qr-wrapper">
                     <img src="qr.jpeg" alt="UPI Payment QR Code" class="qr-image"
                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
                     <div class="qr-placeholder-box">
@@ -989,7 +1109,7 @@
     <div class="toast-container" id="toast-container" aria-live="polite"></div>
 
     <div class="modal-overlay hidden" id="modal-overlay">
-        <div class="modal-box" role="dialog" aria-modal="true">
+        <div class="modal-box crystal" role="dialog" aria-modal="true">
             <h3 id="modal-title">Title</h3>
             <p id="modal-message">Message</p>
             <div class="modal-actions">
@@ -1503,7 +1623,7 @@
                     const card = document.createElement("div");
                     const isMobile = window.matchMedia('(max-width: 768px)').matches;
                     const shouldCollapse = isMobile && !expandedTitles.has(title);
-                    card.className = `category-card${shouldCollapse ? ' collapsed' : ''}`;
+                    card.className = `category-card crystal${shouldCollapse ? ' collapsed' : ''}`;
                     card.innerHTML = `
                         <h3 class="category-title">
                             <span>${title}</span>
@@ -1641,7 +1761,17 @@
                 document.getElementById("summary-unique-items").innerText = uniqueItems;
                 document.getElementById("summary-total-qty").innerText = totalQty;
                 document.getElementById("summary-subtotal").innerText = `₹${subtotal.toFixed(2)}`;
-                document.getElementById("summary-grand-total").innerText = `₹${grandTotal.toFixed(2)}`;
+
+                const grandTotalEl = document.getElementById("summary-grand-total");
+                const newGrandTotalText = `₹${grandTotal.toFixed(2)}`;
+                if (this._lastGrandTotal !== undefined && this._lastGrandTotal !== grandTotal) {
+                    grandTotalEl.classList.remove("pop");
+                    void grandTotalEl.offsetWidth;
+                    grandTotalEl.classList.add("pop");
+                }
+                grandTotalEl.innerText = newGrandTotalText;
+                this._lastGrandTotal = grandTotal;
+
                 document.getElementById("lbl-order-no").innerText = POSState.orderId;
 
                 const discountRow = document.getElementById("row-discount");
@@ -1654,7 +1784,14 @@
                 }
 
                 const qrTag = document.getElementById("qr-amount-tag");
-                document.getElementById("qr-amount-display").innerText = `₹${grandTotal.toFixed(2)}`;
+                const qrAmountEl = document.getElementById("qr-amount-display");
+                const newQrText = `₹${grandTotal.toFixed(2)}`;
+                if (qrAmountEl.innerText !== newQrText && qrAmountEl.innerText !== "") {
+                    qrAmountEl.classList.remove("pop");
+                    void qrAmountEl.offsetWidth;
+                    qrAmountEl.classList.add("pop");
+                }
+                qrAmountEl.innerText = newQrText;
                 qrTag.classList.toggle("zero", grandTotal === 0);
                 const qrWrapper = document.getElementById("qr-wrapper");
                 if (qrWrapper) qrWrapper.classList.toggle("active", grandTotal > 0);
@@ -1749,6 +1886,9 @@
                         return;
                     }
                     if (e.target.classList.contains("qty-btn")) {
+                        e.target.classList.remove("pulse");
+                        void e.target.offsetWidth;
+                        e.target.classList.add("pulse");
                         const id = e.target.dataset.id;
                         const item = getMenuData().find(m => m.id === id);
                         const cart = POSState.getCart();
@@ -2236,6 +2376,43 @@
             POSState.init();
             UIEngine.init();
         });
+
+        /* ================================================================
+           CRYSTAL-PANEL TILT
+           Menu cards tilt in real 3D toward the cursor, as if light were
+           catching a faceted glass panel in a brass wire frame. Skipped
+           for touch devices and reduced-motion preference.
+        ================================================================ */
+        (function tiltEffect() {
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+            if (reduceMotion || isTouch) return;
+
+            const container = document.getElementById('menu-container');
+            if (!container) return;
+            let activeCard = null;
+
+            container.addEventListener('mousemove', (e) => {
+                const card = e.target.closest('.category-card');
+                if (!card) {
+                    if (activeCard) { activeCard.style.transform = ''; activeCard = null; }
+                    return;
+                }
+                activeCard = card;
+                const rect = card.getBoundingClientRect();
+                const px = (e.clientX - rect.left) / rect.width;
+                const py = (e.clientY - rect.top) / rect.height;
+                const rotateY = (px - 0.5) * 7;
+                const rotateX = (0.5 - py) * 5;
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(3px) translateY(-2px)`;
+            });
+
+            container.addEventListener('mouseleave', (e) => {
+                const card = e.target.closest && e.target.closest('.category-card');
+                if (card) card.style.transform = '';
+                if (!container.contains(e.relatedTarget)) activeCard = null;
+            }, true);
+        })();
 
         /* ============================================================
            COPY PROTECTION (deterrent layer)
