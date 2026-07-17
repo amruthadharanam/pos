@@ -125,13 +125,6 @@
 
         /* ============================================================
            CRYSTAL LAYER
-           A shared "glass panel" treatment: frosted translucency over
-           the diamond-facet backdrop, a glowing brass wire traced
-           around the rounded edge (drawn with a masked gradient so it
-           follows border-radius exactly, not a straight-sided box),
-           and a soft diagonal light sweep for a faceted-glass glint.
-           Applied to structural panels only — buttons and inputs stay
-           solid so text and tap targets remain crisp and legible.
         ============================================================ */
         .crystal {
             position: relative;
@@ -164,10 +157,7 @@
         }
 
         /* ============================================================
-           LIVE STATUS BOARD — the signature element.
-           Reads like a hospitality front-desk / departure board:
-           instantly tells staff whether the kitchen can take orders,
-           without ever hard-blocking them from queuing one anyway.
+           LIVE STATUS BOARD
         ============================================================ */
         .status-board {
             max-width: 1600px;
@@ -248,7 +238,7 @@
             .announcement-bar .ab-icon.blinking { animation: none; }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .announcement-bar { font-size: 0.78rem; padding: 0.6rem 0.85rem; }
         }
 
@@ -277,10 +267,6 @@
             overflow-y: auto;
         }
 
-        /* Header reads as a brass-fitted plaque: warm gradient panel,
-           a fine brass rule underneath, and a raised medallion frame
-           around the logo — the page's one unmissable "cast metal"
-           moment, echoed later in the tabs and buttons. */
         .pos-header {
             display: grid;
             grid-template-columns: 190px 1fr;
@@ -298,10 +284,6 @@
             background: linear-gradient(120deg, rgba(177,75,82,0.12) 0%, var(--surface) 55%, rgba(232,199,102,0.06) 100%);
         }
         .header-left { display: flex; align-items: center; justify-content: center; }
-        /* The logo is a wide arch-shaped banner (~1.84:1), not a square
-           mark — object-fit: contain guarantees the full arch, its side
-           flourishes, and the lettering are always shown intact, never
-           cropped, at whatever width the layout gives it. */
         .brand-logo {
             width: 100%; height: auto; max-height: 92px;
             object-fit: contain; object-position: center;
@@ -372,8 +354,6 @@
 
         /* ============================================================
            ORDERING MODE TABS
-           Cast as a pair of brass plaques: the resting tab is raised
-           (embossed), the active tab reads as pressed-in and engraved.
         ============================================================ */
         .mode-tabs {
             display: flex; gap: 0.6rem; margin-bottom: 1rem; flex-wrap: wrap;
@@ -427,11 +407,7 @@
         .cart-schedule-note.visible { display: block; }
         [data-theme="dark"] .cart-schedule-note { background: rgba(232,199,102,0.08); color: var(--secondary-bright); }
 
-        /* --- MENU GRID ---
-           Each category card is a small glass panel in a glowing brass
-           wire frame, floating over the diamond-facet backdrop, and it
-           tilts in real 3D toward the cursor (see the tiltEffect script
-           near the end of the page) rather than a fixed hover angle. */
+        /* --- MENU GRID --- */
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; perspective: 1400px; }
         .category-card {
             border: 1px solid var(--border); border-left: 4px solid var(--secondary);
@@ -495,7 +471,7 @@
         .empty-results { text-align: center; padding: 3rem 1rem; color: var(--text-muted); grid-column: 1 / -1; }
         .empty-results .empty-icon { font-size: 2.2rem; display: block; margin-bottom: 0.6rem; }
 
-        /* --- ORDER REF CHIP (sidebar summary) --- */
+        /* --- ORDER REF CHIP --- */
         .order-ref-chip {
             display: flex; align-items: center; justify-content: space-between;
             background: rgba(110,32,39,0.05); border: 1px dashed var(--secondary-deep);
@@ -617,7 +593,7 @@
         .qr-amount-value { font-family: var(--font-mono); font-size: 1.6rem; font-weight: 700; letter-spacing: 0.01em; }
         .qr-hint { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.7; text-align: center; }
 
-        /* --- UPDATE NOW (cache-busting reload button) --- */
+        /* --- UPDATE NOW --- */
         .btn-update-now {
             position: fixed;
             left: 20px;
@@ -646,7 +622,7 @@
         @media (prefers-reduced-motion: reduce) {
             .btn-update-now .bun-icon { animation: none; }
         }
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .btn-update-now { left: 14px; bottom: 84px; padding: 0.6rem 1rem; font-size: 0.76rem; }
         }
         ::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -654,10 +630,7 @@
         ::-webkit-scrollbar-thumb { background: var(--secondary-deep); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--secondary); }
 
-        /* --- BUTTON SYSTEM ---
-           Every button shares the same cast-brass bevel: raised at rest,
-           pressed-in on click — the tactile signature carried through
-           from the header medallion and the mode tabs above. */
+        /* --- BUTTON SYSTEM --- */
         .btn-group { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem; }
         .btn-row { display: flex; gap: 0.6rem; }
         .btn-row .btn { flex: 1; }
@@ -693,7 +666,7 @@
         .toast.info { background: linear-gradient(180deg, #4A3A30, var(--text-main)); }
         @keyframes toast-in { from { opacity: 0; transform: translateY(8px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
-        /* --- MODAL (replaces jarring native alert/confirm) --- */
+        /* --- MODAL --- */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(21, 10, 11, 0.6); display: flex;
             align-items: center; justify-content: center; z-index: 10000; padding: 1rem;
@@ -745,22 +718,14 @@
             .qr-placeholder { text-align: center; margin-top: 4mm; font-size: 9px; }
         }
 
-        /* --- UPI BUTTON --- */
-        .btn-upi {
-            background: linear-gradient(135deg, #6B21E8, #9333EA); color: white;
-            display: flex; align-items: center; justify-content: center;
-            gap: 0.5rem; font-size: 0.95rem; padding: 0.9rem 1rem;
-        }
-        .btn-upi:hover { background: linear-gradient(135deg, #5B11D8, #7E22CE); }
-
-        /* --- COLLAPSIBLE TOGGLE ICON (hidden on desktop) --- */
+        /* --- COLLAPSIBLE TOGGLE ICON --- */
         .category-toggle-icon { display: none; font-size: 0.75rem; color: var(--text-muted); transition: transform 0.25s ease; flex-shrink: 0; padding: 4px; }
 
         /* --- MOBILE OVERLAY --- */
         .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(21,10,11,0.5); z-index: 900; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
         .mobile-overlay.active { display: block; }
 
-        /* --- SIDEBAR BACK BUTTON (mobile only) --- */
+        /* --- SIDEBAR BACK BUTTON --- */
         .sidebar-close-btn { display: none; }
 
         @media (max-width: 1024px) {
@@ -772,7 +737,7 @@
             body { padding-bottom: 0; }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .status-board { flex-direction: column; gap: 0.3rem; font-size: 0.72rem; padding: 0.5rem 1rem; }
             .status-board .divider { display: none; }
             .pos-header { grid-template-columns: 120px 1fr; gap: 0.6rem; padding: 0.75rem 1rem; }
@@ -826,11 +791,6 @@
     <style>
         /* ============================================================
            MOTION SYSTEM
-           One spring curve reused everywhere: a staggered load-in
-           (plaque, nameplate, tabs, menu settle into place like lamps
-           lit down a counter), plus small tactile cart feedback —
-           a button pulse on tap, a pop on the totals when they change.
-           Fully disabled under prefers-reduced-motion.
         ============================================================ */
         @keyframes settle-in {
             from { opacity: 0; transform: translateY(14px); }
@@ -886,16 +846,15 @@
     </style>
     <style>
         /* ============================================================
-           COPY PROTECTION (deterrent only — see note in JS below)
+           COPY PROTECTION
         ============================================================ */
         html, body {
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            -webkit-touch-callout: none; /* iOS long-press menu */
+            -webkit-touch-callout: none;
         }
-        /* Keep normal typing/selecting inside form fields usable */
         input, textarea, [contenteditable="true"] {
             -webkit-user-select: text;
             -moz-user-select: text;
@@ -947,7 +906,7 @@
             </div>
 
             <div class="schedule-card crystal" id="future-schedule-card">
-                <h3 class="schedule-card-title">📅 Future Order Date with Time</h3>
+                <h3 class="schedule-card-title">📅 Future Delivery</h3>
                 <div class="schedule-card-fields">
                     <div class="form-group">
                         <label for="future-date">Delivery Date *</label>
@@ -958,7 +917,7 @@
                         <input type="time" id="future-time" min="09:00" max="22:00">
                     </div>
                 </div>
-                <p class="schedule-card-hint">This date &amp; time apply to your entire order below — pick your items as usual, then confirm. Delivery date can be chosen from tomorrow up to 14 days ahead, and delivery time must fall between 9:00 AM and 10:00 PM.</p>
+                <p class="schedule-card-hint">This date &amp; time apply to your entire order below — pick your items as usual, then confirm. Delivery date can be chosen from tomorrow up to 15 days ahead, and delivery time must fall between 9:00 AM and 10:00 PM.</p>
             </div>
 
             <div class="controls-row">
@@ -975,7 +934,7 @@
 
         <aside class="sidebar">
 
-            <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Back to menu">&#8592; Back to Menu</button>
+            <button type="button" class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Back to menu">&#8592; Back to Menu</button>
 
             <section>
                 <h3 class="step-title"><span class="step-num">1</span> Order Type</h3>
@@ -1006,8 +965,8 @@
                             <label for="cust-apart">Apartment / Villa</label>
                             <select id="cust-apart">
                                 <option value="SIDHHARTH DHAKSHIN Apts" selected>SIDHHARTH DHAKSHIN Apts</option>
-                                 <option value="NATWEST Apts">NATWEST Apts</option>
-                                 <option value="MARUTHAM Apts">MARUTHAM Apts</option>
+                                <option value="NATWEST Apts">NATWEST Apts</option>
+                                <option value="MARUTHAM Apts">MARUTHAM Apts</option>
                                 <option value="URBAN TREE Apts">URBAN TREE Apts</option>
                             </select>
                         </div>
@@ -1160,254 +1119,134 @@
     <script>
         /* ================================================================
            ANNOUNCEMENT CONFIG
-           Edit this block whenever you have something timely to tell
-           customers — a delayed opening, a new item, a festival special,
-           a temporary closure, etc.
-
-           - enabled: set to false to hide the banner entirely
-           - type:    "info" (green, general), "offer" (gold, promos/new
-                      items), or "urgent" (red, delays/closures/issues)
-           - icon:    any emoji
-           - text:    plain text or simple HTML (e.g. <strong>bold</strong>)
-
-           Dismissals are remembered per browser, but only for THIS exact
-           message — the moment you change enabled/type/text and the
-           customer reloads the page, it reappears even if they'd
-           dismissed an earlier one.
         ================================================================ */
         const ANNOUNCEMENT = {
             enabled: true,
-            type: "offer",   // "info" | "offer" | "urgent"
+            type: "offer",
             icon: "🎉",
-            text: "Announcement: <strong>Introducing FUTURE ORDER ! You can plan your order item for the next 14 days and Stay confident !!!</strong> !",
-            blink: true      // true = text gently pulses to grab attention; false = static
+            text: "<strong>Introducing FUTURE ORDER! Plan your menu selection for the next 14 days and stay ahead dynamically!</strong>",
+            blink: true
         };
 
         /* ================================================================
-           MENU DATA — separate lists per ordering mode
-           Today's Order Menu (Instant) and Future Order each have their
-           own independent item list below. Add, remove, rename, price,
-           or comment out items in ONE list without touching the other —
-           they no longer have to stay in sync.
+           MENU DATA
         ================================================================ */
         const MENU_DATA_BY_MODE = {
-
-        /* ---------- TODAY'S ORDER MENU (Instant) ---------- */
-        Instant: [
-            // --- BREAKFAST SECTION (7 am to 10 am)---
-         //   { id: "b1", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Ghee Podi Mini Idli (14 Pcs)", price: 80 },
-         //   { id: "b2", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Traditional Steamed Idli (2 Pcs) with Chutney", price: 40 },
-         //   { id: "b3", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Crispy Medu Vada (2 Pcs)", price: 45 },
-         //   { id: "b4", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Special Ghee Roast Dosa", price: 90, popular: true },
-
-           // --- LUNCH SECTION (12.30 pm to 2 pm)---
-          //  { id: "l1", category: "Lunch Special", title: "🍱 Lunch Special", name: "Mint Pulao Rice (Made with Basmati Rice) with Dhal Tadka and Raita", price: 149 },
-         //   { id: "l2", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Tangy Lemon Rice with Roasted Peanuts", price: 75 },
-         //   { id: "l3", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Creamy Curd Rice with Pickle & Chutney", price: 70 },
-         //   { id: "l4", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Executive Mini South Indian Meals", price: 130, popular: true },
-
-            // --- EVENING SNACKS SECTION (4 pm to 5.30 pm)---
-              { id: "es1", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Veg Paneer wrap", price: 99 },
-          //  { id: "es2", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Veg-Paneer-Pineapple Grilled Barbeque Box Worth 149/- is now Only 99/-", price: 99 , popular: true},
-           // { id: "es3", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Sweet Paniyaaram 5pcs", price: 99 },
-         //   { id: "es4", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Classic Samosa (2 Pcs) with Mint Chutney", price: 35 },
-
-            // --- MY DINNER SPECIAL SECTION (Pre order delivery from 7 pm)--- 
-            { id: "ds1", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Roti 5pcs", price: 99 },
-           { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Mix Veg Gravy 250ml", price: 80 },             
-            { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti (2pcs) + Mix Veg Gravy 100ml ", price: 80 },
-       //     { id: "ds3", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti (1 pc)", price: 25 },
-          //  { id: "ds4", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Plain Roti (1 pc)", price: 20 },
-          //  { id: "ds5", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Naan (1 pc)", price: 40 },
-
-            // --- BAKERY & PASTRY SECTION (All day Menu)---
-           // { id: "bp1", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "French Vannila Tea Cake (1 Pc)", price: 40 },
-           // { id: "bp2", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Signature Choco Brownie Fudge (1 Pc)", price: 59 },
-         //   { id: "bp3", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Red Velvet Cream Cheese Pastry", price: 95 },
-         //   { id: "bp4", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Fresh Cream Pineapple Cake Slice", price: 75 },
-         //   { id: "bp5", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Rich Chocolate Truffle Cake (Half KG)", price: 450, popular: true },
-         //   { id: "bp6", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Freshly Baked Veg Puff (1 Pc)", price: 30 },
-         //   { id: "bp7", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Paneer Tikka Puff", price: 45 },
-
-            // --- SIGNATURE SANDWICHES (All day Menu)---
-            { id: "s1", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Bombay Raw Veg Green Chutney Sandwich", price: 99 },
-            { id: "s2", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Deadly Chocolate with Cheese Sandwich", price: 99 },
-            { id: "s3", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Minced Veg Spicy Paneer with Butter Grilled Sandwich", price: 99 },
-            { id: "s4", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Triple Layer Bread Butter Jam", price: 75 },
-            { id: "s5", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Chilli Cheese Sandwich", price: 75 },
-            { id: "s6", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Veg Mayo Sandwich", price: 75 },
-            { id: "s7", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Corn Cheese Sandwich", price: 75 },
-            { id: "s8", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Cucumber Cheese Sandwich", price: 75 },
-            { id: "s9", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Onion, Tomato & Cucumber with Green Chutney", price: 75 },
-            { id: "s10", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Sandwich", price: 99, popular: true },
-            { id: "s11", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Banana Sandwich", price: 120 },
-            { id: "s12", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Extra Cheese (Add-On)", price: 20 },
-
-            // --- MAGGI CORNER (All day Menu)---
-            { id: "m1", category: "Maggi", title: "🍜 Maggi Corner", name: "Plain Maggi", price: 50 },
-            { id: "m2", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Maggi", price: 60 },
-            { id: "m3", category: "Maggi", title: "🍜 Maggi Corner", name: "Butter Maggi", price: 60 },
-            { id: "m4", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Butter Maggi", price: 60 },
-            { id: "m5", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Maggi", price: 70 },
-            { id: "m6", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Paneer Cheese Maggi", price: 75 },
-            { id: "m7", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Maggi", price: 80 },
-            { id: "m8", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Paneer Maggi", price: 99, popular: true },
-
-            // --- PASTA CORNER (All day Menu)---
-            { id: "p1", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Cheesy Corn Penne Pasta", price: 99, popular: true },
-            { id: "p2", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Veg Fusilli Pasta", price: 99 },
-            { id: "p3", category: "Pasta", title: "🍝 Pasta Corner", name: "Veggy Sweet Spice Red Sauce Shell Pasta", price: 99 },
-            { id: "p4", category: "Pasta", title: "🍝 Pasta Corner", name: "Masala Macaroni Pasta", price: 99 },
-
-            // --- COOLERS & FRESH JUICES (All day Menu) ---
-            { id: "j1", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Mint Cooler 250ml", price: 60 },
-            { id: "j2", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Juice 250ml", price: 60 },
-            { id: "j3", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Lemon Mint Cooler 250ml", price: 60 },
-            { id: "j4", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Sabja Mint Lime Juice", price: 75 },
-            { id: "j5", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Original & Natural Mint Mojito 500ml", price: 120, popular: true },
-            { id: "j6", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Indian Paneer Grape with mint lime cocktail juice 250ml", price: 60 },
-
-            // --- MILKSHAKES & SPECIAL DRINKS (All day Menu)---
-            { id: "d1", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Lassi", price: 75 },
-            { id: "d2", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Regular Rosemilk", price: 99 },
-            { id: "d3", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Sabja Rosemilk", price: 99 },
-            { id: "d4", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Royal Vanilla Rosemilk", price: 99 },
-            { id: "d5", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Banana Milkshake", price: 99 },
-            { id: "d6", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Choco Banana Milkshake", price: 99, popular: true },
-            { id: "d7", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Fresh Coconut Milk (1 Ltr)", price: 125 },
-
-            // --- COMBOS & OFFERS ---
-             { id: "co1", category: "Combos", title: "🎁 Combos & Offers", name: "BUY 2 WATERMELON MINT COOLER 250ml WORTH 120:", price: 99 },
-             { id: "co2", category: "Combos", title: "🎁 Combos & Offers", name: "ANY TWO PORTION MAGGI VARITY WITH WATERMELON MINT COOLER 250ml",price: 129 },
-             { id: "co3", category: "Combos", title: "🎁 Combos & Offers", name: "Triple Layer Bread Butter Jam with Cheese 2 sets Worth 150  ONLY 120", price: 120 },
-             { id: "co4", category: "Combos", title: "🎁 Combos & Offers", name: "Any Pasta + Lemonade 500ml worth 199 Only 149", price: 149 },
-        //    { id: "co5", category: "Combos", title: "🎁 Combos & Offers", name: "Evening Snack Platter (Pakoda + Bajji + Samosa)", price: 99 },
-        //    { id: "co6", category: "Combos", title: "🎁 Combos & Offers", name: "Dinner Combo: Parotta (2) + Kurma + Rosemilk", price: 175 }
-        ],
-
-        /* ---------- FUTURE ORDER MENU ---------- */
-        /* Seeded as a copy of Today's Order Menu above so nothing breaks
-           on first load — edit this list independently for pre-order-only
-           items, different pricing, or a smaller/larger selection. */
-        Future: [
-            // --- BREAKFAST SECTION (7 am to 10 am)---
-         //   { id: "b1", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Ghee Podi Mini Idli (14 Pcs)", price: 80 },
-         //   { id: "b2", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Traditional Steamed Idli (2 Pcs) with Chutney", price: 40 },
-         //   { id: "b3", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Crispy Medu Vada (2 Pcs)", price: 45 },
-         //   { id: "b4", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Special Ghee Roast Dosa", price: 90, popular: true },
-
-           // --- LUNCH SECTION (12.30 pm to 2 pm)---
-            { id: "l1", category: "Lunch Special", title: "🍱 Lunch Special", name: "Mint Pulao Rice (Made with Basmati Rice) with Dhal Tadka and Raita", price: 175 },
-            { id: "l2", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Tangy Lemon Rice with Roasted Peanuts and a some Fryams, 250ml watermelon mint cooler juice ", price: 125 },
-            { id: "l3", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Creamy Curd Rice with Pickle & Chutney", price: 70 },
-         //   { id: "l4", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Executive Mini South Indian Meals", price: 130, popular: true },
-
-            // --- EVENING SNACKS SECTION (4 pm to 5.30 pm)---
-            { id: "es1", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Bhel Poori chat", price: 50 },
-            { id: "es2", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Grilled Veggies Box Worth 149 /- is now Only 109/-", price: 109 , popular: true},
-            { id: "es3", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Sweet Paniyaaram 5pcs", price: 99 },
-         //   { id: "es4", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Classic Samosa (2 Pcs) with Mint Chutney", price: 35 },
-
-            // --- MY DINNER SPECIAL SECTION (Pre order delivery from 7 pm)--- 
-            { id: "ds1", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Veg Gravy of the Delivery day 250ml", price: 90 },
-            { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti 1pc", price: 25 },             
-            { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti (2pcs) + Veg Gravy of the Delivery day 100ml ", price: 80 },
-            { id: "ds3", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Poori(small size) 5pcs with Veg Gravy of the Delivery day 250ml", price: 99 },
-          //  { id: "ds4", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Plain Roti (1 pc)", price: 20 },
-          //  { id: "ds5", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Naan (1 pc)", price: 40 },
-
-            // --- BAKERY & PASTRY SECTION (All day Menu)---
-          //  { id: "bp1", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "French Vannila Tea Cake (2 box (1pc /box))", price: 80 },
-           // { id: "bp2", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Signature Choco Brownie Fudge (1 Pc)", price: 59 },
-         //   { id: "bp3", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Red Velvet Cream Cheese Pastry", price: 95 },
-         //   { id: "bp4", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Fresh Cream Pineapple Cake Slice", price: 75 },
-         //   { id: "bp5", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Rich Chocolate Truffle Cake (Half KG)", price: 450, popular: true },
-         //   { id: "bp6", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Freshly Baked Veg Puff (1 Pc)", price: 30 },
-         //   { id: "bp7", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Paneer Tikka Puff", price: 45 },
-
-            // --- SIGNATURE SANDWICHES (All day Menu)---
-            { id: "s1", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Bombay Raw Veg Green Chutney Sandwich", price: 99 },
-            { id: "s2", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Deadly Chocolate with Cheese Sandwich", price: 99 },
-            { id: "s3", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Minced Veg Spicy Paneer with Butter Grilled Sandwich", price: 99 },
-            { id: "s4", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Triple Layer Bread Butter Jam", price: 75 },
-            { id: "s5", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Chilli Cheese Sandwich", price: 75 },
-            { id: "s6", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Veg Mayo Sandwich", price: 75 },
-            { id: "s7", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Corn Cheese Sandwich", price: 75 },
-            { id: "s8", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Cucumber Cheese Sandwich", price: 75 },
-            { id: "s9", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Onion, Tomato & Cucumber with Green Chutney", price: 75 },
-            { id: "s10", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Sandwich", price: 99, popular: true },
-            { id: "s11", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Banana Sandwich", price: 120 },
-            { id: "s12", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Extra Cheese (Add-On)", price: 20 },
-
-            // --- MAGGI CORNER (All day Menu)---
-            { id: "m1", category: "Maggi", title: "🍜 Maggi Corner", name: "Plain Maggi", price: 50 },
-            { id: "m2", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Maggi", price: 60 },
-            { id: "m3", category: "Maggi", title: "🍜 Maggi Corner", name: "Butter Maggi", price: 60 },
-            { id: "m4", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Butter Maggi", price: 60 },
-            { id: "m5", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Maggi", price: 70 },
-            { id: "m6", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Paneer Cheese Maggi", price: 75 },
-            { id: "m7", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Maggi", price: 80 },
-            { id: "m8", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Paneer Maggi", price: 99, popular: true },
-
-            // --- PASTA CORNER (All day Menu)---
-            { id: "p1", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Cheesy Corn Penne Pasta", price: 99, popular: true },
-            { id: "p2", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Veg Fusilli Pasta", price: 99 },
-            { id: "p3", category: "Pasta", title: "🍝 Pasta Corner", name: "Veggy Sweet Spice Red Sauce Shell Pasta", price: 99 },
-            { id: "p4", category: "Pasta", title: "🍝 Pasta Corner", name: "Masala Macaroni Pasta", price: 99 },
-
-            // --- COOLERS & FRESH JUICES (All day Menu) ---
-            { id: "j1", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Mint Cooler 250ml", price: 60 },
-            { id: "j2", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Juice 250ml", price: 60 },
-            { id: "j3", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Lemon Mint Cooler 250ml", price: 60 },
-            { id: "j4", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Sabja Mint Lime Juice", price: 75 },
-            { id: "j5", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Original & Natural Mint Mojito 500ml", price: 120, popular: true },
-            { id: "j6", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Indian Paneer Grape with mint lime cocktail juice 250ml", price: 60 },
-
-            // --- MILKSHAKES & SPECIAL DRINKS (All day Menu)---
-            { id: "d1", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Lassi", price: 75 },
-            { id: "d2", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Regular Rosemilk", price: 99 },
-            { id: "d3", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Sabja Rosemilk", price: 99 },
-            { id: "d4", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Royal Vanilla Rosemilk", price: 99 },
-            { id: "d5", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Banana Milkshake", price: 99 },
-            { id: "d6", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Choco Banana Milkshake", price: 99, popular: true },
-            { id: "d7", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Fresh Coconut Milk (1 Ltr)", price: 125 },
-
-            // --- COMBOS & OFFERS ---
-         //    { id: "co1", category: "Combos", title: "🎁 Combos & Offers", name: "BUY 2 WATERMELON MINT COOLER 250ml WORTH 120:", price: 99 },
-      //     { id: "co2", category: "Combos", title: "🎁 Combos & Offers", name: "VEG MOMOS 5 pcs WORTH 125. OFFER PRICE 99 ONLY: ",price: 99 },
-         //   { id: "co3", category: "Combos", title: "🎁 Combos & Offers", name: "Maggi + Milkshake Combo", price: 130 },
-         //   { id: "co4", category: "Combos", title: "🎁 Combos & Offers", name: "Pasta + Cooler Combo", price: 160 },
-        //    { id: "co5", category: "Combos", title: "🎁 Combos & Offers", name: "Evening Snack Platter (Pakoda + Bajji + Samosa)", price: 99 },
-        //    { id: "co6", category: "Combos", title: "🎁 Combos & Offers", name: "Dinner Combo: Parotta (2) + Kurma + Rosemilk", price: 175 }
-        ]
-
+            Instant: [
+                { id: "es1", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Veg Paneer wrap", price: 99 },
+                { id: "ds1", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Roti 5pcs", price: 99 },
+                { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Mix Veg Gravy 250ml", price: 80 },             
+                { id: "ds3", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti (2pcs) + Mix Veg Gravy 100ml ", price: 80 },
+                { id: "s1", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Bombay Raw Veg Green Chutney Sandwich", price: 99 },
+                { id: "s2", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Deadly Chocolate with Cheese Sandwich", price: 99 },
+                { id: "s3", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Minced Veg Spicy Paneer with Butter Grilled Sandwich", price: 99 },
+                { id: "s4", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Triple Layer Bread Butter Jam", price: 75 },
+                { id: "s5", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Chilli Cheese Sandwich", price: 75 },
+                { id: "s6", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Veg Mayo Sandwich", price: 75 },
+                { id: "s7", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Corn Cheese Sandwich", price: 75 },
+                { id: "s8", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Cucumber Cheese Sandwich", price: 75 },
+                { id: "s9", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Onion, Tomato & Cucumber with Green Chutney", price: 75 },
+                { id: "s10", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Sandwich", price: 99, popular: true },
+                { id: "s11", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Banana Sandwich", price: 120 },
+                { id: "s12", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Extra Cheese (Add-On)", price: 20 },
+                { id: "m1", category: "Maggi", title: "🍜 Maggi Corner", name: "Plain Maggi", price: 50 },
+                { id: "m2", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Maggi", price: 60 },
+                { id: "m3", category: "Maggi", title: "🍜 Maggi Corner", name: "Butter Maggi", price: 60 },
+                { id: "m4", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Butter Maggi", price: 60 },
+                { id: "m5", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Maggi", price: 70 },
+                { id: "m6", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Paneer Cheese Maggi", price: 75 },
+                { id: "m7", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Maggi", price: 80 },
+                { id: "m8", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Paneer Maggi", price: 99, popular: true },
+                { id: "p1", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Cheesy Corn Penne Pasta", price: 99, popular: true },
+                { id: "p2", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Veg Fusilli Pasta", price: 99 },
+                { id: "p3", category: "Pasta", title: "🍝 Pasta Corner", name: "Veggy Sweet Spice Red Sauce Shell Pasta", price: 99 },
+                { id: "p4", category: "Pasta", title: "🍝 Pasta Corner", name: "Masala Macaroni Pasta", price: 99 },
+                { id: "j1", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Mint Cooler 250ml", price: 60 },
+                { id: "j2", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Juice 250ml", price: 60 },
+                { id: "j3", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Lemon Mint Cooler 250ml", price: 60 },
+                { id: "j4", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Sabja Mint Lime Juice", price: 75 },
+                { id: "j5", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Original & Natural Mint Mojito 500ml", price: 120, popular: true },
+                { id: "j6", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Indian Paneer Grape with mint lime cocktail juice 250ml", price: 60 },
+                { id: "d1", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Lassi", price: 75 },
+                { id: "d2", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Regular Rosemilk", price: 99 },
+                { id: "d3", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Sabja Rosemilk", price: 99 },
+                { id: "d4", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Royal Vanilla Rosemilk", price: 99 },
+                { id: "d5", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Banana Milkshake", price: 99 },
+                { id: "d6", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Choco Banana Milkshake", price: 99, popular: true },
+                { id: "d7", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Fresh Coconut Milk (1 Ltr)", price: 125 },
+                { id: "co1", category: "Combos", title: "🎁 Combos & Offers", name: "BUY 2 WATERMELON MINT COOLER 250ml WORTH 120:", price: 99 },
+                { id: "co2", category: "Combos", title: "🎁 Combos & Offers", name: "ANY TWO PORTION MAGGI VARITY WITH WATERMELON MINT COOLER 250ml",price: 129 },
+                { id: "co3", category: "Combos", title: "🎁 Combos & Offers", name: "Triple Layer Bread Butter Jam with Cheese 2 sets Worth 150  ONLY 120", price: 120 },
+                { id: "co4", category: "Combos", title: "🎁 Combos & Offers", name: "Any Pasta + Lemonade 500ml worth 199 Only 149", price: 149 }
+            ],
+            Future: [
+                { id: "l1", category: "Lunch Special", title: "🍱 Lunch Special", name: "Mint Pulao Rice (Made with Basmati Rice) with Dhal Tadka and Raita", price: 175 },
+                { id: "l2", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Tangy Lemon Rice with Roasted Peanuts and some Fryams, 250ml watermelon mint cooler juice", price: 125 },
+                { id: "l3", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Creamy Curd Rice with Pickle & Chutney", price: 70 },
+                { id: "es1", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Bhel Poori chat", price: 50 },
+                { id: "es2", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Grilled Veggies Box Worth 149 /- is now Only 109/-", price: 109, popular: true },
+                { id: "es3", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Sweet Paniyaaram 5pcs", price: 99 },
+                { id: "ds1", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Veg Gravy of the Delivery day 250ml", price: 90 },
+                { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti 1pc", price: 25 },             
+                { id: "ds3", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti (2pcs) + Veg Gravy of the Delivery day 100ml ", price: 80 },
+                { id: "ds4", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Poori(small size) 5pcs with Veg Gravy of the Delivery day 250ml", price: 99 },
+                { id: "s1", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Bombay Raw Veg Green Chutney Sandwich", price: 99 },
+                { id: "s2", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Deadly Chocolate with Cheese Sandwich", price: 99 },
+                { id: "s3", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Minced Veg Spicy Paneer with Butter Grilled Sandwich", price: 99 },
+                { id: "s4", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Triple Layer Bread Butter Jam", price: 75 },
+                { id: "s5", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Chilli Cheese Sandwich", price: 75 },
+                { id: "s6", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Veg Mayo Sandwich", price: 75 },
+                { id: "s7", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Corn Cheese Sandwich", price: 75 },
+                { id: "s8", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Cucumber Cheese Sandwich", price: 75 },
+                { id: "s9", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Onion, Tomato & Cucumber with Green Chutney", price: 75 },
+                { id: "s10", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Sandwich", price: 99, popular: true },
+                { id: "s11", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Banana Sandwich", price: 120 },
+                { id: "s12", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Extra Cheese (Add-On)", price: 20 },
+                { id: "m1", category: "Maggi", title: "🍜 Maggi Corner", name: "Plain Maggi", price: 50 },
+                { id: "m2", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Maggi", price: 60 },
+                { id: "m3", category: "Maggi", title: "🍜 Maggi Corner", name: "Butter Maggi", price: 60 },
+                { id: "m4", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Butter Maggi", price: 60 },
+                { id: "m5", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Maggi", price: 70 },
+                { id: "m6", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Paneer Cheese Maggi", price: 75 },
+                { id: "m7", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Maggi", price: 80 },
+                { id: "m8", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Paneer Maggi", price: 99, popular: true },
+                { id: "p1", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Cheesy Corn Penne Pasta", price: 99, popular: true },
+                { id: "p2", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Veg Fusilli Pasta", price: 99 },
+                { id: "p3", category: "Pasta", title: "🍝 Pasta Corner", name: "Veggy Sweet Spice Red Sauce Shell Pasta", price: 99 },
+                { id: "p4", category: "Pasta", title: "🍝 Pasta Corner", name: "Masala Macaroni Pasta", price: 99 },
+                { id: "j1", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Mint Cooler 250ml", price: 60 },
+                { id: "j2", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Juice 250ml", price: 60 },
+                { id: "j3", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Lemon Mint Cooler 250ml", price: 60 },
+                { id: "j4", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Sabja Mint Lime Juice", price: 75 },
+                { id: "j5", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Original & Natural Mint Mojito 500ml", price: 120, popular: true },
+                { id: "j6", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Indian Paneer Grape with mint lime cocktail juice 250ml", price: 60 },
+                { id: "d1", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Lassi", price: 75 },
+                { id: "d2", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Regular Rosemilk", price: 99 },
+                { id: "d3", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Sabja Rosemilk", price: 99 },
+                { id: "d4", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Royal Vanilla Rosemilk", price: 99 },
+                { id: "d5", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Banana Milkshake", price: 99 },
+                { id: "d6", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Choco Banana Milkshake", price: 99, popular: true },
+                { id: "d7", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Fresh Coconut Milk (1 Ltr)", price: 125 }
+            ]
         };
 
-        // Returns the item list for whichever tab is currently active.
         function getMenuData() {
             return MENU_DATA_BY_MODE[POSState.orderMode];
         }
 
-        // Example promo codes — edit freely for real campaigns.
         const COUPON_CODES = {
             "AMRUTH10": { type: "percent", value: 10, label: "10% off" },
             "FLAT50":    { type: "flat",    value: 50, label: "₹50 off" },
             "WELCOME5":  { type: "percent", value: 5,  label: "5% welcome discount" }
         };
 
-        const OPEN_HOUR = 6;   // 6:00 AM
-        const CLOSE_HOUR = 22; // 10:00 PM
+        const OPEN_HOUR = 6;
+        const CLOSE_HOUR = 22;
+        const FUTURE_ORDER_MIN_MINUTES = 9 * 60;
+        const FUTURE_ORDER_MAX_MINUTES = 22 * 60;
+        const FUTURE_ORDER_DATE_MIN_OFFSET_DAYS = 1;
+        const FUTURE_ORDER_DATE_MAX_OFFSET_DAYS = 16;
 
-        // Future Order's allowed delivery-time window. Narrower than the
-        // kitchen's general OPEN_HOUR/CLOSE_HOUR above by request — pre-
-        // orders may only be scheduled between 9 AM and 10 PM.
-        const FUTURE_ORDER_MIN_MINUTES = 9 * 60;   // 09:00
-        const FUTURE_ORDER_MAX_MINUTES = 22 * 60;  // 22:00
-
-        // Returns true only for a "HH:MM" string inside the Future Order
-        // delivery window. Used both live (on the time field's change
-        // event) and again at submit time, since a browser's native time
-        // picker doesn't reliably block manually-typed out-of-range values.
         function isFutureTimeWithinWindow(timeStr) {
             if (!timeStr) return false;
             const [h, m] = timeStr.split(":").map(Number);
@@ -1416,13 +1255,6 @@
             return mins >= FUTURE_ORDER_MIN_MINUTES && mins <= FUTURE_ORDER_MAX_MINUTES;
         }
 
-        // Future Order's allowed delivery-date window: tomorrow through
-        // 15 days after tomorrow (16 selectable dates total). Same-day
-        // scheduling isn't offered here — that's what Today's Order Menu
-        // (Instant) is for.
-        const FUTURE_ORDER_DATE_MIN_OFFSET_DAYS = 1;   // tomorrow
-        const FUTURE_ORDER_DATE_MAX_OFFSET_DAYS = 16;  // 15 days after tomorrow
-
         function toISODateLocal(d) {
             const y = d.getFullYear();
             const m = String(d.getMonth() + 1).padStart(2, '0');
@@ -1430,9 +1262,6 @@
             return `${y}-${m}-${day}`;
         }
 
-        // Returns { min, max } as "YYYY-MM-DD" strings for the future-date
-        // field's allowed range, computed fresh each time so it always
-        // reflects "today" at the moment it's called.
         function getFutureDateBounds() {
             const now = new Date();
             const minDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + FUTURE_ORDER_DATE_MIN_OFFSET_DAYS);
@@ -1440,28 +1269,16 @@
             return { min: toISODateLocal(minDate), max: toISODateLocal(maxDate) };
         }
 
-        // Returns true only for a "YYYY-MM-DD" string inside the Future
-        // Order delivery-date window (tomorrow .. tomorrow+15). Used both
-        // live (on the date field's change event) and again at submit
-        // time, since a browser's native date picker doesn't reliably
-        // block manually-typed out-of-range values.
         function isFutureDateWithinWindow(dateStr) {
             if (!dateStr) return false;
             const { min, max } = getFutureDateBounds();
             return dateStr >= min && dateStr <= max;
         }
 
-        // ⚠️ REQUIRED: Replace with Amruthaadharanam's actual WhatsApp Business
-        // number (country code + number, digits only, e.g. "919876543210").
-        // This is where every customer's order gets sent. Leaving the
-        // placeholder in place means orders will fail to reach you.
         const BUSINESS_WHATSAPP_NUMBER = "917845387741";
-        const UPI_VPA = "prabhunandhu-2@oksbi"; // Replace with your actual UPI VPA
+        const UPI_VPA = "prabhunandhu-2@oksbi";
 
         const POSState = {
-            /* Independent carts per ordering mode — adding items under
-               Future Order never affects what's in Today's Order Menu,
-               and vice versa. Each is a plain id -> qty map. */
             carts: { Instant: {}, Future: {} },
             activeCategory: "ALL",
             searchQuery: "",
@@ -1469,16 +1286,12 @@
             orderType: "Delivery",
             discount: { code: "", type: null, value: 0, label: "" },
             orderId: "",
-            orderMode: "Instant",   // "Instant" | "Future"
+            orderMode: "Instant",
             schedule: { date: "", time: "" },
 
-            /* The ONE place that knows "which cart is active right now".
-               Every read/write of cart quantities goes through this so the
-               two carts can never accidentally cross-contaminate. */
             getCart() {
                 return this.carts[this.orderMode];
             },
-
             init() {
                 this.generateOrderId();
                 this.carts = { Instant: {}, Future: {} };
@@ -1504,7 +1317,6 @@
                 document.getElementById("txt-search").focus();
             },
 
-            /* ---------- ANNOUNCEMENT BANNER ---------- */
             renderAnnouncement() {
                 const bar = document.getElementById("announcement-bar");
                 const iconEl = document.getElementById("announcement-icon");
@@ -1515,8 +1327,6 @@
                     return;
                 }
 
-                // Fingerprint the current message so a dismissal only
-                // suppresses THIS exact announcement, not future ones.
                 const fingerprint = `${ANNOUNCEMENT.type}|${ANNOUNCEMENT.text}`;
                 let hash = 0;
                 for (let i = 0; i < fingerprint.length; i++) {
@@ -1541,7 +1351,6 @@
                 };
             },
 
-            /* ---------- KITCHEN STATUS BOARD ---------- */
             updateKitchenStatus() {
                 const now = new Date();
                 const totalMins = now.getHours() * 60 + now.getMinutes();
@@ -1571,7 +1380,6 @@
                 }
             },
 
-            /* ---------- CATEGORY PILLS ---------- */
             renderCategories() {
                 const container = document.getElementById("category-pills-container");
                 const categories = ["ALL", ...new Set(getMenuData().map(item => item.category))];
@@ -1587,11 +1395,8 @@
                 }).join('');
             },
 
-            /* ---------- MENU GRID ---------- */
             renderMenu() {
                 const container = document.getElementById("menu-container");
-
-                // On mobile, remember which panels are currently open so re-renders don't collapse them
                 const expandedTitles = new Set();
                 if (window.matchMedia('(max-width: 768px)').matches) {
                     container.querySelectorAll('.category-card:not(.collapsed)').forEach(c => {
@@ -1653,22 +1458,8 @@
                 }
             },
 
-            /* ---------- ORDERING MODE SWITCH (Today's Order Menu / Future Order) ----------
-               Single source of truth for everything that changes when the mode
-               changes: active tab styling, whether the Future schedule card is
-               shown, the Future date/time required-ness, and the WhatsApp
-               button label. Used by both the mode-tab click handler and the
-               Reset Order flow so the two never drift out of sync. Each mode
-               has its own independent cart, so switching modes also refreshes
-               category badges, the menu's qty controls, and the sidebar's
-               Order Summary / totals. */
             applyOrderMode(mode) {
                 POSState.orderMode = mode;
-
-                // Each mode now has its own independent item list, so a
-                // category or search term picked under one tab may not
-                // exist under the other — reset both to avoid landing on
-                // an empty "no results" grid after switching tabs.
                 POSState.activeCategory = "ALL";
                 POSState.searchQuery = "";
                 document.getElementById("txt-search").value = "";
@@ -1702,7 +1493,6 @@
                 this.syncTotals();
             },
 
-            /* ---------- TOTALS & DISCOUNT ---------- */
             syncTotals() {
                 let uniqueItems = 0, totalQty = 0, subtotal = 0;
                 const previewContainer = document.getElementById("cart-items-preview");
@@ -1728,9 +1518,6 @@
                     previewContainer.innerHTML = `<li class="cart-empty-state"><span class="empty-icon">🛒</span>No items added yet</li>`;
                 }
 
-                // A single shared line above the list for Future Order (one
-                // date/time applies to the whole cart, so showing it once
-                // per item would just repeat the same line N times).
                 const scheduleNote = document.getElementById("cart-schedule-note");
                 if (POSState.orderMode === "Future") {
                     scheduleNote.classList.add("visible");
@@ -1744,7 +1531,6 @@
                     scheduleNote.classList.remove("visible");
                 }
 
-                // discount
                 let discountAmount = 0;
                 if (subtotal > 0 && POSState.discount.type) {
                     discountAmount = POSState.discount.type === "percent"
@@ -1796,7 +1582,6 @@
                 const qrWrapper = document.getElementById("qr-wrapper");
                 if (qrWrapper) qrWrapper.classList.toggle("active", grandTotal > 0);
 
-                // mobile sticky bar
                 const bar = document.getElementById("mobile-cart-bar");
                 bar.classList.toggle("visible", totalQty > 0);
                 document.getElementById("mobile-cart-count").innerText = totalQty;
@@ -1810,7 +1595,6 @@
                 if (el) el.innerText = new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
             },
 
-            /* ---------- TOASTS ---------- */
             showToast(message, type = "info") {
                 const container = document.getElementById("toast-container");
                 const toast = document.createElement("div");
@@ -1820,7 +1604,6 @@
                 setTimeout(() => toast.remove(), 3200);
             },
 
-            /* ---------- MODAL (replaces window.alert / window.confirm) ---------- */
             alertModal(title, message) {
                 return this.showModal(title, message, { confirmText: "OK", showCancel: false });
             },
@@ -1856,7 +1639,6 @@
                 });
             },
 
-            /* ---------- EVENT BINDING ---------- */
             bindEventHandlers() {
                 document.getElementById("category-pills-container").addEventListener("click", (e) => {
                     if (e.target.classList.contains("pill")) {
@@ -1925,10 +1707,6 @@
                     }
                 });
 
-                /* Phone number: digits only, capped at 10, as the customer
-                   types. This is the single shared "Your Details" field —
-                   Today's Order Menu and Future Order both use the same
-                   form, so this restriction applies under every tab. */
                 document.getElementById("cust-phone").addEventListener("input", (e) => {
                     e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
                 });
@@ -1939,7 +1717,6 @@
                     this.syncTotals();
                 });
 
-                /* ordering mode tabs — Today's Order Menu (Instant) / Future Order */
                 document.getElementById("mode-tabs").addEventListener("click", (e) => {
                     const btn = e.target.closest(".mode-tab");
                     if (!btn) return;
@@ -1958,6 +1735,7 @@
                     POSState.schedule.date = val;
                     this.syncTotals();
                 });
+
                 document.getElementById("future-time").addEventListener("change", (e) => {
                     const val = e.target.value;
                     if (val && !isFutureTimeWithinWindow(val)) {
@@ -1971,7 +1749,6 @@
                     this.syncTotals();
                 });
 
-                /* order type segmented control */
                 document.getElementById("order-type-toggle").addEventListener("click", (e) => {
                     const btn = e.target.closest("button[data-type]");
                     if (!btn) return;
@@ -1988,7 +1765,6 @@
                     this.syncTotals();
                 });
 
-                /* coupon */
                 document.getElementById("btn-apply-coupon").addEventListener("click", () => this.applyCoupon());
                 document.getElementById("input-coupon").addEventListener("keydown", (e) => {
                     if (e.key === "Enter") { e.preventDefault(); this.applyCoupon(); }
@@ -2034,7 +1810,6 @@
                 });
 
                 document.getElementById("trigger-whatsapp").addEventListener("click", () => ExportEngine.sendWhatsApp());
-
                 document.getElementById("btn-update-now").addEventListener("click", () => this.hardReload());
 
                 document.getElementById("trigger-reset").addEventListener("click", async () => {
@@ -2070,17 +1845,12 @@
                     POSState.discount = { code: "", type: null, value: 0, label: "" };
                     POSState.init();
 
-                    // applyOrderMode("Instant") resets tab styling, hides the
-                    // Future schedule card, restores the button label, and
-                    // refreshes categories/menu/totals — the same single path
-                    // used when a tab is clicked, so nothing here repeats it.
                     UIEngine.applyOrderMode("Instant");
                     UIEngine.showToast("New order started", "success");
                     document.getElementById("txt-search").focus();
                 });
             },
 
-            /* ---------- UPDATE NOW: clear caches/SW and force a fresh load ---------- */
             async hardReload() {
                 this.showToast("Fetching the latest version…", "info");
                 try {
@@ -2224,8 +1994,7 @@
                 document.getElementById("print-cust-info").innerHTML = isPickup
                     ? `<strong>${customer.name}</strong> (${customer.phone})<br>Self Pickup at Counter`
                     : `<strong>${customer.name}</strong> (${customer.phone})<br>
-                       Flat/Door: ${customer.door} ${customer.apart ? ', ' + customer.apart : ''}<br>
-                       ${customer.street}`;
+                       Flat/Door: ${customer.door}${customer.apart ? ', ' + customer.apart : ''}`;
 
                 const body = document.getElementById("print-items-body");
                 body.innerHTML = invoice.itemsList.map(item => `
@@ -2262,12 +2031,10 @@
 
                 const LINE = `━━━━━━━━━━━━━━━━━━\n`;
 
-                // Greeting — customer talking to the shop
                 let text = `Hello *AMRUTHADHAARANAM*,\n\n`;
                 text += `I'd like to place my order. Here are the details:\n`;
                 text += LINE;
 
-                // Customer details
                 text += `👤 *Name:*   ${customer.name}\n`;
                 text += `📞 *Phone:*  ${customer.phone}\n`;
                 text += `🚚 *Order Mode:* ${isPickup ? '🏠 Self Pickup' : '🛵 Home Delivery'}\n`;
@@ -2287,7 +2054,6 @@
                 }
                 text += LINE;
 
-                // Items
                 text += `🍽️ *My Order:*\n\n`;
                 invoice.itemsList.forEach((item, i) => {
                     text += `  ${i + 1}. ${item.name}\n`;
@@ -2295,7 +2061,6 @@
                 });
                 text += LINE;
 
-                // Bill
                 text += `💰 *Bill Summary:*\n\n`;
                 text += `  Subtotal        :  ₹${invoice.subtotal.toFixed(2)}\n`;
                 if (invoice.discountAmount > 0) {
@@ -2308,7 +2073,6 @@
                 text += `  *Total Payable  :  ₹${invoice.grandTotal.toFixed(2)}*\n`;
                 text += LINE;
 
-                // Closing
                 text += `📌 Ref: _${POSState.orderId}_\n\n`;
                 text += `Kindly confirm my order at the earliest.\n`;
                 text += `Thank you so much!`;
@@ -2377,12 +2141,6 @@
             UIEngine.init();
         });
 
-        /* ================================================================
-           CRYSTAL-PANEL TILT
-           Menu cards tilt in real 3D toward the cursor, as if light were
-           catching a faceted glass panel in a brass wire frame. Skipped
-           for touch devices and reduced-motion preference.
-        ================================================================ */
         (function tiltEffect() {
             const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
@@ -2414,34 +2172,20 @@
             }, true);
         })();
 
-        /* ============================================================
-           COPY PROTECTION (deterrent layer)
-           NOTE: This only stops casual copying via mouse/keyboard. It
-           cannot stop someone using browser DevTools' "Sources" tab,
-           view-source via a different browser/proxy, curl/wget on the
-           page URL, or disabling JavaScript — all HTML/CSS/JS sent to
-           a browser is fundamentally visible to that browser. Treat
-           this as a speed bump, not a lock.
-        ============================================================ */
         (function copyProtection() {
             const isFormField = (el) =>
                 el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable);
 
-            // Disable right-click context menu (except on form fields, so
-            // customers can still use "paste" etc. while filling details)
             document.addEventListener("contextmenu", (e) => {
                 if (!isFormField(e.target)) e.preventDefault();
             });
 
-            // Block selection outside form fields (belt-and-braces; CSS already does most of this)
             document.addEventListener("selectstart", (e) => {
                 if (!isFormField(e.target)) e.preventDefault();
             });
 
-            // Block dragging images/text out of the page
             document.addEventListener("dragstart", (e) => e.preventDefault());
 
-            // Block copy/cut of page content outside form fields
             document.addEventListener("copy", (e) => {
                 if (!isFormField(e.target)) e.preventDefault();
             });
@@ -2449,27 +2193,18 @@
                 if (!isFormField(e.target)) e.preventDefault();
             });
 
-            // Block common "view/save/inspect source" keyboard shortcuts
             document.addEventListener("keydown", (e) => {
                 const key = e.key ? e.key.toUpperCase() : "";
                 const ctrlOrCmd = e.ctrlKey || e.metaKey;
 
-                // F12 — DevTools
                 if (e.key === "F12") { e.preventDefault(); return; }
 
-                // Ctrl/Cmd+Shift+I / J / C — DevTools panels
                 if (ctrlOrCmd && e.shiftKey && ["I", "J", "C"].includes(key)) {
                     e.preventDefault(); return;
                 }
 
-                // Ctrl/Cmd+U — View Source
                 if (ctrlOrCmd && key === "U") { e.preventDefault(); return; }
-
-                // Ctrl/Cmd+S — Save Page
                 if (ctrlOrCmd && key === "S") { e.preventDefault(); return; }
-
-                // Ctrl/Cmd+P — Print (receipt printing uses the on-screen
-                // button which calls window.print() directly, so this is safe to block)
                 if (ctrlOrCmd && key === "P") { e.preventDefault(); return; }
             });
         })();
