@@ -7,7 +7,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Yeseva+One&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
 
     <style>
         /* ============================================================
@@ -17,49 +17,58 @@
            generic "food app" gradient.
         ============================================================ */
         :root {
-            --primary: #365C46;
-            --primary-deep: #24402E;
-            --secondary: #E6C98F;
-            --background: #FCFAF7;
-            --surface: #FFFFFF;
-            --accent: #B44F2A;
+            --primary: #1F5C3D;
+            --primary-deep: #0F3B26;
+            --secondary: #C99A3B;
+            --brass-light: #F0DBA0;
+            --brass-dark: #7A5A1E;
+            --background: #F6EEDD;
+            --surface: #FFFCF4;
+            --surface-carved: #FBF3E1;
+            --accent: #A8391F;
+            --accent-deep: #7A2A16;
             --success: #2E7D32;
-            --danger: #C62828;
-            --warning: #9C6B14;
-            --text-main: #2C2A29;
-            --text-muted: #666461;
-            --border: #E8E5E0;
+            --danger: #A8291F;
+            --warning: #8A6423;
+            --text-main: #2B2416;
+            --text-muted: #7C7058;
+            --border: #E4D2A4;
             --radius-sm: 6px;
-            --radius-md: 8px;
-            --radius-lg: 14px;
-            --shadow: 0 4px 12px rgba(54, 92, 70, 0.06);
-            --shadow-lift: 0 10px 30px rgba(54, 92, 70, 0.14);
+            --radius-md: 9px;
+            --radius-lg: 16px;
+            --shadow: 0 4px 14px rgba(43, 36, 22, 0.09);
+            --shadow-lift: 0 14px 34px rgba(43, 36, 22, 0.22);
+            --relief-raised: 0 1px 0 rgba(255,255,255,0.6) inset, 0 -2px 4px rgba(122,90,30,0.18) inset, 0 8px 18px rgba(43,36,22,0.14);
+            --relief-carved: 0 2px 5px rgba(43,36,22,0.25) inset, 0 -1px 0 rgba(255,255,255,0.4) inset;
             --transition: all 0.18s ease-in-out;
 
-            --font-heading: 'Playfair Display', serif;
+            --font-heading: 'Yeseva One', serif;
+            --font-sub: 'Cormorant Garamond', serif;
             --font-body: 'Inter', sans-serif;
             --font-btn: 'Manrope', sans-serif;
             --font-mono: 'IBM Plex Mono', monospace;
-            --heading-color: var(--primary);
+            --heading-color: var(--primary-deep);
         }
 
         [data-theme="dark"] {
-            --primary: #4A7A5D;
-            --primary-deep: #365C46;
-            --secondary: #E6C98F;
-            --background: #121211;
-            --surface: #1E1D1C;
-            --accent: #D96B43;
-            --text-main: #F5F3EF;
-            --text-muted: #A8A5A0;
-            --border: #33312F;
-            --shadow: 0 4px 12px rgba(0,0,0,0.3);
-            --shadow-lift: 0 10px 34px rgba(0,0,0,0.45);
-            --heading-color: #E8A87C;
-        }
-        [data-theme="dark"] body {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg opacity='0.18'%3E%3Cellipse cx='22' cy='32' rx='4' ry='13' transform='rotate(-20 22 32)' fill='%234A7A5D'/%3E%3Cellipse cx='22' cy='32' rx='4' ry='13' transform='rotate(20 22 32)' fill='%234A7A5D'/%3E%3Cellipse cx='32' cy='22' rx='3' ry='10' transform='rotate(-55 32 22)' fill='%234A7A5D'/%3E%3Cline x1='22' y1='40' x2='22' y2='58' stroke='%234A7A5D' stroke-width='1.5' stroke-linecap='round'/%3E%3Cellipse cx='185' cy='52' rx='20' ry='6' fill='%23E6C98F'/%3E%3Cellipse cx='185' cy='44' rx='22' ry='5' fill='%234A7A5D'/%3E%3Cpath d='M165,42 Q165,28 185,28 Q205,28 205,42 Z' fill='%23E6C98F'/%3E%3Ccircle cx='108' cy='52' r='22' fill='none' stroke='%234A7A5D' stroke-width='1.2'/%3E%3Ccircle cx='108' cy='52' r='14' fill='none' stroke='%234A7A5D' stroke-width='0.7'/%3E%3Ccircle cx='108' cy='52' r='4' fill='%23E6C98F'/%3E%3Cpath d='M15,148 Q12,172 40,178 Q68,172 65,148 Z' fill='none' stroke='%234A7A5D' stroke-width='1.5'/%3E%3Cellipse cx='40' cy='148' rx='25' ry='5' fill='none' stroke='%234A7A5D' stroke-width='1'/%3E%3Cpath d='M22,158 Q27,154 32,158 Q37,162 42,158 Q47,154 52,158 Q57,162 60,158' fill='none' stroke='%23D96B43' stroke-width='1.3' stroke-linecap='round'/%3E%3Cpath d='M24,165 Q30,161 36,165 Q42,169 48,165 Q54,161 58,165' fill='none' stroke='%23D96B43' stroke-width='1.1' stroke-linecap='round'/%3E%3Cpath d='M185,108 L180,142 L218,142 L213,108 Z' fill='none' stroke='%234A7A5D' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cellipse cx='199' cy='108' rx='14' ry='3.5' fill='none' stroke='%234A7A5D' stroke-width='1'/%3E%3Cline x1='212' y1='94' x2='212' y2='132' stroke='%23D96B43' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='190' cy='134' r='2.5' fill='%234A7A5D'/%3E%3Ccircle cx='199' cy='136' r='2.5' fill='%234A7A5D'/%3E%3Ccircle cx='208' cy='134' r='2' fill='%234A7A5D'/%3E%3Cpath d='M62,186 L40,220 L84,220 Z' fill='none' stroke='%23D96B43' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cline x1='44' y1='212' x2='80' y2='212' stroke='%23E6C98F' stroke-width='1.2'/%3E%3Cline x1='47' y1='205' x2='77' y2='205' stroke='%23E6C98F' stroke-width='0.8'/%3E%3Ccircle cx='62' cy='184' r='3' fill='%23D96B43'/%3E%3Crect x='193' y='190' width='26' height='22' rx='3' fill='none' stroke='%234A7A5D' stroke-width='1.5'/%3E%3Cpath d='M219,195 Q228,195 228,201 Q228,207 219,207' fill='none' stroke='%234A7A5D' stroke-width='1.3'/%3E%3Cellipse cx='206' cy='213' rx='18' ry='4' fill='none' stroke='%234A7A5D' stroke-width='1'/%3E%3Cpath d='M200,187 Q197,182 200,177' fill='none' stroke='%234A7A5D' stroke-width='1.2' stroke-linecap='round'/%3E%3Cpath d='M206,185 Q203,180 206,175' fill='none' stroke='%234A7A5D' stroke-width='1.2' stroke-linecap='round'/%3E%3Cpath d='M212,187 Q209,182 212,177' fill='none' stroke='%234A7A5D' stroke-width='1.2' stroke-linecap='round'/%3E%3Ccircle cx='118' cy='220' r='3' fill='%23D96B43'/%3E%3Ccircle cx='126' cy='215' r='2.5' fill='%23D96B43'/%3E%3Ccircle cx='134' cy='221' r='2' fill='%23D96B43'/%3E%3Ccircle cx='122' cy='228' r='2' fill='%23E6C98F'/%3E%3Ccircle cx='130' cy='226' r='1.5' fill='%23E6C98F'/%3E%3Ccircle cx='138' cy='215' r='1.5' fill='%23E6C98F'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: 240px 240px;
+            --primary: #4E8C68;
+            --primary-deep: #2C5A3E;
+            --secondary: #D7B15C;
+            --brass-light: #E9CD87;
+            --brass-dark: #5C441A;
+            --background: #14120D;
+            --surface: #1E1B14;
+            --surface-carved: #221E16;
+            --accent: #DD7A4C;
+            --accent-deep: #A8391F;
+            --text-main: #F3ECDA;
+            --text-muted: #A99C81;
+            --border: #3A331F;
+            --shadow: 0 4px 14px rgba(0,0,0,0.4);
+            --shadow-lift: 0 16px 40px rgba(0,0,0,0.55);
+            --relief-raised: 0 1px 0 rgba(255,255,255,0.06) inset, 0 -2px 4px rgba(0,0,0,0.4) inset, 0 8px 20px rgba(0,0,0,0.4);
+            --relief-carved: 0 2px 6px rgba(0,0,0,0.5) inset, 0 -1px 0 rgba(255,255,255,0.04) inset;
+            --heading-color: #E9CD87;
         }
 
         html { overflow-x: hidden; }
@@ -67,27 +76,30 @@
         body {
             font-family: var(--font-body);
             background-color: var(--background);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg opacity='0.13'%3E%3Cellipse cx='22' cy='32' rx='4' ry='13' transform='rotate(-20 22 32)' fill='%23365C46'/%3E%3Cellipse cx='22' cy='32' rx='4' ry='13' transform='rotate(20 22 32)' fill='%23365C46'/%3E%3Cellipse cx='32' cy='22' rx='3' ry='10' transform='rotate(-55 32 22)' fill='%23365C46'/%3E%3Cline x1='22' y1='40' x2='22' y2='58' stroke='%23365C46' stroke-width='1.5' stroke-linecap='round'/%3E%3Cellipse cx='185' cy='52' rx='20' ry='6' fill='%23E6C98F'/%3E%3Cellipse cx='185' cy='44' rx='22' ry='5' fill='%23365C46'/%3E%3Cpath d='M165,42 Q165,28 185,28 Q205,28 205,42 Z' fill='%23E6C98F'/%3E%3Ccircle cx='108' cy='52' r='22' fill='none' stroke='%23365C46' stroke-width='1.2'/%3E%3Ccircle cx='108' cy='52' r='14' fill='none' stroke='%23365C46' stroke-width='0.7'/%3E%3Ccircle cx='108' cy='52' r='4' fill='%23E6C98F'/%3E%3Cpath d='M15,148 Q12,172 40,178 Q68,172 65,148 Z' fill='none' stroke='%23365C46' stroke-width='1.5'/%3E%3Cellipse cx='40' cy='148' rx='25' ry='5' fill='none' stroke='%23365C46' stroke-width='1'/%3E%3Cpath d='M22,158 Q27,154 32,158 Q37,162 42,158 Q47,154 52,158 Q57,162 60,158' fill='none' stroke='%23B44F2A' stroke-width='1.3' stroke-linecap='round'/%3E%3Cpath d='M24,165 Q30,161 36,165 Q42,169 48,165 Q54,161 58,165' fill='none' stroke='%23B44F2A' stroke-width='1.1' stroke-linecap='round'/%3E%3Cpath d='M185,108 L180,142 L218,142 L213,108 Z' fill='none' stroke='%23365C46' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cellipse cx='199' cy='108' rx='14' ry='3.5' fill='none' stroke='%23365C46' stroke-width='1'/%3E%3Cline x1='212' y1='94' x2='212' y2='132' stroke='%23B44F2A' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='190' cy='134' r='2.5' fill='%23365C46'/%3E%3Ccircle cx='199' cy='136' r='2.5' fill='%23365C46'/%3E%3Ccircle cx='208' cy='134' r='2' fill='%23365C46'/%3E%3Cpath d='M62,186 L40,220 L84,220 Z' fill='none' stroke='%23B44F2A' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cline x1='44' y1='212' x2='80' y2='212' stroke='%23E6C98F' stroke-width='1.2'/%3E%3Cline x1='47' y1='205' x2='77' y2='205' stroke='%23E6C98F' stroke-width='0.8'/%3E%3Ccircle cx='62' cy='184' r='3' fill='%23B44F2A'/%3E%3Crect x='193' y='190' width='26' height='22' rx='3' fill='none' stroke='%23365C46' stroke-width='1.5'/%3E%3Cpath d='M219,195 Q228,195 228,201 Q228,207 219,207' fill='none' stroke='%23365C46' stroke-width='1.3'/%3E%3Cellipse cx='206' cy='213' rx='18' ry='4' fill='none' stroke='%23365C46' stroke-width='1'/%3E%3Cpath d='M200,187 Q197,182 200,177' fill='none' stroke='%23365C46' stroke-width='1.2' stroke-linecap='round'/%3E%3Cpath d='M206,185 Q203,180 206,175' fill='none' stroke='%23365C46' stroke-width='1.2' stroke-linecap='round'/%3E%3Cpath d='M212,187 Q209,182 212,177' fill='none' stroke='%23365C46' stroke-width='1.2' stroke-linecap='round'/%3E%3Ccircle cx='118' cy='220' r='3' fill='%23B44F2A'/%3E%3Ccircle cx='126' cy='215' r='2.5' fill='%23B44F2A'/%3E%3Ccircle cx='134' cy='221' r='2' fill='%23B44F2A'/%3E%3Ccircle cx='122' cy='228' r='2' fill='%23E6C98F'/%3E%3Ccircle cx='130' cy='226' r='1.5' fill='%23E6C98F'/%3E%3Ccircle cx='138' cy='215' r='1.5' fill='%23E6C98F'/%3E%3C/g%3E%3C/svg%3E");
-            background-repeat: repeat;
-            background-size: 240px 240px;
+            background-image:
+                radial-gradient(ellipse 900px 500px at 12% -10%, rgba(201,154,59,0.16), transparent 60%),
+                radial-gradient(ellipse 700px 500px at 100% 0%, rgba(31,92,61,0.10), transparent 55%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.35 0 0 0 0 0.28 0 0 0 0 0.14 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: no-repeat, no-repeat, repeat;
+            background-attachment: fixed, fixed, fixed;
             color: var(--text-main);
             line-height: 1.5;
             transition: var(--transition);
         }
+        [data-theme="dark"] body {
+            background-image:
+                radial-gradient(ellipse 900px 500px at 12% -10%, rgba(216,177,92,0.10), transparent 60%),
+                radial-gradient(ellipse 700px 500px at 100% 0%, rgba(78,140,104,0.10), transparent 55%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
         a { color: inherit; }
         :focus-visible { outline: 2.5px solid var(--accent); outline-offset: 2px; }
 
-        /* ============================================================
-           LIVE STATUS BOARD — the signature element.
-           Reads like a hospitality front-desk / departure board:
-           instantly tells staff whether the kitchen can take orders,
-           without ever hard-blocking them from queuing one anyway.
-        ============================================================ */
         .status-board {
             max-width: 1600px;
             margin: 0 auto 1rem;
-            padding: 0.6rem 1.5rem;
-            background: linear-gradient(90deg, var(--primary-deep), var(--primary));
+            padding: 0.65rem 1.75rem;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-deep) 100%);
             color: #F5F3EF;
             border-radius: var(--radius-md);
             font-family: var(--font-mono);
@@ -98,13 +110,22 @@
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 0.5rem 1.25rem;
-            box-shadow: var(--shadow);
+            position: relative;
+            border: 1px solid rgba(201,154,59,0.35);
+            box-shadow: var(--shadow-lift), 0 1px 0 rgba(255,255,255,0.12) inset, 0 -3px 8px rgba(0,0,0,0.25) inset;
         }
+        .status-board::before, .status-board::after {
+            content: ''; position: absolute; top: 50%; width: 6px; height: 6px; border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, var(--brass-light), var(--brass-dark));
+            transform: translateY(-50%); box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+        .status-board::before { left: 10px; }
+        .status-board::after { right: 10px; }
         .status-board .seg { display: flex; align-items: center; gap: 0.5rem; }
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .status-dot.open { background: #6FCF97; box-shadow: 0 0 0 0 rgba(111,207,151,0.6); animation: pulse-dot 2.2s infinite; }
-        .status-dot.closing { background: #F2C94C; animation: pulse-dot-amber 2.2s infinite; }
-        .status-dot.closed { background: #E57373; }
+        .status-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px 1px currentColor; }
+        .status-dot.open { background: #FFC94A; color: #FFC94A; box-shadow: 0 0 8px 2px rgba(255,201,74,0.75); animation: pulse-dot 2.2s infinite; }
+        .status-dot.closing { background: #F2C94C; color: #F2C94C; animation: pulse-dot-amber 2.2s infinite; }
+        .status-dot.closed { background: #E57373; color: #E57373; box-shadow: none; }
         @keyframes pulse-dot {
             0% { box-shadow: 0 0 0 0 rgba(111,207,151,0.55); }
             70% { box-shadow: 0 0 0 7px rgba(111,207,151,0); }
@@ -121,15 +142,6 @@
         .veg-mark::after { content: ''; width: 5px; height: 5px; background: #8FD19E; border-radius: 50%; }
         .status-board .divider { opacity: 0.35; }
 
-        /* ============================================================
-           ANNOUNCEMENT BANNER
-           Sits directly under the status board so it reads as a
-           second, editorial line from the restaurant — separate from
-           the automated open/closed indicator above it. Dismissible,
-           but re-appears automatically whenever the message text/type
-           changes (tracked via a content hash), so a stale dismissal
-           can never hide a genuinely new notice.
-        ============================================================ */
         .announcement-bar {
             max-width: 1600px;
             margin: 0 auto 1rem;
@@ -156,13 +168,11 @@
         }
         .announcement-bar .ab-close:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
 
-        /* type variants — pick via ANNOUNCEMENT.type in the script below */
         .announcement-bar.type-info    { border-left-color: var(--secondary); }
         .announcement-bar.type-offer   { border-left-color: var(--secondary); }
         .announcement-bar.type-urgent  { background: linear-gradient(90deg, #5C1E1E, #8B2E2E); border-left-color: #F2C94C; }
         .announcement-bar.type-urgent .ab-text strong { color: #FFFFFF; }
 
-        /* optional blink, toggled via ANNOUNCEMENT.blink in the script below */
         .announcement-bar .ab-icon.blinking { animation: ab-blink 12s ease-in-out infinite; }
         @keyframes ab-blink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.85); } }
         @media (prefers-reduced-motion: reduce) {
@@ -173,9 +183,6 @@
             .announcement-bar { font-size: 0.78rem; padding: 0.6rem 0.85rem; }
         }
 
-        /* ============================================================
-           LAYOUT
-        ============================================================ */
         .app-container {
             display: grid;
             grid-template-columns: 1fr 420px;
@@ -185,8 +192,9 @@
         }
         .main-content { padding: 0 2rem 2rem; max-height: 100vh; overflow-y: auto; }
         .sidebar {
-            background-color: var(--surface);
+            background: linear-gradient(180deg, var(--surface) 0%, var(--surface-carved) 100%);
             border-left: 1px solid var(--border);
+            box-shadow: -6px 0 20px rgba(43,36,22,0.05) inset;
             padding: 1.75rem;
             display: flex;
             flex-direction: column;
@@ -194,7 +202,6 @@
             height: 100vh;
             position: sticky;
             top: 0;
-            box-shadow: var(--shadow);
             overflow-y: auto;
         }
 
@@ -202,31 +209,48 @@
             display: grid;
             grid-template-columns: 90px 1fr;
             align-items: center;
-            background: linear-gradient(120deg, rgba(54,92,70,0.04) 0%, var(--surface) 55%, rgba(230,201,143,0.07) 100%);
-            padding: 1.1rem 1.75rem;
+            background:
+                linear-gradient(160deg, rgba(201,154,59,0.10) 0%, var(--surface-carved) 45%, rgba(31,92,61,0.05) 100%);
+            padding: 1.2rem 1.9rem;
             border-radius: var(--radius-lg);
             margin-bottom: 1.5rem;
-            box-shadow: 0 2px 10px rgba(54,92,70,0.07), 0 1px 3px rgba(0,0,0,0.04);
+            position: relative;
+            box-shadow: var(--shadow-lift), 0 1px 0 rgba(255,255,255,0.5) inset;
             border: 1px solid var(--border);
-            border-bottom: 3px solid var(--secondary);
+            border-image: linear-gradient(90deg, var(--brass-dark), var(--secondary), var(--brass-dark)) 1;
+            border-bottom-width: 3px;
             gap: 1.25rem;
         }
+        .pos-header::before, .pos-header::after {
+            content: ''; position: absolute; top: 8px; width: 10px; height: 10px; border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, var(--brass-light), var(--brass-dark));
+            box-shadow: 0 1px 2px rgba(0,0,0,0.35), 0 0 0 2px var(--surface-carved);
+        }
+        .pos-header::before { left: 12px; }
+        .pos-header::after { right: 12px; }
         [data-theme="dark"] .pos-header {
-            background: linear-gradient(120deg, rgba(74,122,93,0.09) 0%, var(--surface) 55%, rgba(230,201,143,0.05) 100%);
+            background: linear-gradient(160deg, rgba(216,177,92,0.10) 0%, var(--surface-carved) 45%, rgba(78,140,104,0.06) 100%);
         }
         .header-left { display: flex; align-items: center; justify-content: center; }
         .brand-logo { width: auto; height: auto; max-width: 90px; max-height: 78px; object-fit: contain; border-radius: var(--radius-md); }
         .brand-logo-fallback {
             width: 64px; height: 64px; border-radius: 50%;
-            background: var(--primary); color: var(--secondary);
+            background: radial-gradient(circle at 32% 28%, var(--primary), var(--primary-deep));
+            color: var(--secondary);
             display: flex; align-items: center; justify-content: center;
             font-family: var(--font-heading); font-weight: 700; font-size: 1.4rem;
+            box-shadow: var(--relief-raised);
+            border: 1px solid var(--brass-dark);
         }
         .header-center { text-align: center; }
-        .header-center h1 { font-family: var(--font-heading); color: var(--heading-color); font-size: 1.9rem; letter-spacing: 1px; transition: color 0.3s ease; }
-        .header-center p { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.3rem; letter-spacing: 0.03em; }
+        .header-center h1 {
+            font-family: var(--font-heading); font-weight: 400; color: var(--heading-color);
+            font-size: 2.05rem; letter-spacing: 1.5px; transition: color 0.3s ease;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.55), 0 2px 3px rgba(43,36,22,0.18);
+        }
+        [data-theme="dark"] .header-center h1 { text-shadow: 0 1px 0 rgba(0,0,0,0.5); }
+        .header-center p { font-family: var(--font-sub); font-style: italic; font-size: 0.95rem; color: var(--text-muted); margin-top: 0.3rem; letter-spacing: 0.03em; }
 
-        /* --- FILTERS & CONTROLS --- */
         .controls-row {
             display: flex; gap: 1rem; margin: 1.5rem 0 1.5rem;
             align-items: center; flex-wrap: wrap;
@@ -253,27 +277,19 @@
             color: var(--text-main); cursor: pointer; border-radius: 20px;
             font-family: var(--font-btn); font-size: 0.85rem; transition: var(--transition);
         }
-        .pill.active, .pill:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .pill.active, .pill:hover { background: linear-gradient(180deg, var(--primary) 0%, var(--primary-deep) 100%); color: white; border-color: var(--brass-dark); }
         .theme-toggle {
             background: var(--surface); border: 1.5px solid var(--primary); cursor: pointer;
             padding: 0.45rem 0.85rem; border-radius: var(--radius-md); font-family: var(--font-btn);
             font-size: 0.8rem; font-weight: 600; color: var(--primary); display: flex;
             align-items: center; gap: 0.4rem; white-space: nowrap; transition: var(--transition);
-            box-shadow: 0 2px 10px rgba(54, 92, 70, 0.22), 0 1px 3px rgba(0,0,0,0.08);
+            box-shadow: var(--relief-raised);
         }
         .theme-toggle:hover { background: var(--primary); color: white; box-shadow: 0 4px 16px rgba(54, 92, 70, 0.42); transform: translateY(-1px); }
         [data-theme="dark"] .theme-toggle { box-shadow: 0 2px 12px rgba(74, 122, 93, 0.5), 0 1px 4px rgba(0,0,0,0.35); }
         [data-theme="dark"] .theme-toggle:hover { box-shadow: 0 4px 20px rgba(74, 122, 93, 0.68); }
         #theme-icon { font-size: 1rem; line-height: 1; }
 
-        /* ============================================================
-           ORDERING MODE TABS
-           Switching tabs swaps to a fully independent cart — items
-           added under "Today's Order Menu" never mix with items added
-           under "Future Order", and vice versa. Only this tab bar and
-           the Future schedule card change per mode; menu, layout, and
-           pricing markup below are shared and never duplicated.
-        ============================================================ */
         .mode-tabs {
             display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;
         }
@@ -281,13 +297,15 @@
             flex: 1; min-width: 150px; padding: 0.75rem 1rem; border: 1.5px solid var(--border);
             background: var(--surface); color: var(--text-main); border-radius: var(--radius-md);
             font-family: var(--font-btn); font-weight: 600; font-size: 0.88rem; cursor: pointer;
-            transition: var(--transition); text-align: center;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.18s ease; text-align: center;
         }
-        .mode-tab:hover { border-color: var(--primary); }
-        .mode-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: var(--shadow); }
+        .mode-tab:hover { border-color: var(--primary); transform: translateY(-1px); }
+        .mode-tab.active {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-deep) 100%);
+            color: #fff; border-color: var(--brass-dark);
+            box-shadow: var(--relief-raised);
+        }
 
-        /* Future Order's date/time card. Reuses the same entrance
-           transition already defined for toasts/modals. */
         .schedule-card {
             display: none; background: var(--surface); border: 1px solid var(--border);
             border-left: 3px solid var(--accent); border-radius: var(--radius-lg);
@@ -312,8 +330,6 @@
             .schedule-card.visible { animation: none; }
         }
 
-        /* Shared reminder line above the Order Summary list for Future
-           Order, since one date/time applies to every item in that cart. */
         .cart-schedule-note {
             display: none; font-size: 0.78rem; color: var(--primary);
             background: rgba(54,92,70,0.06); border: 1px dashed var(--primary);
@@ -322,16 +338,31 @@
         .cart-schedule-note.visible { display: block; }
         [data-theme="dark"] .cart-schedule-note { background: rgba(74,122,93,0.14); }
 
-        /* --- MENU GRID --- */
-        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; perspective: 1400px; }
         .category-card {
-            background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--secondary);
-            border-radius: var(--radius-lg); padding: 1.25rem; box-shadow: var(--shadow); transition: var(--transition);
+            background: linear-gradient(155deg, var(--surface) 0%, var(--surface-carved) 100%);
+            border: 1px solid var(--border); border-left: 3px solid var(--secondary);
+            border-radius: var(--radius-lg); padding: 1.25rem;
+            box-shadow: var(--shadow), var(--relief-raised);
+            transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
+            position: relative;
+            overflow: hidden;
         }
-        .category-card:hover { box-shadow: 0 6px 20px rgba(54, 92, 70, 0.1); }
+        .category-card::after {
+            content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+            background: radial-gradient(circle 220px at var(--glow-x, 50%) var(--glow-y, 0%), rgba(255,255,255,0.35), transparent 62%);
+            opacity: 0; transition: opacity 0.3s ease; mix-blend-mode: soft-light;
+        }
+        [data-theme="dark"] .category-card::after { mix-blend-mode: overlay; background: radial-gradient(circle 220px at var(--glow-x, 50%) var(--glow-y, 0%), rgba(233,205,135,0.28), transparent 62%); }
+        .category-card:hover { box-shadow: var(--shadow-lift), var(--relief-raised); }
+        .category-card:hover::after { opacity: 1; }
+        @media (prefers-reduced-motion: reduce) { .category-card { transition: box-shadow 0.2s ease; } }
         .category-title {
-            font-family: var(--font-heading); color: var(--heading-color); border-bottom: 2px solid var(--secondary);
-            padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.15rem;
+            font-family: var(--font-sub); font-weight: 700; color: var(--heading-color);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.3rem; letter-spacing: 0.01em;
         }
         .menu-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px dashed var(--border); }
         .menu-item:last-child { border-bottom: none; }
@@ -345,12 +376,14 @@
 
         .qty-controls { display: flex; align-items: center; gap: 0.5rem; }
         .qty-btn {
-            background: var(--border); border: none; width: 30px; height: 30px;
+            background: linear-gradient(180deg, var(--surface) 0%, var(--border) 100%); border: 1px solid var(--border); width: 30px; height: 30px;
             border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem;
-            display: flex; align-items: center; justify-content: center; transition: var(--transition);
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.18s ease;
+            box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 2px 3px rgba(43,36,22,0.12);
         }
-        .qty-btn:hover { background: var(--secondary); }
-        .qty-btn:active { transform: scale(0.85); }
+        .qty-btn:hover { background: linear-gradient(180deg, var(--secondary) 0%, var(--brass-dark) 100%); color: #fff; }
+        .qty-btn:active { transform: scale(0.9) translateY(1px); box-shadow: var(--relief-carved); }
         .qty-input {
             width: 38px; text-align: center; border: 1px solid var(--border);
             border-radius: 4px; background: transparent; color: var(--text-main); font-family: var(--font-mono);
@@ -375,7 +408,6 @@
         .empty-results { text-align: center; padding: 3rem 1rem; color: var(--text-muted); grid-column: 1 / -1; }
         .empty-results .empty-icon { font-size: 2.2rem; display: block; margin-bottom: 0.6rem; }
 
-        /* --- ORDER REF CHIP (sidebar summary) --- */
         .order-ref-chip {
             display: flex; align-items: center; justify-content: space-between;
             background: rgba(54,92,70,0.05); border: 1px dashed var(--primary);
@@ -388,7 +420,6 @@
         .cart-empty-state { text-align: center; padding: 1.25rem 0 0.5rem; color: var(--text-muted); font-size: 0.82rem; }
         .cart-empty-state .empty-icon { font-size: 1.8rem; display: block; margin-bottom: 0.3rem; }
 
-        /* --- SIDEBAR: NUMBERED WORKFLOW STEPS --- */
         .step-title {
             display: flex; align-items: center; gap: 0.6rem; font-size: 0.92rem; text-transform: uppercase;
             letter-spacing: 0.05em; color: var(--primary); font-family: var(--font-btn);
@@ -464,12 +495,13 @@
         }
         .delivery-fee-input:disabled { opacity: 0.4; }
 
-        /* --- QR / PAYMENT --- */
         .qr-wrapper {
             border: 2px solid var(--border); border-radius: var(--radius-lg);
-            padding: 0.85rem; background: var(--surface); transition: border-color 0.25s, box-shadow 0.25s;
+            padding: 0.85rem; background: linear-gradient(155deg, var(--surface) 0%, var(--surface-carved) 100%);
+            box-shadow: var(--relief-raised);
+            transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
         }
-        .qr-wrapper.active { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(54,92,70,0.09); }
+        .qr-wrapper.active { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(31,92,61,0.12), var(--shadow-lift), var(--relief-raised); transform: translateY(-2px); }
         [data-theme="dark"] .qr-wrapper.active { box-shadow: 0 0 0 3px rgba(74,122,93,0.22); }
         .qr-image { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; display: block; border-radius: var(--radius-md); }
         .qr-placeholder-box {
@@ -490,7 +522,6 @@
         .qr-amount-value { font-family: var(--font-mono); font-size: 1.6rem; font-weight: 700; letter-spacing: 0.01em; }
         .qr-hint { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.7; text-align: center; }
 
-        /* --- UPDATE NOW (cache-busting reload button) --- */
         .btn-update-now {
             position: fixed;
             left: 20px;
@@ -527,17 +558,18 @@
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
-        /* --- BUTTON SYSTEM --- */
         .btn-group { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem; }
         .btn-row { display: flex; gap: 0.6rem; }
         .btn-row .btn { flex: 1; }
         .btn {
             padding: 0.75rem; border: none; border-radius: var(--radius-md); cursor: pointer;
             font-family: var(--font-btn); font-weight: 600; font-size: 0.85rem; text-align: center;
-            text-decoration: none; transition: var(--transition);
+            text-decoration: none; transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.18s ease;
+            transform: translateY(0);
         }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: #284433; }
+        .btn-primary { background: linear-gradient(180deg, var(--primary) 0%, var(--primary-deep) 100%); color: white; box-shadow: var(--relief-raised); }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-lift), var(--relief-raised); }
+        .btn-primary:active { transform: translateY(1px); box-shadow: var(--relief-carved); }
         .btn-secondary { background: var(--border); color: var(--text-main); }
         .btn-secondary:hover { background: var(--secondary); }
         .btn-danger { background: transparent; color: var(--danger); border: 1.5px solid var(--danger); }
@@ -545,10 +577,11 @@
         .btn-whatsapp {
             background: #25D366; color: white; display: flex; align-items: center; justify-content: center;
             gap: 0.55rem; font-size: 0.95rem; padding: 0.9rem 1rem; letter-spacing: 0.01em;
+            box-shadow: var(--relief-raised);
         }
-        .btn-whatsapp:hover { background: #128C7E; }
+        .btn-whatsapp:hover { background: #128C7E; transform: translateY(-1px); box-shadow: var(--shadow-lift), var(--relief-raised); }
+        .btn-whatsapp:active { transform: translateY(1px); box-shadow: var(--relief-carved); }
 
-        /* --- TOASTS --- */
         .toast-container { position: fixed; bottom: 1.25rem; right: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; z-index: 9999; }
         .toast {
             background: var(--primary); color: #fff; padding: 0.7rem 1rem; border-radius: var(--radius-md);
@@ -560,7 +593,6 @@
         .toast.info { background: var(--text-main); }
         @keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- MODAL (replaces jarring native alert/confirm) --- */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(20, 20, 18, 0.5); display: flex;
             align-items: center; justify-content: center; z-index: 10000; padding: 1rem;
@@ -576,7 +608,6 @@
         .modal-actions { display: flex; gap: 0.6rem; justify-content: flex-end; }
         .modal-actions .btn { padding: 0.6rem 1.1rem; }
 
-        /* --- MOBILE STICKY CART BAR --- */
         .mobile-cart-bar {
             display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--primary);
             color: #fff; padding: 0.85rem 1.1rem; align-items: center; justify-content: space-between;
@@ -590,7 +621,6 @@
         }
         .mobile-cart-bar strong { font-family: var(--font-mono); }
 
-        /* --- PRINT RECEIPT --- */
         #print-receipt-window { display: none; }
         @media print {
             body * { display: none !important; }
@@ -610,7 +640,6 @@
             .qr-placeholder { text-align: center; margin-top: 4mm; font-size: 9px; }
         }
 
-        /* --- UPI BUTTON --- */
         .btn-upi {
             background: linear-gradient(135deg, #6B21E8, #9333EA); color: white;
             display: flex; align-items: center; justify-content: center;
@@ -618,14 +647,11 @@
         }
         .btn-upi:hover { background: linear-gradient(135deg, #5B11D8, #7E22CE); }
 
-        /* --- COLLAPSIBLE TOGGLE ICON (hidden on desktop) --- */
         .category-toggle-icon { display: none; font-size: 0.75rem; color: var(--text-muted); transition: transform 0.25s ease; flex-shrink: 0; padding: 4px; }
 
-        /* --- MOBILE OVERLAY --- */
         .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 900; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
         .mobile-overlay.active { display: block; }
 
-        /* --- SIDEBAR BACK BUTTON (mobile only) --- */
         .sidebar-close-btn { display: none; }
 
         @media (max-width: 1024px) {
@@ -688,17 +714,13 @@
         }
     </style>
     <style>
-        /* ============================================================
-           COPY PROTECTION (deterrent only — see note in JS below)
-        ============================================================ */
         html, body {
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            -webkit-touch-callout: none; /* iOS long-press menu */
+            -webkit-touch-callout: none;
         }
-        /* Keep normal typing/selecting inside form fields usable */
         input, textarea, [contenteditable="true"] {
             -webkit-user-select: text;
             -moz-user-select: text;
@@ -961,78 +983,21 @@
     </div>
 
     <script>
-        /* ================================================================
-           ANNOUNCEMENT CONFIG
-           Edit this block whenever you have something timely to tell
-           customers — a delayed opening, a new item, a festival special,
-           a temporary closure, etc.
-
-           - enabled: set to false to hide the banner entirely
-           - type:    "info" (green, general), "offer" (gold, promos/new
-                      items), or "urgent" (red, delays/closures/issues)
-           - icon:    any emoji
-           - text:    plain text or simple HTML (e.g. <strong>bold</strong>)
-
-           Dismissals are remembered per browser, but only for THIS exact
-           message — the moment you change enabled/type/text and the
-           customer reloads the page, it reappears even if they'd
-           dismissed an earlier one.
-        ================================================================ */
         const ANNOUNCEMENT = {
             enabled: true,
-            type: "offer",   // "info" | "offer" | "urgent"
+            type: "offer",
             icon: "🎉",
             text: "Announcement: <strong>Introducing FUTURE ORDER ! You can plan your order item for the next 14 days and Stay confident !!!</strong> !",
-            blink: true      // true = text gently pulses to grab attention; false = static
+            blink: true
         };
 
-        /* ================================================================
-           MENU DATA — separate lists per ordering mode
-           Today's Order Menu (Instant) and Future Order each have their
-           own independent item list below. Add, remove, rename, price,
-           or comment out items in ONE list without touching the other —
-           they no longer have to stay in sync.
-        ================================================================ */
         const MENU_DATA_BY_MODE = {
 
-        /* ---------- TODAY'S ORDER MENU (Instant) ---------- */
         Instant: [
-            // --- BREAKFAST SECTION (7 am to 10 am)---
-         //   { id: "b1", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Ghee Podi Mini Idli (14 Pcs)", price: 80 },
-         //   { id: "b2", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Traditional Steamed Idli (2 Pcs) with Chutney", price: 40 },
-         //   { id: "b3", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Crispy Medu Vada (2 Pcs)", price: 45 },
-         //   { id: "b4", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Special Ghee Roast Dosa", price: 90, popular: true },
-
-           // --- LUNCH SECTION (12.30 pm to 2 pm)---
-          //  { id: "l1", category: "Lunch Special", title: "🍱 Lunch Special", name: "Mint Pulao Rice (Made with Basmati Rice) with Dhal Tadka and Raita", price: 149 },
-         //   { id: "l2", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Tangy Lemon Rice with Roasted Peanuts", price: 75 },
-         //   { id: "l3", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Creamy Curd Rice with Pickle & Chutney", price: 70 },
-         //   { id: "l4", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Executive Mini South Indian Meals", price: 130, popular: true },
-
-            // --- EVENING SNACKS SECTION (4 pm to 5.30 pm)---
               { id: "es1", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Veg Paneer wrap", price: 99 },
-          //  { id: "es2", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Veg-Paneer-Pineapple Grilled Barbeque Box Worth 149/- is now Only 99/-", price: 99 , popular: true},
-           // { id: "es3", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Sweet Paniyaaram 5pcs", price: 99 },
-         //   { id: "es4", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Classic Samosa (2 Pcs) with Mint Chutney", price: 35 },
-
-            // --- MY DINNER SPECIAL SECTION (Pre order delivery from 7 pm)--- 
             { id: "ds1", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Roti 5pcs", price: 99 },
            { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Mix Veg Gravy 250ml", price: 80 },             
             { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti (2pcs) + Mix Veg Gravy 100ml ", price: 80 },
-       //     { id: "ds3", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti (1 pc)", price: 25 },
-          //  { id: "ds4", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Plain Roti (1 pc)", price: 20 },
-          //  { id: "ds5", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Naan (1 pc)", price: 40 },
-
-            // --- BAKERY & PASTRY SECTION (All day Menu)---
-           // { id: "bp1", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "French Vannila Tea Cake (1 Pc)", price: 40 },
-           // { id: "bp2", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Signature Choco Brownie Fudge (1 Pc)", price: 59 },
-         //   { id: "bp3", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Red Velvet Cream Cheese Pastry", price: 95 },
-         //   { id: "bp4", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Fresh Cream Pineapple Cake Slice", price: 75 },
-         //   { id: "bp5", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Rich Chocolate Truffle Cake (Half KG)", price: 450, popular: true },
-         //   { id: "bp6", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Freshly Baked Veg Puff (1 Pc)", price: 30 },
-         //   { id: "bp7", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Paneer Tikka Puff", price: 45 },
-
-            // --- SIGNATURE SANDWICHES (All day Menu)---
             { id: "s1", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Bombay Raw Veg Green Chutney Sandwich", price: 99 },
             { id: "s2", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Deadly Chocolate with Cheese Sandwich", price: 99 },
             { id: "s3", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Minced Veg Spicy Paneer with Butter Grilled Sandwich", price: 99 },
@@ -1045,8 +1010,6 @@
             { id: "s10", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Sandwich", price: 99, popular: true },
             { id: "s11", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Banana Sandwich", price: 120 },
             { id: "s12", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Extra Cheese (Add-On)", price: 20 },
-
-            // --- MAGGI CORNER (All day Menu)---
             { id: "m1", category: "Maggi", title: "🍜 Maggi Corner", name: "Plain Maggi", price: 50 },
             { id: "m2", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Maggi", price: 60 },
             { id: "m3", category: "Maggi", title: "🍜 Maggi Corner", name: "Butter Maggi", price: 60 },
@@ -1055,22 +1018,16 @@
             { id: "m6", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Paneer Cheese Maggi", price: 75 },
             { id: "m7", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Maggi", price: 80 },
             { id: "m8", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Paneer Maggi", price: 99, popular: true },
-
-            // --- PASTA CORNER (All day Menu)---
             { id: "p1", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Cheesy Corn Penne Pasta", price: 99, popular: true },
             { id: "p2", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Veg Fusilli Pasta", price: 99 },
             { id: "p3", category: "Pasta", title: "🍝 Pasta Corner", name: "Veggy Sweet Spice Red Sauce Shell Pasta", price: 99 },
             { id: "p4", category: "Pasta", title: "🍝 Pasta Corner", name: "Masala Macaroni Pasta", price: 99 },
-
-            // --- COOLERS & FRESH JUICES (All day Menu) ---
             { id: "j1", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Mint Cooler 250ml", price: 60 },
             { id: "j2", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Juice 250ml", price: 60 },
             { id: "j3", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Lemon Mint Cooler 250ml", price: 60 },
             { id: "j4", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Sabja Mint Lime Juice", price: 75 },
             { id: "j5", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Original & Natural Mint Mojito 500ml", price: 120, popular: true },
             { id: "j6", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Indian Paneer Grape with mint lime cocktail juice 250ml", price: 60 },
-
-            // --- MILKSHAKES & SPECIAL DRINKS (All day Menu)---
             { id: "d1", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Lassi", price: 75 },
             { id: "d2", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Regular Rosemilk", price: 99 },
             { id: "d3", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Sabja Rosemilk", price: 99 },
@@ -1078,57 +1035,23 @@
             { id: "d5", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Banana Milkshake", price: 99 },
             { id: "d6", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Choco Banana Milkshake", price: 99, popular: true },
             { id: "d7", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Fresh Coconut Milk (1 Ltr)", price: 125 },
-
-            // --- COMBOS & OFFERS ---
              { id: "co1", category: "Combos", title: "🎁 Combos & Offers", name: "BUY 2 WATERMELON MINT COOLER 250ml WORTH 120:", price: 99 },
              { id: "co2", category: "Combos", title: "🎁 Combos & Offers", name: "ANY TWO PORTION MAGGI VARITY WITH WATERMELON MINT COOLER 250ml",price: 129 },
              { id: "co3", category: "Combos", title: "🎁 Combos & Offers", name: "Triple Layer Bread Butter Jam with Cheese 2 sets Worth 150  ONLY 120", price: 120 },
-             { id: "co4", category: "Combos", title: "🎁 Combos & Offers", name: "Any Pasta + Lemonade 500ml worth 199 Only 149", price: 149 },
-        //    { id: "co5", category: "Combos", title: "🎁 Combos & Offers", name: "Evening Snack Platter (Pakoda + Bajji + Samosa)", price: 99 },
-        //    { id: "co6", category: "Combos", title: "🎁 Combos & Offers", name: "Dinner Combo: Parotta (2) + Kurma + Rosemilk", price: 175 }
+             { id: "co4", category: "Combos", title: "🎁 Combos & Offers", name: "Any Pasta + Lemonade 500ml worth 199 Only 149", price: 149 }
         ],
 
-        /* ---------- FUTURE ORDER MENU ---------- */
-        /* Seeded as a copy of Today's Order Menu above so nothing breaks
-           on first load — edit this list independently for pre-order-only
-           items, different pricing, or a smaller/larger selection. */
         Future: [
-            // --- BREAKFAST SECTION (7 am to 10 am)---
-         //   { id: "b1", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Ghee Podi Mini Idli (14 Pcs)", price: 80 },
-         //   { id: "b2", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Traditional Steamed Idli (2 Pcs) with Chutney", price: 40 },
-         //   { id: "b3", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Crispy Medu Vada (2 Pcs)", price: 45 },
-         //   { id: "b4", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Special Ghee Roast Dosa", price: 90, popular: true },
-
-           // --- LUNCH SECTION (12.30 pm to 2 pm)---
             { id: "l1", category: "Lunch Special", title: "🍱 Lunch Special", name: "Mint Pulao Rice (Made with Basmati Rice) with Dhal Tadka and Raita", price: 175 },
             { id: "l2", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Tangy Lemon Rice with Roasted Peanuts and a some Fryams, 250ml watermelon mint cooler juice ", price: 125 },
             { id: "l3", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Creamy Curd Rice with Pickle & Chutney", price: 70 },
-         //   { id: "l4", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Executive Mini South Indian Meals", price: 130, popular: true },
-
-            // --- EVENING SNACKS SECTION (4 pm to 5.30 pm)---
             { id: "es1", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Bhel Poori chat", price: 50 },
             { id: "es2", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Grilled Veggies Box Worth 149 /- is now Only 109/-", price: 109 , popular: true},
             { id: "es3", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Sweet Paniyaaram 5pcs", price: 99 },
-         //   { id: "es4", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Classic Samosa (2 Pcs) with Mint Chutney", price: 35 },
-
-            // --- MY DINNER SPECIAL SECTION (Pre order delivery from 7 pm)--- 
             { id: "ds1", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Veg Gravy of the Delivery day 250ml", price: 90 },
             { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti 1pc", price: 25 },             
             { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti (2pcs) + Veg Gravy of the Delivery day 100ml ", price: 80 },
             { id: "ds3", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Poori(small size) 5pcs with Veg Gravy of the Delivery day 250ml", price: 99 },
-          //  { id: "ds4", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Plain Roti (1 pc)", price: 20 },
-          //  { id: "ds5", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Naan (1 pc)", price: 40 },
-
-            // --- BAKERY & PASTRY SECTION (All day Menu)---
-          //  { id: "bp1", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "French Vannila Tea Cake (2 box (1pc /box))", price: 80 },
-           // { id: "bp2", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Signature Choco Brownie Fudge (1 Pc)", price: 59 },
-         //   { id: "bp3", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Red Velvet Cream Cheese Pastry", price: 95 },
-         //   { id: "bp4", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Fresh Cream Pineapple Cake Slice", price: 75 },
-         //   { id: "bp5", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Rich Chocolate Truffle Cake (Half KG)", price: 450, popular: true },
-         //   { id: "bp6", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Freshly Baked Veg Puff (1 Pc)", price: 30 },
-         //   { id: "bp7", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Paneer Tikka Puff", price: 45 },
-
-            // --- SIGNATURE SANDWICHES (All day Menu)---
             { id: "s1", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Bombay Raw Veg Green Chutney Sandwich", price: 99 },
             { id: "s2", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Deadly Chocolate with Cheese Sandwich", price: 99 },
             { id: "s3", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Minced Veg Spicy Paneer with Butter Grilled Sandwich", price: 99 },
@@ -1141,8 +1064,6 @@
             { id: "s10", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Sandwich", price: 99, popular: true },
             { id: "s11", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Banana Sandwich", price: 120 },
             { id: "s12", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Extra Cheese (Add-On)", price: 20 },
-
-            // --- MAGGI CORNER (All day Menu)---
             { id: "m1", category: "Maggi", title: "🍜 Maggi Corner", name: "Plain Maggi", price: 50 },
             { id: "m2", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Maggi", price: 60 },
             { id: "m3", category: "Maggi", title: "🍜 Maggi Corner", name: "Butter Maggi", price: 60 },
@@ -1151,66 +1072,43 @@
             { id: "m6", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Paneer Cheese Maggi", price: 75 },
             { id: "m7", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Maggi", price: 80 },
             { id: "m8", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Paneer Maggi", price: 99, popular: true },
-
-            // --- PASTA CORNER (All day Menu)---
             { id: "p1", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Cheesy Corn Penne Pasta", price: 99, popular: true },
             { id: "p2", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Veg Fusilli Pasta", price: 99 },
             { id: "p3", category: "Pasta", title: "🍝 Pasta Corner", name: "Veggy Sweet Spice Red Sauce Shell Pasta", price: 99 },
             { id: "p4", category: "Pasta", title: "🍝 Pasta Corner", name: "Masala Macaroni Pasta", price: 99 },
-
-            // --- COOLERS & FRESH JUICES (All day Menu) ---
             { id: "j1", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Mint Cooler 250ml", price: 60 },
             { id: "j2", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Juice 250ml", price: 60 },
             { id: "j3", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Lemon Mint Cooler 250ml", price: 60 },
             { id: "j4", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Sabja Mint Lime Juice", price: 75 },
             { id: "j5", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Original & Natural Mint Mojito 500ml", price: 120, popular: true },
             { id: "j6", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Indian Paneer Grape with mint lime cocktail juice 250ml", price: 60 },
-
-            // --- MILKSHAKES & SPECIAL DRINKS (All day Menu)---
             { id: "d1", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Lassi", price: 75 },
             { id: "d2", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Regular Rosemilk", price: 99 },
             { id: "d3", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Sabja Rosemilk", price: 99 },
             { id: "d4", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Royal Vanilla Rosemilk", price: 99 },
             { id: "d5", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Banana Milkshake", price: 99 },
             { id: "d6", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Choco Banana Milkshake", price: 99, popular: true },
-            { id: "d7", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Fresh Coconut Milk (1 Ltr)", price: 125 },
-
-            // --- COMBOS & OFFERS ---
-         //    { id: "co1", category: "Combos", title: "🎁 Combos & Offers", name: "BUY 2 WATERMELON MINT COOLER 250ml WORTH 120:", price: 99 },
-      //     { id: "co2", category: "Combos", title: "🎁 Combos & Offers", name: "VEG MOMOS 5 pcs WORTH 125. OFFER PRICE 99 ONLY: ",price: 99 },
-         //   { id: "co3", category: "Combos", title: "🎁 Combos & Offers", name: "Maggi + Milkshake Combo", price: 130 },
-         //   { id: "co4", category: "Combos", title: "🎁 Combos & Offers", name: "Pasta + Cooler Combo", price: 160 },
-        //    { id: "co5", category: "Combos", title: "🎁 Combos & Offers", name: "Evening Snack Platter (Pakoda + Bajji + Samosa)", price: 99 },
-        //    { id: "co6", category: "Combos", title: "🎁 Combos & Offers", name: "Dinner Combo: Parotta (2) + Kurma + Rosemilk", price: 175 }
+            { id: "d7", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Fresh Coconut Milk (1 Ltr)", price: 125 }
         ]
 
         };
 
-        // Returns the item list for whichever tab is currently active.
         function getMenuData() {
             return MENU_DATA_BY_MODE[POSState.orderMode];
         }
 
-        // Example promo codes — edit freely for real campaigns.
         const COUPON_CODES = {
             "AMRUTH10": { type: "percent", value: 10, label: "10% off" },
             "FLAT50":    { type: "flat",    value: 50, label: "₹50 off" },
             "WELCOME5":  { type: "percent", value: 5,  label: "5% welcome discount" }
         };
 
-        const OPEN_HOUR = 6;   // 6:00 AM
-        const CLOSE_HOUR = 22; // 10:00 PM
+        const OPEN_HOUR = 6;
+        const CLOSE_HOUR = 22;
 
-        // Future Order's allowed delivery-time window. Narrower than the
-        // kitchen's general OPEN_HOUR/CLOSE_HOUR above by request — pre-
-        // orders may only be scheduled between 9 AM and 10 PM.
-        const FUTURE_ORDER_MIN_MINUTES = 9 * 60;   // 09:00
-        const FUTURE_ORDER_MAX_MINUTES = 22 * 60;  // 22:00
+        const FUTURE_ORDER_MIN_MINUTES = 9 * 60;
+        const FUTURE_ORDER_MAX_MINUTES = 22 * 60;
 
-        // Returns true only for a "HH:MM" string inside the Future Order
-        // delivery window. Used both live (on the time field's change
-        // event) and again at submit time, since a browser's native time
-        // picker doesn't reliably block manually-typed out-of-range values.
         function isFutureTimeWithinWindow(timeStr) {
             if (!timeStr) return false;
             const [h, m] = timeStr.split(":").map(Number);
@@ -1219,12 +1117,8 @@
             return mins >= FUTURE_ORDER_MIN_MINUTES && mins <= FUTURE_ORDER_MAX_MINUTES;
         }
 
-        // Future Order's allowed delivery-date window: tomorrow through
-        // 15 days after tomorrow (16 selectable dates total). Same-day
-        // scheduling isn't offered here — that's what Today's Order Menu
-        // (Instant) is for.
-        const FUTURE_ORDER_DATE_MIN_OFFSET_DAYS = 1;   // tomorrow
-        const FUTURE_ORDER_DATE_MAX_OFFSET_DAYS = 16;  // 15 days after tomorrow
+        const FUTURE_ORDER_DATE_MIN_OFFSET_DAYS = 1;
+        const FUTURE_ORDER_DATE_MAX_OFFSET_DAYS = 16;
 
         function toISODateLocal(d) {
             const y = d.getFullYear();
@@ -1233,9 +1127,6 @@
             return `${y}-${m}-${day}`;
         }
 
-        // Returns { min, max } as "YYYY-MM-DD" strings for the future-date
-        // field's allowed range, computed fresh each time so it always
-        // reflects "today" at the moment it's called.
         function getFutureDateBounds() {
             const now = new Date();
             const minDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + FUTURE_ORDER_DATE_MIN_OFFSET_DAYS);
@@ -1243,28 +1134,16 @@
             return { min: toISODateLocal(minDate), max: toISODateLocal(maxDate) };
         }
 
-        // Returns true only for a "YYYY-MM-DD" string inside the Future
-        // Order delivery-date window (tomorrow .. tomorrow+15). Used both
-        // live (on the date field's change event) and again at submit
-        // time, since a browser's native date picker doesn't reliably
-        // block manually-typed out-of-range values.
         function isFutureDateWithinWindow(dateStr) {
             if (!dateStr) return false;
             const { min, max } = getFutureDateBounds();
             return dateStr >= min && dateStr <= max;
         }
 
-        // ⚠️ REQUIRED: Replace with Amruthaadharanam's actual WhatsApp Business
-        // number (country code + number, digits only, e.g. "919876543210").
-        // This is where every customer's order gets sent. Leaving the
-        // placeholder in place means orders will fail to reach you.
         const BUSINESS_WHATSAPP_NUMBER = "917845387741";
-        const UPI_VPA = "prabhunandhu-2@oksbi"; // Replace with your actual UPI VPA
+        const UPI_VPA = "prabhunandhu-2@oksbi";
 
         const POSState = {
-            /* Independent carts per ordering mode — adding items under
-               Future Order never affects what's in Today's Order Menu,
-               and vice versa. Each is a plain id -> qty map. */
             carts: { Instant: {}, Future: {} },
             activeCategory: "ALL",
             searchQuery: "",
@@ -1272,12 +1151,9 @@
             orderType: "Delivery",
             discount: { code: "", type: null, value: 0, label: "" },
             orderId: "",
-            orderMode: "Instant",   // "Instant" | "Future"
+            orderMode: "Instant",
             schedule: { date: "", time: "" },
 
-            /* The ONE place that knows "which cart is active right now".
-               Every read/write of cart quantities goes through this so the
-               two carts can never accidentally cross-contaminate. */
             getCart() {
                 return this.carts[this.orderMode];
             },
@@ -1307,7 +1183,6 @@
                 document.getElementById("txt-search").focus();
             },
 
-            /* ---------- ANNOUNCEMENT BANNER ---------- */
             renderAnnouncement() {
                 const bar = document.getElementById("announcement-bar");
                 const iconEl = document.getElementById("announcement-icon");
@@ -1318,8 +1193,6 @@
                     return;
                 }
 
-                // Fingerprint the current message so a dismissal only
-                // suppresses THIS exact announcement, not future ones.
                 const fingerprint = `${ANNOUNCEMENT.type}|${ANNOUNCEMENT.text}`;
                 let hash = 0;
                 for (let i = 0; i < fingerprint.length; i++) {
@@ -1344,7 +1217,6 @@
                 };
             },
 
-            /* ---------- KITCHEN STATUS BOARD ---------- */
             updateKitchenStatus() {
                 const now = new Date();
                 const totalMins = now.getHours() * 60 + now.getMinutes();
@@ -1374,7 +1246,6 @@
                 }
             },
 
-            /* ---------- CATEGORY PILLS ---------- */
             renderCategories() {
                 const container = document.getElementById("category-pills-container");
                 const categories = ["ALL", ...new Set(getMenuData().map(item => item.category))];
@@ -1390,11 +1261,9 @@
                 }).join('');
             },
 
-            /* ---------- MENU GRID ---------- */
             renderMenu() {
                 const container = document.getElementById("menu-container");
 
-                // On mobile, remember which panels are currently open so re-renders don't collapse them
                 const expandedTitles = new Set();
                 if (window.matchMedia('(max-width: 768px)').matches) {
                     container.querySelectorAll('.category-card:not(.collapsed)').forEach(c => {
@@ -1456,22 +1325,9 @@
                 }
             },
 
-            /* ---------- ORDERING MODE SWITCH (Today's Order Menu / Future Order) ----------
-               Single source of truth for everything that changes when the mode
-               changes: active tab styling, whether the Future schedule card is
-               shown, the Future date/time required-ness, and the WhatsApp
-               button label. Used by both the mode-tab click handler and the
-               Reset Order flow so the two never drift out of sync. Each mode
-               has its own independent cart, so switching modes also refreshes
-               category badges, the menu's qty controls, and the sidebar's
-               Order Summary / totals. */
             applyOrderMode(mode) {
                 POSState.orderMode = mode;
 
-                // Each mode now has its own independent item list, so a
-                // category or search term picked under one tab may not
-                // exist under the other — reset both to avoid landing on
-                // an empty "no results" grid after switching tabs.
                 POSState.activeCategory = "ALL";
                 POSState.searchQuery = "";
                 document.getElementById("txt-search").value = "";
@@ -1505,7 +1361,6 @@
                 this.syncTotals();
             },
 
-            /* ---------- TOTALS & DISCOUNT ---------- */
             syncTotals() {
                 let uniqueItems = 0, totalQty = 0, subtotal = 0;
                 const previewContainer = document.getElementById("cart-items-preview");
@@ -1531,9 +1386,6 @@
                     previewContainer.innerHTML = `<li class="cart-empty-state"><span class="empty-icon">🛒</span>No items added yet</li>`;
                 }
 
-                // A single shared line above the list for Future Order (one
-                // date/time applies to the whole cart, so showing it once
-                // per item would just repeat the same line N times).
                 const scheduleNote = document.getElementById("cart-schedule-note");
                 if (POSState.orderMode === "Future") {
                     scheduleNote.classList.add("visible");
@@ -1547,7 +1399,6 @@
                     scheduleNote.classList.remove("visible");
                 }
 
-                // discount
                 let discountAmount = 0;
                 if (subtotal > 0 && POSState.discount.type) {
                     discountAmount = POSState.discount.type === "percent"
@@ -1582,7 +1433,6 @@
                 const qrWrapper = document.getElementById("qr-wrapper");
                 if (qrWrapper) qrWrapper.classList.toggle("active", grandTotal > 0);
 
-                // mobile sticky bar
                 const bar = document.getElementById("mobile-cart-bar");
                 bar.classList.toggle("visible", totalQty > 0);
                 document.getElementById("mobile-cart-count").innerText = totalQty;
@@ -1596,7 +1446,6 @@
                 if (el) el.innerText = new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
             },
 
-            /* ---------- TOASTS ---------- */
             showToast(message, type = "info") {
                 const container = document.getElementById("toast-container");
                 const toast = document.createElement("div");
@@ -1606,7 +1455,6 @@
                 setTimeout(() => toast.remove(), 3200);
             },
 
-            /* ---------- MODAL (replaces window.alert / window.confirm) ---------- */
             alertModal(title, message) {
                 return this.showModal(title, message, { confirmText: "OK", showCancel: false });
             },
@@ -1642,7 +1490,6 @@
                 });
             },
 
-            /* ---------- EVENT BINDING ---------- */
             bindEventHandlers() {
                 document.getElementById("category-pills-container").addEventListener("click", (e) => {
                     if (e.target.classList.contains("pill")) {
@@ -1708,10 +1555,6 @@
                     }
                 });
 
-                /* Phone number: digits only, capped at 10, as the customer
-                   types. This is the single shared "Your Details" field —
-                   Today's Order Menu and Future Order both use the same
-                   form, so this restriction applies under every tab. */
                 document.getElementById("cust-phone").addEventListener("input", (e) => {
                     e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
                 });
@@ -1722,7 +1565,6 @@
                     this.syncTotals();
                 });
 
-                /* ordering mode tabs — Today's Order Menu (Instant) / Future Order */
                 document.getElementById("mode-tabs").addEventListener("click", (e) => {
                     const btn = e.target.closest(".mode-tab");
                     if (!btn) return;
@@ -1754,7 +1596,6 @@
                     this.syncTotals();
                 });
 
-                /* order type segmented control */
                 document.getElementById("order-type-toggle").addEventListener("click", (e) => {
                     const btn = e.target.closest("button[data-type]");
                     if (!btn) return;
@@ -1771,7 +1612,6 @@
                     this.syncTotals();
                 });
 
-                /* coupon */
                 document.getElementById("btn-apply-coupon").addEventListener("click", () => this.applyCoupon());
                 document.getElementById("input-coupon").addEventListener("keydown", (e) => {
                     if (e.key === "Enter") { e.preventDefault(); this.applyCoupon(); }
@@ -1853,17 +1693,12 @@
                     POSState.discount = { code: "", type: null, value: 0, label: "" };
                     POSState.init();
 
-                    // applyOrderMode("Instant") resets tab styling, hides the
-                    // Future schedule card, restores the button label, and
-                    // refreshes categories/menu/totals — the same single path
-                    // used when a tab is clicked, so nothing here repeats it.
                     UIEngine.applyOrderMode("Instant");
                     UIEngine.showToast("New order started", "success");
                     document.getElementById("txt-search").focus();
                 });
             },
 
-            /* ---------- UPDATE NOW: clear caches/SW and force a fresh load ---------- */
             async hardReload() {
                 this.showToast("Fetching the latest version…", "info");
                 try {
@@ -2045,12 +1880,10 @@
 
                 const LINE = `━━━━━━━━━━━━━━━━━━\n`;
 
-                // Greeting — customer talking to the shop
                 let text = `Hello *AMRUTHADHAARANAM*,\n\n`;
                 text += `I'd like to place my order. Here are the details:\n`;
                 text += LINE;
 
-                // Customer details
                 text += `👤 *Name:*   ${customer.name}\n`;
                 text += `📞 *Phone:*  ${customer.phone}\n`;
                 text += `🚚 *Order Mode:* ${isPickup ? '🏠 Self Pickup' : '🛵 Home Delivery'}\n`;
@@ -2070,7 +1903,6 @@
                 }
                 text += LINE;
 
-                // Items
                 text += `🍽️ *My Order:*\n\n`;
                 invoice.itemsList.forEach((item, i) => {
                     text += `  ${i + 1}. ${item.name}\n`;
@@ -2078,7 +1910,6 @@
                 });
                 text += LINE;
 
-                // Bill
                 text += `💰 *Bill Summary:*\n\n`;
                 text += `  Subtotal        :  ₹${invoice.subtotal.toFixed(2)}\n`;
                 if (invoice.discountAmount > 0) {
@@ -2091,7 +1922,6 @@
                 text += `  *Total Payable  :  ₹${invoice.grandTotal.toFixed(2)}*\n`;
                 text += LINE;
 
-                // Closing
                 text += `📌 Ref: _${POSState.orderId}_\n\n`;
                 text += `Kindly confirm my order at the earliest.\n`;
                 text += `Thank you so much!`;
@@ -2160,34 +1990,60 @@
             UIEngine.init();
         });
 
-        /* ============================================================
-           COPY PROTECTION (deterrent layer)
-           NOTE: This only stops casual copying via mouse/keyboard. It
-           cannot stop someone using browser DevTools' "Sources" tab,
-           view-source via a different browser/proxy, curl/wget on the
-           page URL, or disabling JavaScript — all HTML/CSS/JS sent to
-           a browser is fundamentally visible to that browser. Treat
-           this as a speed bump, not a lock.
-        ============================================================ */
+        /* ================================================================
+           CARVED-PANEL TILT
+           Menu cards tilt in real 3D toward the cursor and carry a soft
+           moving highlight, like light catching a raised wood-and-brass
+           relief panel as you lean past it. Skipped entirely for touch
+           devices and for anyone who has asked for reduced motion.
+        ================================================================ */
+        (function tiltEffect() {
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+            if (reduceMotion || isTouch) return;
+
+            const container = document.getElementById('menu-container');
+            if (!container) return;
+            let activeCard = null;
+
+            container.addEventListener('mousemove', (e) => {
+                const card = e.target.closest('.category-card');
+                if (!card) {
+                    if (activeCard) { activeCard.style.transform = ''; activeCard = null; }
+                    return;
+                }
+                activeCard = card;
+                const rect = card.getBoundingClientRect();
+                const px = (e.clientX - rect.left) / rect.width;
+                const py = (e.clientY - rect.top) / rect.height;
+                const rotateY = (px - 0.5) * 7;
+                const rotateX = (0.5 - py) * 5;
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(3px)`;
+                card.style.setProperty('--glow-x', `${px * 100}%`);
+                card.style.setProperty('--glow-y', `${py * 100}%`);
+            });
+
+            container.addEventListener('mouseleave', (e) => {
+                const card = e.target.closest && e.target.closest('.category-card');
+                if (card) card.style.transform = '';
+                if (!container.contains(e.relatedTarget)) activeCard = null;
+            }, true);
+        })();
+
         (function copyProtection() {
             const isFormField = (el) =>
                 el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable);
 
-            // Disable right-click context menu (except on form fields, so
-            // customers can still use "paste" etc. while filling details)
             document.addEventListener("contextmenu", (e) => {
                 if (!isFormField(e.target)) e.preventDefault();
             });
 
-            // Block selection outside form fields (belt-and-braces; CSS already does most of this)
             document.addEventListener("selectstart", (e) => {
                 if (!isFormField(e.target)) e.preventDefault();
             });
 
-            // Block dragging images/text out of the page
             document.addEventListener("dragstart", (e) => e.preventDefault());
 
-            // Block copy/cut of page content outside form fields
             document.addEventListener("copy", (e) => {
                 if (!isFormField(e.target)) e.preventDefault();
             });
@@ -2195,27 +2051,20 @@
                 if (!isFormField(e.target)) e.preventDefault();
             });
 
-            // Block common "view/save/inspect source" keyboard shortcuts
             document.addEventListener("keydown", (e) => {
                 const key = e.key ? e.key.toUpperCase() : "";
                 const ctrlOrCmd = e.ctrlKey || e.metaKey;
 
-                // F12 — DevTools
                 if (e.key === "F12") { e.preventDefault(); return; }
 
-                // Ctrl/Cmd+Shift+I / J / C — DevTools panels
                 if (ctrlOrCmd && e.shiftKey && ["I", "J", "C"].includes(key)) {
                     e.preventDefault(); return;
                 }
 
-                // Ctrl/Cmd+U — View Source
                 if (ctrlOrCmd && key === "U") { e.preventDefault(); return; }
 
-                // Ctrl/Cmd+S — Save Page
                 if (ctrlOrCmd && key === "S") { e.preventDefault(); return; }
 
-                // Ctrl/Cmd+P — Print (receipt printing uses the on-screen
-                // button which calls window.print() directly, so this is safe to block)
                 if (ctrlOrCmd && key === "P") { e.preventDefault(); return; }
             });
         })();
