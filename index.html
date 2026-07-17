@@ -266,6 +266,62 @@
         [data-theme="dark"] .theme-toggle:hover { box-shadow: 0 4px 20px rgba(74, 122, 93, 0.68); }
         #theme-icon { font-size: 1rem; line-height: 1; }
 
+        /* ============================================================
+           ORDERING MODE TABS
+           Switching tabs swaps to a fully independent cart — items
+           added under "Today's Order Menu" never mix with items added
+           under "Future Order", and vice versa. Only this tab bar and
+           the Future schedule card change per mode; menu, layout, and
+           pricing markup below are shared and never duplicated.
+        ============================================================ */
+        .mode-tabs {
+            display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;
+        }
+        .mode-tab {
+            flex: 1; min-width: 150px; padding: 0.75rem 1rem; border: 1.5px solid var(--border);
+            background: var(--surface); color: var(--text-main); border-radius: var(--radius-md);
+            font-family: var(--font-btn); font-weight: 600; font-size: 0.88rem; cursor: pointer;
+            transition: var(--transition); text-align: center;
+        }
+        .mode-tab:hover { border-color: var(--primary); }
+        .mode-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: var(--shadow); }
+
+        /* Future Order's date/time card. Reuses the same entrance
+           transition already defined for toasts/modals. */
+        .schedule-card {
+            display: none; background: var(--surface); border: 1px solid var(--border);
+            border-left: 3px solid var(--accent); border-radius: var(--radius-lg);
+            padding: 1.1rem 1.25rem; margin-bottom: 1.5rem; box-shadow: var(--shadow);
+        }
+        .schedule-card.visible { display: block; animation: toast-in 0.2s ease-out; }
+        .schedule-card-title {
+            font-family: var(--font-heading); color: var(--heading-color); font-size: 1.1rem;
+            margin-bottom: 0.9rem;
+        }
+        .schedule-card-fields {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+        }
+        .schedule-card-hint {
+            font-size: 0.76rem; color: var(--text-muted); margin-top: 0.75rem; line-height: 1.5;
+        }
+        @media (max-width: 640px) {
+            .schedule-card-fields { grid-template-columns: 1fr; }
+            .mode-tab { min-width: 105px; font-size: 0.78rem; padding: 0.65rem 0.5rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .schedule-card.visible { animation: none; }
+        }
+
+        /* Shared reminder line above the Order Summary list for Future
+           Order, since one date/time applies to every item in that cart. */
+        .cart-schedule-note {
+            display: none; font-size: 0.78rem; color: var(--primary);
+            background: rgba(54,92,70,0.06); border: 1px dashed var(--primary);
+            border-radius: var(--radius-md); padding: 0.5rem 0.7rem; margin-bottom: 0.6rem;
+        }
+        .cart-schedule-note.visible { display: block; }
+        [data-theme="dark"] .cart-schedule-note { background: rgba(74,122,93,0.14); }
+
         /* --- MENU GRID --- */
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
         .category-card {
@@ -688,6 +744,26 @@
                 </div>
             </header>
 
+            <div class="mode-tabs" id="mode-tabs" role="group" aria-label="Ordering mode">
+                <button type="button" class="mode-tab active" data-mode="Instant" aria-pressed="true">⚡ Today's Order Menu</button>
+                <button type="button" class="mode-tab" data-mode="Future" aria-pressed="false">📅 Future Order</button>
+            </div>
+
+            <div class="schedule-card" id="future-schedule-card">
+                <h3 class="schedule-card-title">📅 Future Delivery</h3>
+                <div class="schedule-card-fields">
+                    <div class="form-group">
+                        <label for="future-date">Delivery Date *</label>
+                        <input type="date" id="future-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="future-time">Delivery Time * <span class="field-hint">— between 9:00 AM &amp; 10:00 PM</span></label>
+                        <input type="time" id="future-time" min="09:00" max="22:00">
+                    </div>
+                </div>
+                <p class="schedule-card-hint">This date &amp; time apply to your entire order below — pick your items as usual, then confirm. Delivery date can be chosen from tomorrow up to 15 days ahead, and delivery time must fall between 9:00 AM and 10:00 PM.</p>
+            </div>
+
             <div class="controls-row">
                 <div class="search-wrapper">
                     <input type="text" id="txt-search" class="search-input" placeholder="Search menu items (e.g., Cake, Pastry, Idli, Maggi, Pasta)..." aria-label="Search menu">
@@ -722,7 +798,7 @@
                     </div>
                     <div class="form-group">
                         <label for="cust-phone">Phone Number * <span class="field-hint">— 10 digits, used for WhatsApp</span></label>
-                        <input type="tel" id="cust-phone" required pattern="[0-9]{10}" maxlength="10" placeholder="Enter 10-digit number">
+                        <input type="tel" id="cust-phone" required pattern="[0-9]{10}" maxlength="10" inputmode="numeric" placeholder="Enter 10-digit number">
                     </div>
                     <div class="address-fields" id="address-fields">
                         <div class="form-group">
@@ -752,6 +828,7 @@
                     <span>Order Reference</span>
                     <span id="lbl-order-no" class="order-ref-value">#AD-20260707-0000</span>
                 </div>
+                <div class="cart-schedule-note" id="cart-schedule-note"></div>
                 <ul class="cart-items-list" id="cart-items-preview" aria-live="polite"></ul>
 
                 <div class="coupon-row">
@@ -878,7 +955,7 @@
             <p>Thank You! Visit Again</p>
             <div class="qr-placeholder">
                 <div style="border: 1px solid #000; width: 25mm; height: 25mm; margin: 2mm auto; display: flex; align-items: center; justify-content: center; font-size: 8px;">Scan to Pay</div>
-                <p>Order generated via Amruthaadharanam Online Ordering</p>
+                <p>Order generated via Amruthadhaaranam Online Ordering</p>
             </div>
         </div>
     </div>
@@ -909,7 +986,17 @@
             blink: true      // true = text gently pulses to grab attention; false = static
         };
 
-         const MENU_DATA = [
+        /* ================================================================
+           MENU DATA — separate lists per ordering mode
+           Today's Order Menu (Instant) and Future Order each have their
+           own independent item list below. Add, remove, rename, price,
+           or comment out items in ONE list without touching the other —
+           they no longer have to stay in sync.
+        ================================================================ */
+        const MENU_DATA_BY_MODE = {
+
+        /* ---------- TODAY'S ORDER MENU (Instant) ---------- */
+        Instant: [
             // --- BREAKFAST SECTION (7 am to 10 am)---
          //   { id: "b1", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Ghee Podi Mini Idli (14 Pcs)", price: 80 },
          //   { id: "b2", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Traditional Steamed Idli (2 Pcs) with Chutney", price: 40 },
@@ -999,17 +1086,173 @@
              { id: "co4", category: "Combos", title: "🎁 Combos & Offers", name: "Any Pasta + Lemonade 500ml worth 199 Only 149", price: 149 },
         //    { id: "co5", category: "Combos", title: "🎁 Combos & Offers", name: "Evening Snack Platter (Pakoda + Bajji + Samosa)", price: 99 },
         //    { id: "co6", category: "Combos", title: "🎁 Combos & Offers", name: "Dinner Combo: Parotta (2) + Kurma + Rosemilk", price: 175 }
-        ];
+        ],
+
+        /* ---------- FUTURE ORDER MENU ---------- */
+        /* Seeded as a copy of Today's Order Menu above so nothing breaks
+           on first load — edit this list independently for pre-order-only
+           items, different pricing, or a smaller/larger selection. */
+        Future: [
+            // --- BREAKFAST SECTION (7 am to 10 am)---
+         //   { id: "b1", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Ghee Podi Mini Idli (14 Pcs)", price: 80 },
+         //   { id: "b2", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Traditional Steamed Idli (2 Pcs) with Chutney", price: 40 },
+         //   { id: "b3", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Crispy Medu Vada (2 Pcs)", price: 45 },
+         //   { id: "b4", category: "Breakfast", title: "☀️ Morning Breakfast Specials", name: "Special Ghee Roast Dosa", price: 90, popular: true },
+
+           // --- LUNCH SECTION (12.30 pm to 2 pm)---
+            { id: "l1", category: "Lunch Special", title: "🍱 Lunch Special", name: "Mint Pulao Rice (Made with Basmati Rice) with Dhal Tadka and Raita", price: 175 },
+            { id: "l2", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Tangy Lemon Rice with Roasted Peanuts and a some Fryams, 250ml watermelon mint cooler juice ", price: 125 },
+            { id: "l3", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Creamy Curd Rice with Pickle & Chutney", price: 70 },
+         //   { id: "l4", category: "Lunch", title: "🍱 Traditional South Indian Lunch", name: "Executive Mini South Indian Meals", price: 130, popular: true },
+
+            // --- EVENING SNACKS SECTION (4 pm to 5.30 pm)---
+            { id: "es1", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Bhel Poori chat", price: 50 },
+            { id: "es2", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Grilled Veggies Box Worth 149 /- is now Only 109/-", price: 109 , popular: true},
+            { id: "es3", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Sweet Paniyaaram 5pcs", price: 99 },
+         //   { id: "es4", category: "Evening Snacks", title: "🌆 Delightful Evening Snacks", name: "Classic Samosa (2 Pcs) with Mint Chutney", price: 35 },
+
+            // --- MY DINNER SPECIAL SECTION (Pre order delivery from 7 pm)--- 
+            { id: "ds1", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Veg Gravy of the Delivery day 250ml", price: 90 },
+            { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti 1pc", price: 25 },             
+            { id: "ds2", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Roti (2pcs) + Veg Gravy of the Delivery day 100ml ", price: 80 },
+            { id: "ds3", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Poori(small size) 5pcs with Veg Gravy of the Delivery day 250ml", price: 99 },
+          //  { id: "ds4", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Plain Roti (1 pc)", price: 20 },
+          //  { id: "ds5", category: "Dinner Special", title: "🌙 My Dinner Specials", name: "Butter Naan (1 pc)", price: 40 },
+
+            // --- BAKERY & PASTRY SECTION (All day Menu)---
+          //  { id: "bp1", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "French Vannila Tea Cake (2 box (1pc /box))", price: 80 },
+           // { id: "bp2", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Signature Choco Brownie Fudge (1 Pc)", price: 59 },
+         //   { id: "bp3", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Red Velvet Cream Cheese Pastry", price: 95 },
+         //   { id: "bp4", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Fresh Cream Pineapple Cake Slice", price: 75 },
+         //   { id: "bp5", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Rich Chocolate Truffle Cake (Half KG)", price: 450, popular: true },
+         //   { id: "bp6", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Freshly Baked Veg Puff (1 Pc)", price: 30 },
+         //   { id: "bp7", category: "Bakery", title: "🎂 Bakery & Pastry Selection", name: "Paneer Tikka Puff", price: 45 },
+
+            // --- SIGNATURE SANDWICHES (All day Menu)---
+            { id: "s1", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Bombay Raw Veg Green Chutney Sandwich", price: 99 },
+            { id: "s2", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Deadly Chocolate with Cheese Sandwich", price: 99 },
+            { id: "s3", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Minced Veg Spicy Paneer with Butter Grilled Sandwich", price: 99 },
+            { id: "s4", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Triple Layer Bread Butter Jam", price: 75 },
+            { id: "s5", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Chilli Cheese Sandwich", price: 75 },
+            { id: "s6", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Veg Mayo Sandwich", price: 75 },
+            { id: "s7", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Corn Cheese Sandwich", price: 75 },
+            { id: "s8", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Cucumber Cheese Sandwich", price: 75 },
+            { id: "s9", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Onion, Tomato & Cucumber with Green Chutney", price: 75 },
+            { id: "s10", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Sandwich", price: 99, popular: true },
+            { id: "s11", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Grilled Nutella Banana Sandwich", price: 120 },
+            { id: "s12", category: "Sandwich", title: "🥪 Signature Sandwiches", name: "Extra Cheese (Add-On)", price: 20 },
+
+            // --- MAGGI CORNER (All day Menu)---
+            { id: "m1", category: "Maggi", title: "🍜 Maggi Corner", name: "Plain Maggi", price: 50 },
+            { id: "m2", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Maggi", price: 60 },
+            { id: "m3", category: "Maggi", title: "🍜 Maggi Corner", name: "Butter Maggi", price: 60 },
+            { id: "m4", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Butter Maggi", price: 60 },
+            { id: "m5", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Maggi", price: 70 },
+            { id: "m6", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Paneer Cheese Maggi", price: 75 },
+            { id: "m7", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Maggi", price: 80 },
+            { id: "m8", category: "Maggi", title: "🍜 Maggi Corner", name: "Veg Cheese Butter Paneer Maggi", price: 99, popular: true },
+
+            // --- PASTA CORNER (All day Menu)---
+            { id: "p1", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Cheesy Corn Penne Pasta", price: 99, popular: true },
+            { id: "p2", category: "Pasta", title: "🍝 Pasta Corner", name: "Creamy Veg Fusilli Pasta", price: 99 },
+            { id: "p3", category: "Pasta", title: "🍝 Pasta Corner", name: "Veggy Sweet Spice Red Sauce Shell Pasta", price: 99 },
+            { id: "p4", category: "Pasta", title: "🍝 Pasta Corner", name: "Masala Macaroni Pasta", price: 99 },
+
+            // --- COOLERS & FRESH JUICES (All day Menu) ---
+            { id: "j1", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Mint Cooler 250ml", price: 60 },
+            { id: "j2", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Watermelon Juice 250ml", price: 60 },
+            { id: "j3", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Lemon Mint Cooler 250ml", price: 60 },
+            { id: "j4", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Sabja Mint Lime Juice", price: 75 },
+            { id: "j5", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Original & Natural Mint Mojito 500ml", price: 120, popular: true },
+            { id: "j6", category: "Juices", title: "🥤 Coolers & Fresh Juices", name: "Indian Paneer Grape with mint lime cocktail juice 250ml", price: 60 },
+
+            // --- MILKSHAKES & SPECIAL DRINKS (All day Menu)---
+            { id: "d1", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Lassi", price: 75 },
+            { id: "d2", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Regular Rosemilk", price: 99 },
+            { id: "d3", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Sabja Rosemilk", price: 99 },
+            { id: "d4", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Royal Vanilla Rosemilk", price: 99 },
+            { id: "d5", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Banana Milkshake", price: 99 },
+            { id: "d6", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Choco Banana Milkshake", price: 99, popular: true },
+            { id: "d7", category: "Milkshakes", title: "🥛 Milkshakes & Specials", name: "Fresh Coconut Milk (1 Ltr)", price: 125 },
+
+            // --- COMBOS & OFFERS ---
+         //    { id: "co1", category: "Combos", title: "🎁 Combos & Offers", name: "BUY 2 WATERMELON MINT COOLER 250ml WORTH 120:", price: 99 },
+      //     { id: "co2", category: "Combos", title: "🎁 Combos & Offers", name: "VEG MOMOS 5 pcs WORTH 125. OFFER PRICE 99 ONLY: ",price: 99 },
+         //   { id: "co3", category: "Combos", title: "🎁 Combos & Offers", name: "Maggi + Milkshake Combo", price: 130 },
+         //   { id: "co4", category: "Combos", title: "🎁 Combos & Offers", name: "Pasta + Cooler Combo", price: 160 },
+        //    { id: "co5", category: "Combos", title: "🎁 Combos & Offers", name: "Evening Snack Platter (Pakoda + Bajji + Samosa)", price: 99 },
+        //    { id: "co6", category: "Combos", title: "🎁 Combos & Offers", name: "Dinner Combo: Parotta (2) + Kurma + Rosemilk", price: 175 }
+        ]
+
+        };
+
+        // Returns the item list for whichever tab is currently active.
+        function getMenuData() {
+            return MENU_DATA_BY_MODE[POSState.orderMode];
+        }
 
         // Example promo codes — edit freely for real campaigns.
         const COUPON_CODES = {
-            "_AMRUTH__10": { type: "percent", value: 10, label: "10% off" },
-            "__FLAT50___":    { type: "flat",    value: 50, label: "₹50 off" },
-            "___WELCOME5___":  { type: "percent", value: 5,  label: "5% welcome discount" }
+            "AMRUTH10": { type: "percent", value: 10, label: "10% off" },
+            "FLAT50":    { type: "flat",    value: 50, label: "₹50 off" },
+            "WELCOME5":  { type: "percent", value: 5,  label: "5% welcome discount" }
         };
 
         const OPEN_HOUR = 6;   // 6:00 AM
         const CLOSE_HOUR = 22; // 10:00 PM
+
+        // Future Order's allowed delivery-time window. Narrower than the
+        // kitchen's general OPEN_HOUR/CLOSE_HOUR above by request — pre-
+        // orders may only be scheduled between 9 AM and 10 PM.
+        const FUTURE_ORDER_MIN_MINUTES = 9 * 60;   // 09:00
+        const FUTURE_ORDER_MAX_MINUTES = 22 * 60;  // 22:00
+
+        // Returns true only for a "HH:MM" string inside the Future Order
+        // delivery window. Used both live (on the time field's change
+        // event) and again at submit time, since a browser's native time
+        // picker doesn't reliably block manually-typed out-of-range values.
+        function isFutureTimeWithinWindow(timeStr) {
+            if (!timeStr) return false;
+            const [h, m] = timeStr.split(":").map(Number);
+            if (Number.isNaN(h) || Number.isNaN(m)) return false;
+            const mins = h * 60 + m;
+            return mins >= FUTURE_ORDER_MIN_MINUTES && mins <= FUTURE_ORDER_MAX_MINUTES;
+        }
+
+        // Future Order's allowed delivery-date window: tomorrow through
+        // 15 days after tomorrow (16 selectable dates total). Same-day
+        // scheduling isn't offered here — that's what Today's Order Menu
+        // (Instant) is for.
+        const FUTURE_ORDER_DATE_MIN_OFFSET_DAYS = 1;   // tomorrow
+        const FUTURE_ORDER_DATE_MAX_OFFSET_DAYS = 16;  // 15 days after tomorrow
+
+        function toISODateLocal(d) {
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${y}-${m}-${day}`;
+        }
+
+        // Returns { min, max } as "YYYY-MM-DD" strings for the future-date
+        // field's allowed range, computed fresh each time so it always
+        // reflects "today" at the moment it's called.
+        function getFutureDateBounds() {
+            const now = new Date();
+            const minDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + FUTURE_ORDER_DATE_MIN_OFFSET_DAYS);
+            const maxDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + FUTURE_ORDER_DATE_MAX_OFFSET_DAYS);
+            return { min: toISODateLocal(minDate), max: toISODateLocal(maxDate) };
+        }
+
+        // Returns true only for a "YYYY-MM-DD" string inside the Future
+        // Order delivery-date window (tomorrow .. tomorrow+15). Used both
+        // live (on the date field's change event) and again at submit
+        // time, since a browser's native date picker doesn't reliably
+        // block manually-typed out-of-range values.
+        function isFutureDateWithinWindow(dateStr) {
+            if (!dateStr) return false;
+            const { min, max } = getFutureDateBounds();
+            return dateStr >= min && dateStr <= max;
+        }
 
         // ⚠️ REQUIRED: Replace with Amruthaadharanam's actual WhatsApp Business
         // number (country code + number, digits only, e.g. "919876543210").
@@ -1019,17 +1262,29 @@
         const UPI_VPA = "prabhunandhu-2@oksbi"; // Replace with your actual UPI VPA
 
         const POSState = {
-            cart: {},
+            /* Independent carts per ordering mode — adding items under
+               Future Order never affects what's in Today's Order Menu,
+               and vice versa. Each is a plain id -> qty map. */
+            carts: { Instant: {}, Future: {} },
             activeCategory: "ALL",
             searchQuery: "",
             deliveryCharge: 0.00,
             orderType: "Delivery",
             discount: { code: "", type: null, value: 0, label: "" },
             orderId: "",
+            orderMode: "Instant",   // "Instant" | "Future"
+            schedule: { date: "", time: "" },
+
+            /* The ONE place that knows "which cart is active right now".
+               Every read/write of cart quantities goes through this so the
+               two carts can never accidentally cross-contaminate. */
+            getCart() {
+                return this.carts[this.orderMode];
+            },
 
             init() {
                 this.generateOrderId();
-                this.cart = {};
+                this.carts = { Instant: {}, Future: {} };
             },
             generateOrderId() {
                 const now = new Date();
@@ -1122,13 +1377,14 @@
             /* ---------- CATEGORY PILLS ---------- */
             renderCategories() {
                 const container = document.getElementById("category-pills-container");
-                const categories = ["ALL", ...new Set(MENU_DATA.map(item => item.category))];
+                const categories = ["ALL", ...new Set(getMenuData().map(item => item.category))];
+                const cart = POSState.getCart();
 
                 container.innerHTML = categories.map(cat => {
                     const cartQty = cat === "ALL"
-                        ? Object.values(POSState.cart).reduce((a, b) => a + b, 0)
-                        : MENU_DATA.filter(i => i.category === cat)
-                                   .reduce((sum, i) => sum + (POSState.cart[i.id] || 0), 0);
+                        ? Object.values(cart).reduce((a, b) => a + b, 0)
+                        : getMenuData().filter(i => i.category === cat)
+                                   .reduce((sum, i) => sum + (cart[i.id] || 0), 0);
                     const badge = cartQty > 0 ? `<span class="pill-badge">${cartQty}</span>` : '';
                     return `<button class="pill ${POSState.activeCategory === cat ? 'active' : ''}" data-category="${cat}">${cat.toUpperCase()}${badge}</button>`;
                 }).join('');
@@ -1149,7 +1405,7 @@
 
                 container.innerHTML = "";
 
-                const filteredItems = MENU_DATA.filter(item => {
+                const filteredItems = getMenuData().filter(item => {
                     const matchCat = POSState.activeCategory === "ALL" || item.category === POSState.activeCategory;
                     const matchSearch = item.name.toLowerCase().includes(POSState.searchQuery.toLowerCase());
                     return matchCat && matchSearch;
@@ -1180,7 +1436,7 @@
                     `;
                     const body = card.querySelector('.menu-items-body');
                     items.forEach(item => {
-                        const currentQty = POSState.cart[item.id] || 0;
+                        const currentQty = POSState.getCart()[item.id] || 0;
                         const row = document.createElement("div");
                         row.className = `menu-item${currentQty > 0 ? ' in-cart' : ''}`;
                         row.innerHTML = `
@@ -1200,16 +1456,66 @@
                 }
             },
 
+            /* ---------- ORDERING MODE SWITCH (Today's Order Menu / Future Order) ----------
+               Single source of truth for everything that changes when the mode
+               changes: active tab styling, whether the Future schedule card is
+               shown, the Future date/time required-ness, and the WhatsApp
+               button label. Used by both the mode-tab click handler and the
+               Reset Order flow so the two never drift out of sync. Each mode
+               has its own independent cart, so switching modes also refreshes
+               category badges, the menu's qty controls, and the sidebar's
+               Order Summary / totals. */
+            applyOrderMode(mode) {
+                POSState.orderMode = mode;
+
+                // Each mode now has its own independent item list, so a
+                // category or search term picked under one tab may not
+                // exist under the other — reset both to avoid landing on
+                // an empty "no results" grid after switching tabs.
+                POSState.activeCategory = "ALL";
+                POSState.searchQuery = "";
+                document.getElementById("txt-search").value = "";
+
+                document.querySelectorAll(".mode-tab").forEach(b => {
+                    const isActive = b.dataset.mode === mode;
+                    b.classList.toggle("active", isActive);
+                    b.setAttribute("aria-pressed", isActive ? "true" : "false");
+                });
+
+                const futureCard = document.getElementById("future-schedule-card");
+                const futureDate = document.getElementById("future-date");
+                const futureTime = document.getElementById("future-time");
+                const whatsappLabel = document.getElementById("whatsapp-btn-label");
+
+                futureCard.classList.toggle("visible", mode === "Future");
+                futureDate.required = (mode === "Future");
+                futureTime.required = (mode === "Future");
+
+                if (mode === "Future") {
+                    const { min, max } = getFutureDateBounds();
+                    futureDate.min = min;
+                    futureDate.max = max;
+                    whatsappLabel.textContent = "Schedule Order";
+                } else {
+                    whatsappLabel.textContent = "Place Order";
+                }
+
+                this.renderCategories();
+                this.renderMenu();
+                this.syncTotals();
+            },
+
             /* ---------- TOTALS & DISCOUNT ---------- */
             syncTotals() {
                 let uniqueItems = 0, totalQty = 0, subtotal = 0;
                 const previewContainer = document.getElementById("cart-items-preview");
                 previewContainer.innerHTML = "";
+                const cart = POSState.getCart();
 
-                Object.keys(POSState.cart).forEach(id => {
-                    const qty = POSState.cart[id];
+                Object.keys(cart).forEach(id => {
+                    const qty = cart[id];
                     if (qty > 0) {
-                        const item = MENU_DATA.find(m => m.id === id);
+                        const item = getMenuData().find(m => m.id === id);
                         uniqueItems++;
                         totalQty += qty;
                         subtotal += item.price * qty;
@@ -1223,6 +1529,22 @@
 
                 if (uniqueItems === 0) {
                     previewContainer.innerHTML = `<li class="cart-empty-state"><span class="empty-icon">🛒</span>No items added yet</li>`;
+                }
+
+                // A single shared line above the list for Future Order (one
+                // date/time applies to the whole cart, so showing it once
+                // per item would just repeat the same line N times).
+                const scheduleNote = document.getElementById("cart-schedule-note");
+                if (POSState.orderMode === "Future") {
+                    scheduleNote.classList.add("visible");
+                    if (POSState.schedule.date && POSState.schedule.time) {
+                        const dt = new Date(`${POSState.schedule.date}T${POSState.schedule.time}`);
+                        scheduleNote.innerHTML = `📅 Scheduled for <strong>${dt.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}</strong>`;
+                    } else {
+                        scheduleNote.innerHTML = `⚠️ Set a delivery date &amp; time above`;
+                    }
+                } else {
+                    scheduleNote.classList.remove("visible");
                 }
 
                 // discount
@@ -1351,15 +1673,16 @@
                     }
                     if (e.target.classList.contains("qty-btn")) {
                         const id = e.target.dataset.id;
-                        const item = MENU_DATA.find(m => m.id === id);
-                        const current = POSState.cart[id] || 0;
+                        const item = getMenuData().find(m => m.id === id);
+                        const cart = POSState.getCart();
+                        const current = cart[id] || 0;
                         if (e.target.classList.contains("btn-up")) {
-                            POSState.cart[id] = current + 1;
+                            cart[id] = current + 1;
                             if (current === 0) this.showToast(`${item.name} added`, "success");
                         } else if (e.target.classList.contains("btn-down") && current > 0) {
-                            POSState.cart[id] = current - 1;
-                            if (POSState.cart[id] === 0) {
-                                delete POSState.cart[id];
+                            cart[id] = current - 1;
+                            if (cart[id] === 0) {
+                                delete cart[id];
                                 this.showToast(`${item.name} removed`, "info");
                             }
                         }
@@ -1373,10 +1696,11 @@
                     if (e.target.classList.contains("qty-input")) {
                         const id = e.target.dataset.id;
                         const val = parseInt(e.target.value, 10) || 0;
+                        const cart = POSState.getCart();
                         if (val > 0) {
-                            POSState.cart[id] = val;
+                            cart[id] = val;
                         } else {
-                            delete POSState.cart[id];
+                            delete cart[id];
                         }
                         this.renderCategories();
                         this.renderMenu();
@@ -1384,9 +1708,49 @@
                     }
                 });
 
+                /* Phone number: digits only, capped at 10, as the customer
+                   types. This is the single shared "Your Details" field —
+                   Today's Order Menu and Future Order both use the same
+                   form, so this restriction applies under every tab. */
+                document.getElementById("cust-phone").addEventListener("input", (e) => {
+                    e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
+                });
+
                 document.getElementById("input-delivery-fee").addEventListener("input", (e) => {
                     const val = parseFloat(e.target.value);
                     POSState.deliveryCharge = (!isNaN(val) && val >= 0) ? val : 0;
+                    this.syncTotals();
+                });
+
+                /* ordering mode tabs — Today's Order Menu (Instant) / Future Order */
+                document.getElementById("mode-tabs").addEventListener("click", (e) => {
+                    const btn = e.target.closest(".mode-tab");
+                    if (!btn) return;
+                    this.applyOrderMode(btn.dataset.mode);
+                });
+
+                document.getElementById("future-date").addEventListener("change", (e) => {
+                    const val = e.target.value;
+                    if (val && !isFutureDateWithinWindow(val)) {
+                        e.target.value = "";
+                        POSState.schedule.date = "";
+                        this.showToast("Delivery date must be between tomorrow and 15 days from tomorrow", "error");
+                        this.syncTotals();
+                        return;
+                    }
+                    POSState.schedule.date = val;
+                    this.syncTotals();
+                });
+                document.getElementById("future-time").addEventListener("change", (e) => {
+                    const val = e.target.value;
+                    if (val && !isFutureTimeWithinWindow(val)) {
+                        e.target.value = "";
+                        POSState.schedule.time = "";
+                        this.showToast("Delivery time must be between 9:00 AM and 10:00 PM", "error");
+                        this.syncTotals();
+                        return;
+                    }
+                    POSState.schedule.time = val;
                     this.syncTotals();
                 });
 
@@ -1478,16 +1842,22 @@
                     document.getElementById("cust-door").required = true;
                     document.getElementById("input-delivery-fee").disabled = false;
 
+                    document.getElementById("future-date").value = "";
+                    document.getElementById("future-time").value = "";
+
                     POSState.searchQuery = "";
                     POSState.activeCategory = "ALL";
                     POSState.deliveryCharge = 0;
                     POSState.orderType = "Delivery";
+                    POSState.schedule = { date: "", time: "" };
                     POSState.discount = { code: "", type: null, value: 0, label: "" };
                     POSState.init();
 
-                    UIEngine.renderCategories();
-                    UIEngine.renderMenu();
-                    UIEngine.syncTotals();
+                    // applyOrderMode("Instant") resets tab styling, hides the
+                    // Future schedule card, restores the button label, and
+                    // refreshes categories/menu/totals — the same single path
+                    // used when a tab is clicked, so nothing here repeats it.
+                    UIEngine.applyOrderMode("Instant");
                     UIEngine.showToast("New order started", "success");
                     document.getElementById("txt-search").focus();
                 });
@@ -1556,6 +1926,27 @@
                     UIEngine.alertModal("A few details are missing", "Please fill in your name and a valid 10-digit phone number, plus your door/flat number for delivery orders.");
                     return false;
                 }
+
+                if (POSState.orderMode === "Future") {
+                    const { date, time } = POSState.schedule;
+                    if (!date || !time) {
+                        UIEngine.alertModal("Delivery date & time needed", "Please choose a delivery date and time for this future order before sending it.");
+                        return false;
+                    }
+                    if (!isFutureDateWithinWindow(date)) {
+                        UIEngine.alertModal("Delivery date out of range", "Delivery date must be between tomorrow and 15 days from tomorrow. Please update it before sending.");
+                        return false;
+                    }
+                    if (!isFutureTimeWithinWindow(time)) {
+                        UIEngine.alertModal("Delivery time out of range", "Delivery time must be between 9:00 AM and 10:00 PM. Please update it before sending.");
+                        return false;
+                    }
+                    const scheduledAt = new Date(`${date}T${time}`);
+                    if (scheduledAt.getTime() <= Date.now()) {
+                        UIEngine.alertModal("Please pick a later time", "The delivery date and time you chose has already passed. Please select a future date and time.");
+                        return false;
+                    }
+                }
                 return true;
             },
 
@@ -1573,11 +1964,12 @@
                 let itemsList = [];
                 let subtotal = 0;
                 let totalQty = 0;
+                const cart = POSState.getCart();
 
-                Object.keys(POSState.cart).forEach(id => {
-                    const qty = POSState.cart[id];
+                Object.keys(cart).forEach(id => {
+                    const qty = cart[id];
                     if (qty > 0) {
-                        const item = MENU_DATA.find(m => m.id === id);
+                        const item = getMenuData().find(m => m.id === id);
                         const total = item.price * qty;
                         subtotal += total;
                         totalQty += qty;
@@ -1608,7 +2000,10 @@
 
                 document.getElementById("print-order-no").innerText = POSState.orderId;
                 document.getElementById("print-datetime").innerText = new Date().toLocaleString('en-IN');
-                document.getElementById("print-order-type").innerText = POSState.orderType;
+                document.getElementById("print-order-type").innerText = POSState.orderType +
+                    (POSState.orderMode === "Future" && POSState.schedule.date && POSState.schedule.time
+                        ? ` (Future — ${new Date(`${POSState.schedule.date}T${POSState.schedule.time}`).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })})`
+                        : "");
                 document.getElementById("print-cust-info").innerHTML = isPickup
                     ? `<strong>${customer.name}</strong> (${customer.phone})<br>Self Pickup at Counter`
                     : `<strong>${customer.name}</strong> (${customer.phone})<br>
@@ -1651,7 +2046,7 @@
                 const LINE = `━━━━━━━━━━━━━━━━━━\n`;
 
                 // Greeting — customer talking to the shop
-                let text = `Hello *AMRUTHAADHARANAM*,\n\n`;
+                let text = `Hello *AMRUTHADHAARANAM*,\n\n`;
                 text += `I'd like to place my order. Here are the details:\n`;
                 text += LINE;
 
@@ -1666,6 +2061,13 @@
                     text += `   ${customer.door}${customer.apart ? ', ' + customer.apart : ''}\n`;
                 }
                 if (customer.notes) text += `📝 *Notes:* ${customer.notes}\n`;
+
+                if (POSState.orderMode === "Future" && POSState.schedule.date && POSState.schedule.time) {
+                    const scheduledAt = new Date(`${POSState.schedule.date}T${POSState.schedule.time}`);
+                    const formatted = scheduledAt.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+                    text += `📅 *This is a FUTURE ORDER*\n`;
+                    text += `   Deliver on: *${formatted}*\n`;
+                }
                 text += LINE;
 
                 // Items
@@ -1703,7 +2105,7 @@
                 if (!BUSINESS_WHATSAPP_NUMBER || BUSINESS_WHATSAPP_NUMBER.includes("X")) {
                     UIEngine.alertModal(
                         "WhatsApp number not set up yet",
-                        "This site isn't connected to a WhatsApp number yet. Please contact Amruthaadharanam directly to place this order for now."
+                        "This site isn't connected to a WhatsApp number yet. Please contact Amruthadhaaranam directly to place this order for now."
                     );
                     return;
                 }
@@ -1712,7 +2114,11 @@
                 const url = `https://wa.me/${BUSINESS_WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
                 const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
                 if (newWindow) newWindow.opener = null;
-                UIEngine.showToast("Opening WhatsApp with your order pre-filled…", "success");
+
+                const toastMsg = POSState.orderMode === "Future"
+                    ? "Opening WhatsApp with your scheduled order pre-filled…"
+                    : "Opening WhatsApp with your order pre-filled…";
+                UIEngine.showToast(toastMsg, "success");
             },
 
             payViaUPI() {
@@ -1721,7 +2127,7 @@
                     UIEngine.alertModal("Cart is empty", "Please add at least one item before proceeding to UPI payment.");
                     return;
                 }
-                const upiLink = `upi://pay?pa=${encodeURIComponent(UPI_VPA)}&pn=${encodeURIComponent("AMRUTHAADHARANAM")}&am=${invoice.grandTotal.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Order ' + POSState.orderId)}`;
+                const upiLink = `upi://pay?pa=${encodeURIComponent(UPI_VPA)}&pn=${encodeURIComponent("AMRUTHADHAARANAM")}&am=${invoice.grandTotal.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Order ' + POSState.orderId)}`;
                 const tempLink = document.createElement('a');
                 tempLink.href = upiLink;
                 document.body.appendChild(tempLink);
